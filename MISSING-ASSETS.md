@@ -84,6 +84,9 @@ control, and performance.
 - **Reference:** `proofPlaceholders` in [`site.ts:105`](src/data/site.ts:105), rendered at [`index.astro:163`](src/pages/index.astro:163).
 - **What's needed (per card):** a **client-approved quote**, the client's first
   name/initials, and optionally a **before/after or progress photo** (~1080×1350, 4:5).
+- **Alejandro task:** find real before/after photos of Jaihden that can be used as
+  personal proof or story/context assets, with permission and accurate dates/context
+  before publishing.
 - **Important:** do not fabricate. Until at least one real testimonial exists, the
   recommendation is to **hide this section** rather than ship placeholders.
 - **Provide or generate:** **Provide only** — this is real client content, not generatable.

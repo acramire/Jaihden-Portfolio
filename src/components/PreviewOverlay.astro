@@ -1,0 +1,466 @@
+---
+import imageGroups from '../data/preview-images.json';
+import copyGroups from '../data/preview-copy.json';
+
+const previewConfig = { imageGroups, copyGroups };
+---
+
+<aside class="preview-overlay" aria-label="Image and copy preview controls" data-preview-overlay>
+  <button
+    class="preview-toggle"
+    type="button"
+    aria-expanded="true"
+    aria-controls="preview-panel"
+    data-preview-toggle
+  >
+    Preview controls
+  </button>
+
+  <div class="preview-panel" id="preview-panel" data-preview-panel>
+    <div class="preview-panel-header">
+      <div>
+        <p>Dev-only scaffold</p>
+        <h2>Image + Copy Options</h2>
+      </div>
+      <button type="button" data-preview-collapse aria-label="Collapse preview controls">×</button>
+    </div>
+
+    <div class="preview-toolbar" aria-label="Preview actions">
+      <button type="button" data-preview-reset>Reset</button>
+      <button type="button" data-preview-export>Export selections</button>
+    </div>
+
+    <p class="preview-status" data-preview-status aria-live="polite">
+      Local changes are stored in this browser only.
+    </p>
+
+    <div class="preview-controls" data-preview-controls></div>
+
+    <label class="preview-export-output">
+      Exported JSON
+      <textarea data-preview-output readonly rows="8" spellcheck="false"></textarea>
+    </label>
+  </div>
+</aside>
+
+<script is:inline type="application/json" id="preview-options" set:html={JSON.stringify(previewConfig)} />
+
+<script is:inline>
+  (() => {
+    const storageKey = 'jaihden-preview-selections';
+    const collapsedKey = 'jaihden-preview-collapsed';
+    const configNode = document.getElementById('preview-options');
+    const overlay = document.querySelector('[data-preview-overlay]');
+    const panel = document.querySelector('[data-preview-panel]');
+    const controlsRoot = document.querySelector('[data-preview-controls]');
+    const toggle = document.querySelector('[data-preview-toggle]');
+    const collapse = document.querySelector('[data-preview-collapse]');
+    const reset = document.querySelector('[data-preview-reset]');
+    const exportButton = document.querySelector('[data-preview-export]');
+    const output = document.querySelector('[data-preview-output]');
+    const status = document.querySelector('[data-preview-status]');
+
+    if (!configNode || !overlay || !panel || !controlsRoot || !toggle) return;
+
+    const config = JSON.parse(configNode.textContent || '{}');
+    const groups = [
+      ...(config.copyGroups || []).map((group) => ({ ...group, type: 'copy' })),
+      ...(config.imageGroups || []).map((group) => ({ ...group, type: 'image' })),
+    ];
+    const slots = groups.flatMap((group) =>
+      (group.slots || []).map((slot) => ({
+        ...slot,
+        type: group.type,
+        section: group.section,
+      })),
+    );
+    const defaults = Object.fromEntries(
+      slots.map((slot) => [slot.slot, slot.default || slot.options?.[0]?.value || '']),
+    );
+    const selectBySlot = new Map();
+
+    let selections = { ...defaults, ...readStoredSelections() };
+
+    function readStoredSelections() {
+      try {
+        return JSON.parse(localStorage.getItem(storageKey) || '{}');
+      } catch {
+        return {};
+      }
+    }
+
+    function writeStoredSelections() {
+      localStorage.setItem(storageKey, JSON.stringify(selections));
+    }
+
+    function setStatus(message) {
+      if (status) status.textContent = message;
+    }
+
+    function getNodes(slotName) {
+      return document.querySelectorAll(`[data-preview-slot="${slotName}"]`);
+    }
+
+    function applySlot(slotName, value) {
+      const nodes = getNodes(slotName);
+      nodes.forEach((node) => {
+        if (node instanceof HTMLImageElement) {
+          node.src = value;
+        } else {
+          node.textContent = value;
+        }
+      });
+    }
+
+    function applyAll() {
+      Object.entries(selections).forEach(([slotName, value]) => applySlot(slotName, value));
+    }
+
+    function getSlotConfig(slotName) {
+      return slots.find((slot) => slot.slot === slotName);
+    }
+
+    function getOptionIndex(slot, value) {
+      return Math.max(
+        0,
+        (slot.options || []).findIndex((option) => option.value === value),
+      );
+    }
+
+    function updateSlot(slotName, value, shouldPersist = true) {
+      selections = { ...selections, [slotName]: value };
+      applySlot(slotName, value);
+
+      const select = selectBySlot.get(slotName);
+      if (select) select.value = value;
+
+      if (shouldPersist) writeStoredSelections();
+    }
+
+    function stepSlot(slotName, direction) {
+      const slot = getSlotConfig(slotName);
+      if (!slot || !slot.options?.length) return;
+
+      const currentIndex = getOptionIndex(slot, selections[slotName]);
+      const nextIndex = (currentIndex + direction + slot.options.length) % slot.options.length;
+      updateSlot(slotName, slot.options[nextIndex].value);
+    }
+
+    function buildControls() {
+      groups.forEach((group) => {
+        const groupElement = document.createElement('section');
+        groupElement.className = 'preview-group';
+
+        const heading = document.createElement('h3');
+        heading.textContent = group.section;
+        groupElement.append(heading);
+
+        group.slots.forEach((slot) => {
+          const row = document.createElement('div');
+          row.className = 'preview-row';
+
+          const label = document.createElement('label');
+          label.textContent = slot.exportOnly ? `${slot.label} (export only)` : slot.label;
+
+          const select = document.createElement('select');
+          select.setAttribute('aria-label', `${slot.label} options`);
+          selectBySlot.set(slot.slot, select);
+
+          slot.options.forEach((option) => {
+            const item = document.createElement('option');
+            item.value = option.value;
+            item.textContent = option.label;
+            select.append(item);
+          });
+
+          select.value = selections[slot.slot] || slot.default || slot.options[0]?.value || '';
+          select.addEventListener('change', () => {
+            updateSlot(slot.slot, select.value);
+            setStatus(`Updated ${slot.label}.`);
+          });
+
+          const actions = document.createElement('div');
+          actions.className = 'preview-row-actions';
+
+          const previous = document.createElement('button');
+          previous.type = 'button';
+          previous.textContent = 'Prev';
+          previous.addEventListener('click', () => {
+            stepSlot(slot.slot, -1);
+            setStatus(`Updated ${slot.label}.`);
+          });
+
+          const next = document.createElement('button');
+          next.type = 'button';
+          next.textContent = 'Next';
+          next.addEventListener('click', () => {
+            stepSlot(slot.slot, 1);
+            setStatus(`Updated ${slot.label}.`);
+          });
+
+          actions.append(previous, next);
+          row.append(label, select, actions);
+          groupElement.append(row);
+        });
+
+        controlsRoot.append(groupElement);
+      });
+    }
+
+    function setCollapsed(isCollapsed) {
+      overlay.setAttribute('data-collapsed', String(isCollapsed));
+      panel.hidden = isCollapsed;
+      toggle.setAttribute('aria-expanded', String(!isCollapsed));
+      toggle.textContent = isCollapsed ? 'Open preview controls' : 'Preview controls';
+      localStorage.setItem(collapsedKey, String(isCollapsed));
+    }
+
+    function resetSelections() {
+      selections = { ...defaults };
+      writeStoredSelections();
+      Object.entries(selections).forEach(([slotName, value]) => {
+        updateSlot(slotName, value, false);
+      });
+      writeStoredSelections();
+      setStatus('Reset to defaults.');
+    }
+
+    async function exportSelections() {
+      const serialized = JSON.stringify(selections, null, 2);
+      if (output) output.value = serialized;
+
+      try {
+        await navigator.clipboard.writeText(serialized);
+        setStatus('Selections copied to clipboard.');
+      } catch {
+        setStatus('Selections shown below. Copy manually if clipboard access is blocked.');
+      }
+    }
+
+    buildControls();
+    applyAll();
+    setCollapsed(localStorage.getItem(collapsedKey) === 'true');
+
+    toggle.addEventListener('click', () => {
+      setCollapsed(!panel.hidden);
+    });
+
+    collapse?.addEventListener('click', () => {
+      setCollapsed(true);
+      toggle.focus();
+    });
+
+    reset?.addEventListener('click', resetSelections);
+    exportButton?.addEventListener('click', exportSelections);
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !panel.hidden && overlay.contains(document.activeElement)) {
+        setCollapsed(true);
+        toggle.focus();
+      }
+    });
+  })();
+</script>
+
+<style>
+  .preview-overlay {
+    position: fixed;
+    z-index: 100;
+    right: 16px;
+    bottom: 16px;
+    width: min(420px, calc(100vw - 32px));
+    color: #f8fafc;
+    font-family:
+      Archivo, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+      sans-serif;
+  }
+
+  .preview-toggle,
+  .preview-panel button,
+  .preview-panel select,
+  .preview-panel textarea {
+    font: inherit;
+  }
+
+  .preview-toggle {
+    display: block;
+    margin-left: auto;
+    padding: 10px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: #e43d30;
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 16px 45px rgba(0, 0, 0, 0.28);
+  }
+
+  .preview-panel {
+    max-height: min(720px, calc(100vh - 88px));
+    margin-top: 8px;
+    overflow: auto;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(11, 12, 14, 0.96);
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.44);
+    backdrop-filter: blur(18px);
+  }
+
+  .preview-panel-header,
+  .preview-toolbar,
+  .preview-row-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .preview-panel-header {
+    position: sticky;
+    z-index: 1;
+    top: 0;
+    justify-content: space-between;
+    padding: 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    background: #0b0c0e;
+  }
+
+  .preview-panel-header p,
+  .preview-panel-header h2,
+  .preview-status,
+  .preview-group h3 {
+    margin: 0;
+  }
+
+  .preview-panel-header p {
+    color: #ffafa8;
+    font-size: 0.7rem;
+    font-weight: 900;
+    text-transform: uppercase;
+  }
+
+  .preview-panel-header h2 {
+    font-size: 1rem;
+    line-height: 1.2;
+  }
+
+  .preview-panel-header button {
+    width: 36px;
+    height: 36px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: transparent;
+    color: #fff;
+    font-size: 1.3rem;
+    cursor: pointer;
+  }
+
+  .preview-toolbar {
+    padding: 12px 14px 0;
+  }
+
+  .preview-toolbar button,
+  .preview-row-actions button {
+    min-height: 36px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  .preview-toolbar button {
+    flex: 1;
+    padding: 8px 10px;
+  }
+
+  .preview-toolbar button:hover,
+  .preview-row-actions button:hover,
+  .preview-panel-header button:hover {
+    background: rgba(255, 255, 255, 0.16);
+  }
+
+  .preview-status {
+    padding: 10px 14px 0;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 0.78rem;
+  }
+
+  .preview-controls {
+    display: grid;
+    gap: 12px;
+    padding: 14px;
+  }
+
+  .preview-group {
+    display: grid;
+    gap: 10px;
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .preview-group h3 {
+    color: #ffafa8;
+    font-size: 0.78rem;
+    font-weight: 950;
+    text-transform: uppercase;
+  }
+
+  .preview-row {
+    display: grid;
+    gap: 7px;
+  }
+
+  .preview-row label,
+  .preview-export-output {
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 0.78rem;
+    font-weight: 800;
+  }
+
+  .preview-row select,
+  .preview-export-output textarea {
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: #15171c;
+    color: #fff;
+  }
+
+  .preview-row select {
+    min-height: 38px;
+    padding: 6px 8px;
+  }
+
+  .preview-row-actions button {
+    flex: 1;
+  }
+
+  .preview-export-output {
+    display: grid;
+    gap: 7px;
+    padding: 0 14px 14px;
+  }
+
+  .preview-export-output textarea {
+    resize: vertical;
+    padding: 10px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    font-size: 0.74rem;
+  }
+
+  .preview-overlay[data-collapsed='true'] {
+    width: auto;
+  }
+
+  @media (max-width: 640px) {
+    .preview-overlay {
+      right: 10px;
+      bottom: 10px;
+      width: min(380px, calc(100vw - 20px));
+    }
+
+    .preview-panel {
+      max-height: calc(100vh - 78px);
+    }
+  }
+</style>

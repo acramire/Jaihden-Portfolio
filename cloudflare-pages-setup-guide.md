@@ -235,7 +235,19 @@ Then redirect:
 https://www.jaihdentorres.com -> https://jaihdentorres.com
 ```
 
+Use **Bulk Redirects** in Cloudflare for the `www` to apex redirect. Cloudflare's
+Pages docs model this as a Bulk Redirect list entry with:
+
+```txt
+Source URL: www.example.com
+Target URL: https://example.com
+Status: 301
+Parameters: preserve query string, subpath matching, preserve path suffix, include subdomains
+```
+
 Also redirect the `*.pages.dev` URL to the custom domain once the custom domain is live.
+Cloudflare documents this as another Bulk Redirect after the custom domain is attached
+to the Pages project.
 
 ### 9. Redirects
 
@@ -250,11 +262,15 @@ public/_redirects
 Example:
 
 ```txt
-/www https://jaihdentorres.com 301
 /instagram https://www.instagram.com/jaihdentorres/ 302
 /uofpump https://uofpump.com/ 302
 /shop https://uofpump.com/collections/trademark-tee 302
 ```
+
+Do not use `_redirects` for the `www` hostname redirect. `_redirects` is useful for
+site paths such as `/instagram` and `/shop`; host-level redirects such as
+`www.jaihdentorres.com` to `jaihdentorres.com` should be handled with Cloudflare
+Bulk Redirects.
 
 Useful creator-site redirects:
 

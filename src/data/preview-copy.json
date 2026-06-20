@@ -1,0 +1,387 @@
+[
+  {
+    "section": "Hero",
+    "slots": [
+      {
+        "slot": "copy.hero.eyebrow",
+        "label": "Hero eyebrow",
+        "default": "Fitness coaching + UofPump",
+        "options": [
+          {
+            "label": "Current",
+            "value": "Fitness coaching + UofPump"
+          },
+          {
+            "label": "College lifestyle",
+            "value": "College-lifestyle fitness coaching"
+          },
+          {
+            "label": "Coaching ecosystem",
+            "value": "Coaching, content, and UofPump"
+          }
+        ]
+      },
+      {
+        "slot": "copy.hero.headline",
+        "label": "Hero headline",
+        "default": "Become the best version of yourself.",
+        "options": [
+          {
+            "label": "Lead option",
+            "value": "Become the best version of yourself."
+          },
+          {
+            "label": "Current",
+            "value": "Real results without giving up your social life."
+          },
+          {
+            "label": "Sharper conversion",
+            "value": "Fitness coaching built around the life you actually live."
+          },
+          {
+            "label": "Outcome-first",
+            "value": "Get leaner, stronger, and more confident without disappearing."
+          },
+          {
+            "label": "Balanced professional",
+            "value": "Build a body that works in the gym and in real life."
+          }
+        ]
+      },
+      {
+        "slot": "copy.hero.body",
+        "label": "Hero body",
+        "default": "Balanced, lifestyle-aware coaching for people who want to get leaner, stronger, and more confident while still living a full life.",
+        "options": [
+          {
+            "label": "Current",
+            "value": "Balanced, lifestyle-aware coaching for people who want to get leaner, stronger, and more confident while still living a full life."
+          },
+          {
+            "label": "Direct",
+            "value": "A clear training, nutrition, and lifestyle system for people who want visible progress without pretending weekends, travel, and social life do not exist."
+          },
+          {
+            "label": "Aspirational",
+            "value": "Built for the person who wants the physique, confidence, and standards to show up well in photos, nights out, trips, and everyday life."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "section": "Primary CTAs",
+    "slots": [
+      {
+        "slot": "copy.cta.apply-short",
+        "label": "Header CTA",
+        "default": "Apply",
+        "options": [
+          {
+            "label": "Current",
+            "value": "Apply"
+          },
+          {
+            "label": "Coaching",
+            "value": "Coaching"
+          },
+          {
+            "label": "Start",
+            "value": "Start"
+          }
+        ]
+      },
+      {
+        "slot": "copy.cta.apply",
+        "label": "Hero apply CTA",
+        "default": "Apply for Coaching",
+        "options": [
+          {
+            "label": "Current",
+            "value": "Apply for Coaching"
+          },
+          {
+            "label": "Start Coaching Application",
+            "value": "Start Coaching Application"
+          },
+          {
+            "label": "Build My Plan",
+            "value": "Build My Plan"
+          }
+        ]
+      },
+      {
+        "slot": "copy.cta.shop",
+        "label": "Hero shop CTA",
+        "default": "Shop UofPump",
+        "options": [
+          {
+            "label": "Current",
+            "value": "Shop UofPump"
+          },
+          {
+            "label": "Shop the Drop",
+            "value": "Shop the Drop"
+          },
+          {
+            "label": "Explore UofPump",
+            "value": "Explore UofPump"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "section": "Problem + Method",
+    "slots": [
+      {
+        "slot": "copy.problem.heading",
+        "label": "Problem heading",
+        "default": "Most plans fall apart the second real life starts.",
+        "options": [
+          {
+            "label": "Current",
+            "value": "Most plans fall apart the second real life starts."
+          },
+          {
+            "label": "More specific",
+            "value": "The plan should survive the weekend, not collapse because of it."
+          },
+          {
+            "label": "Sharper",
+            "value": "Your fitness plan should work on more than perfect weekdays."
+          }
+        ]
+      },
+      {
+        "slot": "copy.method.heading",
+        "label": "Method heading",
+        "default": "Five pillars built for the lifestyle you actually live.",
+        "options": [
+          {
+            "label": "Current",
+            "value": "Five pillars built for the lifestyle you actually live."
+          },
+          {
+            "label": "System wording",
+            "value": "A coaching system for training hard, living fully, and staying consistent."
+          },
+          {
+            "label": "Professional",
+            "value": "Five practical pillars for sustainable physical transformation."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "section": "What You Get",
+    "slots": [
+      {
+        "slot": "copy.deliverables.heading",
+        "label": "Deliverables heading",
+        "default": "Clear structure before the call, during the week, and after the weekend.",
+        "options": [
+          {
+            "label": "Current",
+            "value": "Clear structure before the call, during the week, and after the weekend."
+          },
+          {
+            "label": "Benefit-led",
+            "value": "Everything you need to train, eat, recover, and reset with confidence."
+          },
+          {
+            "label": "Simple",
+            "value": "The structure, accountability, and adjustments that keep progress moving."
+          }
+        ]
+      },
+      {
+        "slot": "copy.deliverables.body",
+        "label": "Deliverables body",
+        "default": "Everything is built around the life you actually live — training days, travel, recovery, and the weekends most plans pretend don't exist.",
+        "options": [
+          {
+            "label": "Current",
+            "value": "Everything is built around the life you actually live — training days, travel, recovery, and the weekends most plans pretend don't exist."
+          },
+          {
+            "label": "More direct",
+            "value": "You get a clear weekly plan, feedback, and decision rules for the moments that usually knock people off track."
+          },
+          {
+            "label": "Premium",
+            "value": "The coaching gives you structure without overcomplicating your life: training, nutrition, check-ins, social protocols, and long-term standards."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "section": "Story",
+    "slots": [
+      {
+        "slot": "copy.story.heading",
+        "label": "Story heading",
+        "default": "Built from the same tension his clients are trying to solve.",
+        "options": [
+          {
+            "label": "Current",
+            "value": "Built from the same tension his clients are trying to solve."
+          },
+          {
+            "label": "Personal",
+            "value": "Jaihden built this from the same lifestyle tension his clients live with."
+          },
+          {
+            "label": "Outcome",
+            "value": "The standard is simple: build the body without losing the life."
+          }
+        ]
+      },
+      {
+        "slot": "copy.story.badge",
+        "label": "Story media badge",
+        "default": "Watch",
+        "options": [
+          {
+            "label": "Current",
+            "value": "Watch"
+          },
+          {
+            "label": "Play Story",
+            "value": "Play Story"
+          },
+          {
+            "label": "YouTube",
+            "value": "YouTube"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "section": "UofPump",
+    "slots": [
+      {
+        "slot": "copy.uofpump.heading",
+        "label": "UofPump heading",
+        "default": "UofPump: Look Great. Feel Better.",
+        "options": [
+          {
+            "label": "Current",
+            "value": "UofPump: Look Great. Feel Better."
+          },
+          {
+            "label": "Brand-first",
+            "value": "UofPump is the brand side of the same standard."
+          },
+          {
+            "label": "Collection-first",
+            "value": "Trademark Collection by UofPump."
+          }
+        ]
+      },
+      {
+        "slot": "copy.uofpump.body",
+        "label": "UofPump body",
+        "default": "Pump University is the brand side of Jaihden's ecosystem: apparel, culture, and the same standard-driven lifestyle behind the coaching.",
+        "options": [
+          {
+            "label": "Current",
+            "value": "Pump University is the brand side of Jaihden's ecosystem: apparel, culture, and the same standard-driven lifestyle behind the coaching."
+          },
+          {
+            "label": "Cleaner",
+            "value": "The apparel side of Jaihden's ecosystem: gym culture, clean pieces, and the same standards behind the coaching."
+          },
+          {
+            "label": "More premium",
+            "value": "UofPump turns the training standard into apparel, culture, and a visual identity people can wear outside the gym."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "section": "Apply",
+    "slots": [
+      {
+        "slot": "copy.apply.heading",
+        "label": "Apply heading",
+        "default": "Start with the questionnaire. Book after there is a fit.",
+        "options": [
+          {
+            "label": "Current",
+            "value": "Start with the questionnaire. Book after there is a fit."
+          },
+          {
+            "label": "Clearer",
+            "value": "Apply first. If it fits, book the strategy call."
+          },
+          {
+            "label": "Softer",
+            "value": "Tell Jaihden where you are starting, then schedule the next step."
+          }
+        ]
+      },
+      {
+        "slot": "copy.apply.body",
+        "label": "Apply body",
+        "default": "Start with a few questions about your goals and schedule. If it's a fit, you'll book a 30-minute call — no pressure to commit before then.",
+        "options": [
+          {
+            "label": "Current",
+            "value": "Start with a few questions about your goals and schedule. If it's a fit, you'll book a 30-minute call — no pressure to commit before then."
+          },
+          {
+            "label": "Direct",
+            "value": "The questionnaire helps Jaihden understand your goals, schedule, training history, and where you usually get stuck before the call."
+          },
+          {
+            "label": "Conversion",
+            "value": "Share your goals and current routine first. Qualified applicants can then book a 30-minute call to map out the next step."
+          }
+        ]
+      },
+      {
+        "slot": "copy.cta.questionnaire",
+        "label": "Questionnaire CTA",
+        "default": "Start Questionnaire",
+        "options": [
+          {
+            "label": "Current",
+            "value": "Start Questionnaire"
+          },
+          {
+            "label": "Start Application",
+            "value": "Start Application"
+          },
+          {
+            "label": "Apply Now",
+            "value": "Apply Now"
+          }
+        ]
+      },
+      {
+        "slot": "copy.cta.book",
+        "label": "Booking CTA",
+        "default": "Book 30-Minute Call",
+        "options": [
+          {
+            "label": "Current",
+            "value": "Book 30-Minute Call"
+          },
+          {
+            "label": "Book Strategy Call",
+            "value": "Book Strategy Call"
+          },
+          {
+            "label": "Schedule Call",
+            "value": "Schedule Call"
+          }
+        ]
+      }
+    ]
+  }
+]

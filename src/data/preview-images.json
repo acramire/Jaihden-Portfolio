@@ -1,0 +1,184 @@
+[
+  {
+    "section": "Hero",
+    "slots": [
+      {
+        "slot": "image.hero",
+        "label": "Hero background",
+        "default": "/images/candidates/instagram-uofpump-07-labor-day.jpg",
+        "options": [
+          {
+            "label": "Current: UofPump Labor Day",
+            "value": "/images/candidates/instagram-uofpump-07-labor-day.jpg"
+          },
+          {
+            "label": "Generated wide hero",
+            "value": "/images/candidates/generated-wide-hero-alt-01.png"
+          },
+          {
+            "label": "Fratlete coaching",
+            "value": "/images/candidates/instagram-coaching-01-fratlete.jpg"
+          },
+          {
+            "label": "One-on-one coaching",
+            "value": "/images/candidates/instagram-coaching-02-1on1.jpg"
+          },
+          {
+            "label": "Trademark drop",
+            "value": "/images/candidates/instagram-uofpump-05-trademark-drop.jpg"
+          }
+        ]
+      },
+      {
+        "slot": "image.og",
+        "label": "Open Graph image",
+        "default": "/images/candidates/generated-og-background-alt-01.png",
+        "exportOnly": true,
+        "options": [
+          {
+            "label": "Current: generated OG",
+            "value": "/images/candidates/generated-og-background-alt-01.png"
+          },
+          {
+            "label": "Generated wide hero",
+            "value": "/images/candidates/generated-wide-hero-alt-01.png"
+          },
+          {
+            "label": "UofPump Labor Day",
+            "value": "/images/candidates/instagram-uofpump-07-labor-day.jpg"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "section": "Story",
+    "slots": [
+      {
+        "slot": "image.story",
+        "label": "Story media",
+        "default": "/images/candidates/instagram-story-08-faith-drop.jpg",
+        "options": [
+          {
+            "label": "Current: faith drop",
+            "value": "/images/candidates/instagram-story-08-faith-drop.jpg"
+          },
+          {
+            "label": "CEO formal",
+            "value": "/images/candidates/instagram-video-03-ceo-frat-formal.jpg"
+          },
+          {
+            "label": "Formal part two",
+            "value": "/images/candidates/instagram-video-04-formal-part2.jpg"
+          },
+          {
+            "label": "Generated clean gym",
+            "value": "/images/candidates/generated-clean-gym-alt-01.png"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "section": "UofPump",
+    "slots": [
+      {
+        "slot": "image.uofpumpHero",
+        "label": "UofPump section image",
+        "default": "/images/candidates/uofpump-hero-01-trademark-gym.jpg",
+        "options": [
+          {
+            "label": "Current: Trademark gym",
+            "value": "/images/candidates/uofpump-hero-01-trademark-gym.jpg"
+          },
+          {
+            "label": "Trademark tee product",
+            "value": "/images/candidates/uofpump-product-02-trademark-tee.jpg"
+          },
+          {
+            "label": "Black tee lifestyle",
+            "value": "/images/candidates/uofpump-lifestyle-03-black-tee.jpg"
+          },
+          {
+            "label": "Training lifestyle",
+            "value": "/images/candidates/uofpump-lifestyle-04-training.jpg"
+          },
+          {
+            "label": "Square detail",
+            "value": "/images/candidates/uofpump-detail-05-square.jpg"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "section": "Content Cards",
+    "slots": [
+      {
+        "slot": "image.content.beer-tastes-better-with-abs",
+        "label": "Story content card",
+        "default": "/images/candidates/instagram-video-03-ceo-frat-formal.jpg",
+        "options": [
+          {
+            "label": "Current: CEO formal",
+            "value": "/images/candidates/instagram-video-03-ceo-frat-formal.jpg"
+          },
+          {
+            "label": "Formal part two",
+            "value": "/images/candidates/instagram-video-04-formal-part2.jpg"
+          },
+          {
+            "label": "Faith drop",
+            "value": "/images/candidates/instagram-story-08-faith-drop.jpg"
+          }
+        ]
+      },
+      {
+        "slot": "image.content.jaihden-on-instagram",
+        "label": "Instagram content card",
+        "default": "/images/candidates/instagram-uofpump-07-labor-day.jpg",
+        "options": [
+          {
+            "label": "Current: UofPump Labor Day",
+            "value": "/images/candidates/instagram-uofpump-07-labor-day.jpg"
+          },
+          {
+            "label": "Profile avatar",
+            "value": "/images/candidates/instagram-profile-10-avatar.jpg"
+          },
+          {
+            "label": "Fratlete coaching",
+            "value": "/images/candidates/instagram-coaching-01-fratlete.jpg"
+          },
+          {
+            "label": "Alpha cofounder",
+            "value": "/images/candidates/instagram-coaching-06-alpha-cofounder.jpg"
+          }
+        ]
+      },
+      {
+        "slot": "image.content.shop-uofpump",
+        "label": "Shop content card",
+        "default": "/images/candidates/uofpump-product-02-trademark-tee.jpg",
+        "options": [
+          {
+            "label": "Current: Trademark tee",
+            "value": "/images/candidates/uofpump-product-02-trademark-tee.jpg"
+          },
+          {
+            "label": "Black tee lifestyle",
+            "value": "/images/candidates/uofpump-lifestyle-03-black-tee.jpg"
+          },
+          {
+            "label": "Training lifestyle",
+            "value": "/images/candidates/uofpump-lifestyle-04-training.jpg"
+          },
+          {
+            "label": "Square detail",
+            "value": "/images/candidates/uofpump-detail-06-square.jpg"
+          }
+        ]
+      }
+    ]
+  }
+]
