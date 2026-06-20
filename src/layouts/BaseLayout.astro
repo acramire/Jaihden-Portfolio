@@ -9,6 +9,8 @@ interface Props {
 
 const title = Astro.props.title ?? site.title;
 const description = Astro.props.description ?? site.description;
+const absoluteUrl = (path: string) => (path.startsWith('http') ? path : new URL(path, site.url).toString());
+const socialImage = absoluteUrl(site.media.og ?? site.media.hero);
 const analyticsToken = import.meta.env.PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN;
 ---
 
@@ -20,17 +22,25 @@ const analyticsToken = import.meta.env.PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN;
     <meta name="description" content={description} />
     <meta name="theme-color" content="#0b0c0e" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700;800;900&display=swap"
+    />
+
     <title>{title}</title>
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={site.url} />
-    <meta property="og:image" content={site.media.hero} />
+    <meta property="og:image" content={socialImage} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={site.media.hero} />
+    <meta name="twitter:image" content={socialImage} />
 
     {
       analyticsToken && (

@@ -5,22 +5,40 @@ import {
   featuredContent,
   methodPillars,
   navItems,
-  proofPlaceholders,
+  proof,
   site,
   storyBeats,
 } from '../data/site';
 
 const applyHref = site.integrations.tallyUrl || '#apply';
 const bookHref = site.integrations.calendlyUrl || '#apply';
+
+// "Apply" is shown as the CTA button, not as a text link.
+// "Proof" stays hidden until there is at least one approved testimonial.
+const visibleNav = navItems.filter((item) => {
+  if (item.href === '#apply') return false;
+  if (item.href === '#proof') return proof.length > 0;
+  return true;
+});
 ---
 
 <BaseLayout>
   <header class="site-header">
-    <a class="brand-mark" href="#top" aria-label="Jaihden Torres home">
-      <span>JT</span>
-    </a>
-    <nav aria-label="Primary navigation">
-      {navItems.map((item) => <a href={item.href}>{item.label}</a>)}
+    <a class="brand-mark" href="#top" aria-label="Jaihden Torres home">Jaihden Torres</a>
+    <button
+      class="nav-toggle"
+      type="button"
+      aria-label="Open navigation menu"
+      aria-expanded="false"
+      aria-controls="primary-nav"
+      data-nav-toggle
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <nav id="primary-nav" aria-label="Primary navigation" data-nav data-open="false">
+      {visibleNav.map((item) => <a href={item.href}>{item.label}</a>)}
     </nav>
     <a class="header-cta" href={applyHref} data-cta="header-apply">Apply</a>
   </header>
@@ -44,10 +62,11 @@ const bookHref = site.integrations.calendlyUrl || '#apply';
           <a class="button button-secondary" href={site.social.shop} data-cta="hero-shop">
             Shop UofPump
           </a>
-          <a class="button button-ghost" href={site.social.storyVideo} data-cta="hero-story">
-            Watch the Story
-          </a>
         </div>
+        <a class="hero-watch" href={site.social.storyVideo} data-cta="hero-story">
+          <span class="hero-watch-icon" aria-hidden="true">▶</span>
+          Watch the story
+        </a>
         <dl class="hero-stats" aria-label="Brand highlights">
           <div>
             <dt>7+</dt>
@@ -106,7 +125,6 @@ const bookHref = site.integrations.calendlyUrl || '#apply';
       <div class="pillar-grid">
         {methodPillars.map((pillar) => (
           <article class="pillar-card">
-            <span>{pillar.number}</span>
             <h3>{pillar.title}</h3>
             <p>{pillar.text}</p>
           </article>
@@ -120,8 +138,8 @@ const bookHref = site.integrations.calendlyUrl || '#apply';
           <p class="eyebrow">What you get</p>
           <h2>Clear structure before the call, during the week, and after the weekend.</h2>
           <p>
-            This section is intentionally specific without publishing unconfirmed
-            pricing, medical-adjacent claims, or support promises.
+            Everything is built around the life you actually live — training days,
+            travel, recovery, and the weekends most plans pretend don't exist.
           </p>
         </div>
         <ul class="deliverable-list">
@@ -151,25 +169,23 @@ const bookHref = site.integrations.calendlyUrl || '#apply';
       </div>
     </section>
 
-    <section class="proof section-light" id="proof">
-      <div class="section-heading">
-        <p class="eyebrow">Proof</p>
-        <h2>Real quotes and transformations go here once approved.</h2>
-        <p>
-          No fabricated testimonials. These cards are ready for client-approved
-          quotes, screenshots, and photos.
-        </p>
-      </div>
-      <div class="proof-grid">
-        {proofPlaceholders.map((proof) => (
-          <article class="proof-card">
-            <span>{proof.label}</span>
-            <h3>{proof.title}</h3>
-            <p>{proof.text}</p>
-          </article>
-        ))}
-      </div>
-    </section>
+    {proof.length > 0 && (
+      <section class="proof section-light" id="proof">
+        <div class="section-heading">
+          <p class="eyebrow">Proof</p>
+          <h2>Real results from real clients.</h2>
+        </div>
+        <div class="proof-grid">
+          {proof.map((item) => (
+            <article class="proof-card">
+              {item.image && <img src={item.image} alt={`Result from ${item.name}`} />}
+              <p class="proof-quote">“{item.quote}”</p>
+              <span>{item.detail ? `${item.name} · ${item.detail}` : item.name}</span>
+            </article>
+          ))}
+        </div>
+      </section>
+    )}
 
     <section class="uofpump section-dark" id="uofpump">
       <div class="brand-image">
@@ -214,8 +230,8 @@ const bookHref = site.integrations.calendlyUrl || '#apply';
         <p class="eyebrow">Apply</p>
         <h2>Start with the questionnaire. Book after there is a fit.</h2>
         <p>
-          The v1 flow is built for a Tally application first, then Calendly for
-          the 30-minute call once the final links are supplied.
+          Start with a few questions about your goals and schedule. If it's a fit,
+          you'll book a 30-minute call — no pressure to commit before then.
         </p>
         <div class="apply-actions">
           {
@@ -275,4 +291,32 @@ const bookHref = site.integrations.calendlyUrl || '#apply';
     <span>Fitness coaching + UofPump</span>
     <a href="#top">Back to top</a>
   </footer>
+
+  <script>
+    const toggle = document.querySelector('[data-nav-toggle]');
+    const nav = document.querySelector('[data-nav]');
+
+    if (toggle && nav) {
+      const setOpen = (open: boolean) => {
+        nav.setAttribute('data-open', String(open));
+        toggle.setAttribute('aria-expanded', String(open));
+        toggle.setAttribute(
+          'aria-label',
+          open ? 'Close navigation menu' : 'Open navigation menu',
+        );
+      };
+
+      toggle.addEventListener('click', () => {
+        setOpen(nav.getAttribute('data-open') !== 'true');
+      });
+
+      // Close after picking a destination, or on Escape.
+      nav.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => setOpen(false));
+      });
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') setOpen(false);
+      });
+    }
+  </script>
 </BaseLayout>

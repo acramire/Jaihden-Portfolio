@@ -14,16 +14,15 @@ export const site = {
   },
   integrations: {
     tallyUrl: 'https://tally.so/r/MePOjM',
-    calendlyUrl: 'https://calendly.com/tjaihden14/30min?utm_id=97760_v0_s00_e0_tv3&month=2026-06',
+    calendlyUrl: 'https://calendly.com/tjaihden14/30min',
     contactEmail: '',
   },
   media: {
-    hero: 'https://img.youtube.com/vi/KDCu5OTG0QE/maxresdefault.jpg',
-    story: 'https://img.youtube.com/vi/KDCu5OTG0QE/maxresdefault.jpg',
-    uofpumpHero:
-      'https://cdn.shopify.com/s/files/1/0641/7445/7085/files/DSC03071.jpg?v=1755232744',
-    uofpumpAlt:
-      'https://cdn.shopify.com/s/files/1/0641/7445/7085/files/DSC03184_46448250-43c7-4979-96f9-1d01c3d4e123.jpg?v=1755232883',
+    hero: '/images/candidates/instagram-uofpump-07-labor-day.jpg',
+    story: '/images/candidates/instagram-story-08-faith-drop.jpg',
+    og: '/images/candidates/generated-og-background-alt-01.png',
+    uofpumpHero: '/images/candidates/uofpump-hero-01-trademark-gym.jpg',
+    uofpumpAlt: '/images/candidates/uofpump-product-02-trademark-tee.jpg',
   },
 };
 
@@ -102,33 +101,23 @@ export const storyBeats = [
   },
 ];
 
-export const proofPlaceholders = [
-  {
-    label: 'Client quote',
-    title: 'Approved testimonial needed',
-    text:
-      'Add a real quote once Jaihden confirms permission to publish. Do not invent results or names.',
-  },
-  {
-    label: 'Transformation',
-    title: 'Proof asset needed',
-    text:
-      'Reserve this space for approved before/after photos, progress screenshots, or a short result summary.',
-  },
-  {
-    label: 'Coaching outcome',
-    title: 'Client details needed',
-    text:
-      'Use first name, initials, or anonymous proof only after approval from the client and Jaihden.',
-  },
-];
+// Client-approved testimonials only. While this array is empty, the Proof
+// section and its "Proof" nav link do not render at all (see index.astro).
+// Never fabricate quotes, names, or results. To enable the section, add real
+// entries here and the nav link returns automatically.
+export const proof: {
+  quote: string;
+  name: string;
+  detail?: string;
+  image?: string;
+}[] = [];
 
 export const featuredContent = [
   {
     title: 'Beer Tastes Better With Abs',
     label: 'Story + coaching breakdown',
     href: site.social.storyVideo,
-    image: site.media.story,
+    image: '/images/candidates/instagram-video-03-ceo-frat-formal.jpg',
   },
   {
     title: 'Jaihden on Instagram',
