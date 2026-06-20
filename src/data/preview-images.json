@@ -8,7 +8,7 @@
         "default": "/images/candidates/instagram-uofpump-07-labor-day.jpg",
         "options": [
           {
-            "label": "Current: UofPump Labor Day",
+            "label": "Current: Pump University Labor Day",
             "value": "/images/candidates/instagram-uofpump-07-labor-day.jpg"
           },
           {
@@ -44,7 +44,7 @@
             "value": "/images/candidates/generated-wide-hero-alt-01.png"
           },
           {
-            "label": "UofPump Labor Day",
+            "label": "Pump University Labor Day",
             "value": "/images/candidates/instagram-uofpump-07-labor-day.jpg"
           }
         ]
@@ -80,11 +80,11 @@
     ]
   },
   {
-    "section": "UofPump",
+    "section": "Pump University",
     "slots": [
       {
-        "slot": "image.uofpumpHero",
-        "label": "UofPump section image",
+        "slot": "image.pumpUniversityHero",
+        "label": "Pump University section image",
         "default": "/images/candidates/uofpump-hero-01-trademark-gym.jpg",
         "options": [
           {
@@ -139,7 +139,7 @@
         "default": "/images/candidates/instagram-uofpump-07-labor-day.jpg",
         "options": [
           {
-            "label": "Current: UofPump Labor Day",
+            "label": "Current: Pump University Labor Day",
             "value": "/images/candidates/instagram-uofpump-07-labor-day.jpg"
           },
           {
@@ -157,7 +157,7 @@
         ]
       },
       {
-        "slot": "image.content.shop-uofpump",
+        "slot": "image.content.shop-pump-university",
         "label": "Shop content card",
         "default": "/images/candidates/uofpump-product-02-trademark-tee.jpg",
         "options": [

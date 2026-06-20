@@ -136,7 +136,7 @@ Possible future variables:
 ```txt
 PUBLIC_SITE_URL=https://jaihdentorres.com
 PUBLIC_INSTAGRAM_URL=https://www.instagram.com/jaihdentorres/
-PUBLIC_UOFPUMP_URL=https://uofpump.com/
+PUBLIC_PUMP_UNIVERSITY_URL=https://uofpump.com/
 FORMSPREE_ENDPOINT=...
 CALENDLY_URL=...
 ```
@@ -290,7 +290,7 @@ Recommended:
 - Enable **Cloudflare Web Analytics**.
 - Track CTA clicks separately if possible:
   - `Start Coaching`
-  - `Shop UofPump`
+  - `Shop Pump University`
   - `Instagram`
   - `YouTube`
   - `Book Call`
@@ -326,7 +326,7 @@ Before launch:
 - `www` redirects correctly.
 - Social preview image works.
 - Favicon works.
-- Instagram, UofPump, and YouTube links work.
+- Instagram, Pump University, and YouTube links work.
 - Contact form or booking flow works.
 - Mobile layout is tested.
 - Cloudflare Web Analytics is enabled.
@@ -344,7 +344,7 @@ Build command: npm run build
 Output directory: dist
 Production branch: main
 Forms: Formspree, Tally, or Calendly
-Shop: External link to UofPump
+Shop: External link to Pump University
 Analytics: Cloudflare Web Analytics
 ```
 

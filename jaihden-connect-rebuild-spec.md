@@ -90,7 +90,7 @@ Content:
 - Full-bleed background image of Jaihden Torres.
 - Eyebrow: `Fitness Coach · Content Creator · Athlete`
 - H1: `Helping Party Animals Stay in Shape`
-- Supporting copy: `CEO of @uofpump · 1:1 Coaching built for the college lifestyle. Build muscle, burn fat, and balance your benders.`
+- Supporting copy: `Pump University CEO · 1:1 Coaching built for the college lifestyle. Build muscle, burn fat, and balance your benders.`
 - CTA: `Book a Free Call`
 - Secondary CTA: `Follow Me`
 - Stats:
@@ -121,7 +121,7 @@ Content:
 
 - Eyebrow: `About Me`
 - H2: `From the Gym to the Screen`
-- Subheading: `Entrepreneur · @uofpump CEO`
+- Subheading: `Entrepreneur · Pump University CEO`
 - Body copy:
   - `Helping Party Animals stay in shape 🍾`
   - `Build Muscle | Burn Fat | Balance Benders 🍺`
@@ -131,7 +131,7 @@ Content:
   - `Fitness Coach` / `Transformation specialist`
   - `Content Creator` / `College lifestyle & fitness`
   - `Martial Artist` / `ESPN+ featured athlete`
-  - `Community Builder` / `CEO of @uofpump`
+  - `Community Builder` / `Pump University CEO`
 
 Interactions:
 
@@ -582,7 +582,7 @@ All visible page copy is captured in the section inventory above. Exact strings 
 - `JAIHDEN.`
 - `Fitness Coach · Content Creator · Athlete`
 - `Helping Party Animals Stay in Shape`
-- `CEO of @uofpump · 1:1 Coaching built for the college lifestyle. Build muscle, burn fat, and balance your benders.`
+- `Pump University CEO · 1:1 Coaching built for the college lifestyle. Build muscle, burn fat, and balance your benders.`
 - `Book a Free Call`
 - `Follow Me`
 - `About Me`

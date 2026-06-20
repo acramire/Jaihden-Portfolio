@@ -1,14 +1,14 @@
 export const site = {
   name: 'Jaihden Torres',
   shortName: 'JT',
-  title: 'Jaihden Torres | Fitness Coaching + UofPump',
+  title: 'Jaihden Torres | Fitness Coaching + Pump University',
   description:
-    'Balanced, lifestyle-aware fitness coaching for people who want real results without giving up their social life. Home of Jaihden Torres and UofPump.',
+    'Balanced, lifestyle-aware fitness coaching for people who want real results without giving up their social life. Home of Jaihden Torres and Pump University.',
   url: 'https://jaihdentorres.com',
   social: {
     instagram: 'https://www.instagram.com/jaihdentorres/',
     youtube: 'https://www.youtube.com/@jaihdentorres',
-    uofpump: 'https://uofpump.com/',
+    pumpUniversity: 'https://uofpump.com/',
     shop: 'https://uofpump.com/collections/trademark-tee',
     storyVideo: 'https://youtu.be/KDCu5OTG0QE',
   },
@@ -21,15 +21,15 @@ export const site = {
     hero: '/images/candidates/instagram-uofpump-07-labor-day.jpg',
     story: '/images/candidates/instagram-story-08-faith-drop.jpg',
     og: '/images/candidates/generated-og-background-alt-01.png',
-    uofpumpHero: '/images/candidates/uofpump-hero-01-trademark-gym.jpg',
-    uofpumpAlt: '/images/candidates/uofpump-product-02-trademark-tee.jpg',
+    pumpUniversityHero: '/images/candidates/uofpump-hero-01-trademark-gym.jpg',
+    pumpUniversityAlt: '/images/candidates/uofpump-product-02-trademark-tee.jpg',
   },
 };
 
 export const navItems = [
   { label: 'Coaching', href: '#method' },
   { label: 'Proof', href: '#proof' },
-  { label: 'UofPump', href: '#uofpump' },
+  { label: 'Pump University', href: '#pump-university' },
   { label: 'Content', href: '#content' },
   { label: 'Apply', href: '#apply' },
 ];
@@ -121,14 +121,14 @@ export const featuredContent = [
   },
   {
     title: 'Jaihden on Instagram',
-    label: 'Fitness, lifestyle, and UofPump updates',
+    label: 'Fitness, lifestyle, and Pump University updates',
     href: site.social.instagram,
     image: site.media.hero,
   },
   {
-    title: 'Shop UofPump',
+    title: 'Shop Pump University',
     label: 'Trademark Collection',
     href: site.social.shop,
-    image: site.media.uofpumpAlt,
+    image: site.media.pumpUniversityAlt,
   },
 ];

@@ -50,8 +50,8 @@ transitions/animations — part of the accessibility quality floor. ([`src/style
 - Functional check (via page JS): hamburger toggle flips `data-open`/`aria-expanded`
   correctly and closes on link/Escape; the ≤980px media-query rules are present in the
   CSSOM; the Proof nav link and Proof section are absent while `proof` is empty.
-- Visual check (desktop): nav reads "Coaching · UofPump · Content · Apply"; deliverables
-  and apply copy are customer-facing; Story flows directly into UofPump (no Proof gap).
+- Visual check (desktop): nav reads "Coaching · Pump University · Content · Apply"; deliverables
+  and apply copy are customer-facing; Story flows directly into Pump University (no Proof gap).
 
 ---
 
@@ -64,7 +64,7 @@ Inter (a generic default) was swapped for a deliberate pairing that tells the du
 story: a loud athletic display + a clean professional body.
 
 - **Display: Anton** — used for `h1`, `h2`, and the hero stat numbers; poster energy for
-  the UofPump/streetwear side. Set at weight 400 (Anton's natural weight) to avoid
+  the Pump University/streetwear side. Set at weight 400 (Anton's natural weight) to avoid
   faux-bold. ([`src/styles/global.css`](src/styles/global.css), `--display` token)
 - **Body/UI: Archivo** — everything else; a professional grotesque for the coaching side.
 - Fonts loaded via Google Fonts with `preconnect` + `display=swap`.

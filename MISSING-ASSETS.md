@@ -17,7 +17,7 @@ control, and performance.
 - **One YouTube thumbnail is used 4 times** (hero background, story image, and content
   cards 1 & 2). It also has the video's own title text ("ATHLETE / FITNESS" in green)
   baked into the photo.
-- The two **UofPump product photos** (Shopify) are fine and can stay.
+- The two **Pump University product photos** (Shopify) are fine and can stay.
 - The **favicon** is already a custom JT mark — keep it.
 - **Proof section** needs real testimonial content (text + photos), not images per se.
 
@@ -31,8 +31,8 @@ control, and performance.
 | 2 | Story image | "Coach fit" story section | Same YouTube thumb | ❌ Reused + baked-in text | Provide/Generate |
 | 3 | Content card 1 — "Beer Tastes Better With Abs" | Content grid | Same YouTube thumb | ❌ Reused | Provide/Generate |
 | 4 | Content card 2 — "Jaihden on Instagram" | Content grid | Same YouTube thumb (`media.hero`) | ❌ Duplicate of #1 | Provide/Generate |
-| 5 | Content card 3 — "Shop UofPump" | Content grid | Shopify `DSC03184…jpg` | ✅ OK | Keep (optional swap) |
-| 6 | UofPump section image | UofPump section | Shopify `DSC03071…jpg` | ✅ OK | Keep |
+| 5 | Content card 3 — "Shop Pump University" | Content grid | Shopify `DSC03184…jpg` | ✅ OK | Keep (optional swap) |
+| 6 | Pump University section image | Pump University section | Shopify `DSC03071…jpg` | ✅ OK | Keep |
 | 7 | Proof assets (×3) | Proof section | None (placeholder cards) | ❌ Missing content | Provide |
 | 8 | Open Graph / social share image | `<head>` og:image, twitter:image | Falls back to `media.hero` | ⚠️ Inherits hero problem | Provide/Generate |
 | 9 | Favicon | Browser tab | `public/favicon.svg` (JT mark) | ✅ OK | Keep |
@@ -49,7 +49,7 @@ control, and performance.
   **center/right** and the left third should be visually quieter.
 - **Spec:** landscape, **2400×1600 (3:2) or larger**, JPG or WebP, < ~500 KB ideal.
   High contrast, **no text baked into the image**, works when darkened.
-- **Content:** Jaihden — confident, lifestyle/gym, on-brand with Instagram + UofPump.
+- **Content:** Jaihden — confident, lifestyle/gym, on-brand with Instagram + Pump University.
 - **Provide or generate:** Best as a **real photo of Jaihden**. If generating a
   placeholder, avoid any embedded words/logos.
 
@@ -74,7 +74,7 @@ control, and performance.
   - Card 2: a lifestyle / Instagram-style shot of Jaihden.
 - **Provide or generate:** Provide real photos; both must differ from the hero and each other.
 
-### 5 & 6. UofPump images  → `media.uofpumpHero`, `media.uofpumpAlt`
+### 5 & 6. Pump University images  → `media.pumpUniversityHero`, `media.pumpUniversityAlt`
 - **Status:** ✅ Real Shopify product photography. Keep as-is. Optional: download locally
   so the site doesn't depend on Shopify's CDN staying stable.
 

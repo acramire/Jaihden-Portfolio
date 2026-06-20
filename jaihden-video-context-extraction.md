@@ -58,7 +58,7 @@ Secondary audience:
 
 - Women are mentioned as coaching clients.
 - Young professionals with desk jobs or blue-collar schedules.
-- Followers who found him through TikTok, Instagram, YouTube, or UofPump.
+- Followers who found him through TikTok, Instagram, YouTube, or Pump University.
 
 Open question:
 
@@ -70,7 +70,7 @@ Use these as story beats, not as a full biography:
 
 - He has been lifting since around age 15 and references seven years of experience.
 - He is a UC Irvine / Paul Merage business school graduate or near-graduate.
-- He owns Pump University / UofPump.
+- He owns Pump University.
 - He built the physique and lifestyle his audience wants.
 - He says he went through the same cycle of being locked in during the week and losing progress on weekends.
 - He frames his content as a funnel: viral reels get attention, then the long-form video gives actual value.
@@ -205,7 +205,7 @@ The new site should follow this structure:
 4. Proof: testimonials, quotes, transformations, screenshots with permission.
 5. What You Get: concrete coaching deliverables.
 6. Story: selected Jaihden story beats showing relatability and credibility.
-7. UofPump: co-equal brand pillar.
+7. Pump University: co-equal brand pillar.
 8. Apply: questionnaire first.
 9. Optional call: Calendly after qualification or as a paid strategy call.
 
@@ -259,11 +259,11 @@ Ask for:
 - Approved client transformation images.
 - Approved bio optimization wording.
 - Whether coaching is for men only, men and women, or everyone in the college-lifestyle niche.
-- Whether UofPump should appear in top nav as equal to coaching.
+- Whether Pump University should appear in top nav as equal to coaching.
 
 ## Plan Changes Recommended
 
-- Update UofPump from "strong secondary section" to **co-equal brand pillar**.
+- Update Pump University from "strong secondary section" to **co-equal brand pillar**.
 - Add the full coaching method as a core homepage section.
 - Add a problem section around the "weekend restart cycle."
 - Add questionnaire-first conversion flow.

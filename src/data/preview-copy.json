@@ -5,11 +5,11 @@
       {
         "slot": "copy.hero.eyebrow",
         "label": "Hero eyebrow",
-        "default": "Fitness coaching + UofPump",
+        "default": "Fitness coaching + Pump University",
         "options": [
           {
             "label": "Current",
-            "value": "Fitness coaching + UofPump"
+            "value": "Fitness coaching + Pump University"
           },
           {
             "label": "College lifestyle",
@@ -17,7 +17,7 @@
           },
           {
             "label": "Coaching ecosystem",
-            "value": "Coaching, content, and UofPump"
+            "value": "Coaching, content, and Pump University"
           }
         ]
       },
@@ -113,19 +113,19 @@
       {
         "slot": "copy.cta.shop",
         "label": "Hero shop CTA",
-        "default": "Shop UofPump",
+        "default": "Shop Pump University",
         "options": [
           {
             "label": "Current",
-            "value": "Shop UofPump"
+            "value": "Shop Pump University"
           },
           {
             "label": "Shop the Drop",
             "value": "Shop the Drop"
           },
           {
-            "label": "Explore UofPump",
-            "value": "Explore UofPump"
+            "label": "Explore Pump University",
+            "value": "Explore Pump University"
           }
         ]
       }
@@ -261,30 +261,30 @@
     ]
   },
   {
-    "section": "UofPump",
+    "section": "Pump University",
     "slots": [
       {
-        "slot": "copy.uofpump.heading",
-        "label": "UofPump heading",
-        "default": "UofPump: Look Great. Feel Better.",
+        "slot": "copy.pumpUniversity.heading",
+        "label": "Pump University heading",
+        "default": "Pump University: Look Great. Feel Better.",
         "options": [
           {
             "label": "Current",
-            "value": "UofPump: Look Great. Feel Better."
+            "value": "Pump University: Look Great. Feel Better."
           },
           {
             "label": "Brand-first",
-            "value": "UofPump is the brand side of the same standard."
+            "value": "Pump University is the brand side of the same standard."
           },
           {
             "label": "Collection-first",
-            "value": "Trademark Collection by UofPump."
+            "value": "Trademark Collection by Pump University."
           }
         ]
       },
       {
-        "slot": "copy.uofpump.body",
-        "label": "UofPump body",
+        "slot": "copy.pumpUniversity.body",
+        "label": "Pump University body",
         "default": "Pump University is the brand side of Jaihden's ecosystem: apparel, culture, and the same standard-driven lifestyle behind the coaching.",
         "options": [
           {
@@ -297,7 +297,7 @@
           },
           {
             "label": "More premium",
-            "value": "UofPump turns the training standard into apparel, culture, and a visual identity people can wear outside the gym."
+            "value": "Pump University turns the training standard into apparel, culture, and a visual identity people can wear outside the gym."
           }
         ]
       }

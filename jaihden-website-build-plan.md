@@ -12,7 +12,7 @@ Key decisions from the thread:
 - The site should take inspiration from online coaching funnels, specifically the flow, questionnaire, optional call, what-you-get section, pictures, and testimonials.
 - Public copy should say **bio optimization**, not peptides.
 - Do not mention peptides directly in public-facing website copy.
-- UofPump should be treated as a **co-equal brand**, not only a light mention.
+- Pump University should be treated as a **co-equal brand**, not only a light mention.
 - Testimonials should be included as quote-style proof.
 - The YouTube video **Beer Tastes Better With Abs** should be used as source material for selective conversion copy because Jaihden said it explains his story and what clients get from coaching.
 - The website should use pieces of his story to help conversions and show what he is like as a coach, but it should not become a full autobiography.
@@ -29,7 +29,7 @@ Primary goal:
 Secondary goals:
 
 - Establish trust in Jaihden as a coach and personality.
-- Present UofPump as a co-equal part of Jaihden's ecosystem.
+- Present Pump University as a co-equal part of Jaihden's ecosystem.
 - Send visitors to relevant social/content channels.
 - Support brand/collaboration inquiries without distracting from coaching.
 
@@ -76,7 +76,7 @@ Content:
 - Jaihden's name
 - Short positioning line
 - Primary CTA: `Apply for Coaching`
-- Secondary CTA: `Watch The Story` or `Shop UofPump`
+- Secondary CTA: `Watch The Story` or `Shop Pump University`
 - Visual: strong Jaihden photo or reel still
 
 Recommended hero copy direction:
@@ -190,25 +190,25 @@ Recommended placement:
 - Mention as an optional coaching layer or partner/resource link.
 - Keep it secondary to training, nutrition, and lifestyle coaching.
 
-### 4.7 UofPump / Pump University
+### 4.7 Pump University
 
 Purpose:
 
-- Present UofPump as the co-equal brand side of Jaihden's ecosystem and drive shop traffic.
+- Present Pump University as the co-equal brand side of Jaihden's ecosystem and drive shop traffic.
 
 Placement:
 
 - Strong dedicated section and persistent navigation presence.
-- UofPump should appear as one of the two major pillars: coaching and brand.
+- Pump University should appear as one of the two major pillars: coaching and brand.
 
 Content:
 
-- Pump University / UofPump brand intro
+- Pump University brand intro
 - Trademark Collection
 - `Look Great. Feel Better.`
 - `Commit Now`
 - Product imagery
-- CTA to shop UofPump
+- CTA to shop Pump University
 
 ### 4.8 Content Hub
 
@@ -220,7 +220,7 @@ Content:
 
 - Featured YouTube video: **Beer Tastes Better With Abs**
 - Selected reels/posts
-- UofPump launch/content clips
+- Pump University launch/content clips
 - Optional embedded YouTube content
 
 Implementation note:
@@ -237,7 +237,7 @@ Paths:
 
 - Coaching: application/questionnaire
 - Brand/collab: contact form
-- Shopping: UofPump link
+- Shopping: Pump University link
 - Social: Instagram/YouTube links
 
 ## 5. Functional Requirements
@@ -248,8 +248,8 @@ Paths:
 - The site shall include a `What You Get` section for coaching deliverables.
 - The site shall include a quote-style testimonials section.
 - The site shall include a story-based coaching section derived from the transcribed YouTube video.
-- The site shall include UofPump as a co-equal brand section.
-- The site shall link externally to UofPump rather than rebuilding ecommerce.
+- The site shall include Pump University as a co-equal brand section.
+- The site shall link externally to Pump University rather than rebuilding ecommerce.
 - The site shall use `bio optimization` language and avoid public `peptides` language.
 - The site shall include social links to Instagram and YouTube.
 - The site shall work cleanly on mobile first.
@@ -261,7 +261,7 @@ Paths:
 
 - Preferred coaching application questions
 - Calendly URL
-- Exact UofPump shop URL to promote
+- Exact Pump University shop URL to promote
 - Final social links
 - Testimonial quotes
 - Client proof images, if approved
@@ -281,7 +281,7 @@ Recommended v1 stack:
 - Cloudflare Pages
 - Formspree, Tally, or similar for the questionnaire if no custom backend is needed
 - Calendly for booking
-- External UofPump shop link
+- External Pump University shop link
 - Cloudflare Web Analytics
 
 Recommended v1 scope:
@@ -289,7 +289,7 @@ Recommended v1 scope:
 - Landing page
 - Coaching application/questionnaire
 - Calendly handoff
-- UofPump section
+- Pump University section
 - Testimonials section
 - Featured content section
 - Contact/collab form
@@ -300,8 +300,8 @@ Recommended v1 scope:
 - Should Calendly be shown immediately, or only after completing the questionnaire?
 - What is the final Calendly URL?
 - What exact testimonials can be published?
-- What photos can be used for hero, proof, and UofPump sections?
+- What photos can be used for hero, proof, and Pump University sections?
 - What specific bio optimization language is approved?
 - Should pricing be shown publicly or only after applying?
-- Is UofPump truly co-equal in the top-level site positioning, or should coaching still lead the first screen?
+- Is Pump University truly co-equal in the top-level site positioning, or should coaching still lead the first screen?
 - Are the video's direct-access, refund, pricing, and bio optimization claims approved for public copy?

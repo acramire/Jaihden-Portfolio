@@ -442,7 +442,7 @@ h3 {
 }
 
 .story,
-.uofpump {
+.pump-university {
   display: grid;
   grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
   gap: clamp(28px, 6vw, 80px);
@@ -629,7 +629,7 @@ footer {
   .contact-grid,
   .split,
   .story,
-  .uofpump {
+  .pump-university {
     grid-template-columns: 1fr;
   }
 
