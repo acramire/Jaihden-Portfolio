@@ -1,0 +1,11 @@
+{
+  "ok": true,
+  "run_dir": "/Users/alejandroramirez/Desktop/projects/JAI portfolio website/hatch-pet-runs/luna-chihuahua-surfing-clean",
+  "spritesheet": "/Users/alejandroramirez/Desktop/projects/JAI portfolio website/hatch-pet-runs/luna-chihuahua-surfing-clean/final/spritesheet.webp",
+  "validation": "/Users/alejandroramirez/Desktop/projects/JAI portfolio website/hatch-pet-runs/luna-chihuahua-surfing-clean/final/validation.json",
+  "contact_sheet": "/Users/alejandroramirez/Desktop/projects/JAI portfolio website/hatch-pet-runs/luna-chihuahua-surfing-clean/qa/contact-sheet.png",
+  "motion_sheet": "/Users/alejandroramirez/Desktop/projects/JAI portfolio website/hatch-pet-runs/luna-chihuahua-surfing-clean/qa/png-frame-motion-sheet.png",
+  "review": "/Users/alejandroramirez/Desktop/projects/JAI portfolio website/hatch-pet-runs/luna-chihuahua-surfing-clean/qa/review.json",
+  "package": "/Users/alejandroramirez/.codex/pets/luna-chihuahua-surfing",
+  "notes": "Cleaned semi-transparent magenta edge halo and removed a tiny detached left-edge artifact from running-left frame 00."
+}

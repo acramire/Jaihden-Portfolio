@@ -28,31 +28,35 @@
       {
         "slot": "style.heroTreatment",
         "label": "Hero image treatment",
-        "default": "spotlight",
+        "default": "rule",
         "options": [
           {
-            "label": "Current: spotlight card",
+            "label": "Recommended: red brand seam (no gradient)",
+            "value": "rule"
+          },
+          {
+            "label": "No gradient: red ember glow",
+            "value": "ember"
+          },
+          {
+            "label": "No gradient: editorial panel",
+            "value": "panel"
+          },
+          {
+            "label": "No gradient: gallery frame",
+            "value": "frame"
+          },
+          {
+            "label": "Gradient: spotlight card",
             "value": "spotlight"
           },
           {
-            "label": "Blended transformation",
+            "label": "Gradient: blended transformation",
             "value": "blend"
           },
           {
-            "label": "Editorial poster",
+            "label": "Gradient: editorial poster",
             "value": "poster"
-          },
-          {
-            "label": "No gradient: neon split",
-            "value": "neon-split"
-          },
-          {
-            "label": "No gradient: bracket frame",
-            "value": "neon-bracket"
-          },
-          {
-            "label": "No gradient: glass edge",
-            "value": "neon-glass"
           }
         ]
       },

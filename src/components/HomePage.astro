@@ -1,5 +1,6 @@
 ---
 import {
+  cycleSteps,
   deliverables,
   featuredContent,
   methodPillars,
@@ -11,6 +12,28 @@ import {
 
 const applyHref = site.integrations.tallyUrl || '#apply';
 const bookHref = site.integrations.calendlyUrl || '#apply';
+
+// Inline line-icons (stroke = currentColor) for the expandable cards.
+const icons: Record<string, string> = {
+  apple:
+    '<path d="M12 20.94c1.5 0 2.75 1.06 4 1.06 3 0 6-8 6-12.22A4.91 4.91 0 0 0 17 5c-2.22 0-4 1.44-5 2-1-.56-2.78-2-5-2a4.9 4.9 0 0 0-5 4.78C2 14 5 22 8 22c1.25 0 2.5-1.06 4-1.06Z"/><path d="M10 2c1 .5 2 2 2 5"/>',
+  dumbbell:
+    '<path d="M6 7v10"/><path d="M9 5v14"/><path d="M15 5v14"/><path d="M18 7v10"/><path d="M9 12h6"/>',
+  glass: '<path d="M4 4h16l-8 9z"/><path d="M12 13v7"/><path d="M8 21h8"/>',
+  target:
+    '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>',
+  moon: '<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>',
+  lock:
+    '<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',
+  bolt: '<path d="M13 2 4 14h7l-1 8 9-12h-7z"/>',
+  loop:
+    '<path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/><path d="M3 21v-5h5"/>',
+};
+
+const svg = (name: string) =>
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icons[name] ?? ''}</svg>`;
+const chevron =
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>';
 
 // "Apply" is shown as the CTA button, not as a text link.
 // "Proof" stays hidden until there is at least one approved testimonial.
@@ -56,7 +79,7 @@ const visibleNav = navItems.filter((item) => {
 >
   <section
     class="hero section-dark"
-    data-hero-treatment="spotlight"
+    data-hero-treatment="rule"
     data-preview-slot="style.heroTreatment"
     data-preview-attribute="data-hero-treatment"
   >
@@ -109,36 +132,57 @@ const visibleNav = navItems.filter((item) => {
     </a>
   </section>
 
+  <section class="testimonials section-light" id="proof">
+    <div class="section-heading">
+      <p class="eyebrow">Proof</p>
+      <h2>{proof.length > 0 ? 'Real results from real clients.' : 'Real results, added as they happen.'}</h2>
+    </div>
+    {proof.length > 0 ? (
+      <div class="proof-grid">
+        {proof.map((item) => (
+          <article class="proof-card">
+            {item.image && <img src={item.image} alt={`Result from ${item.name}`} />}
+            <p class="proof-quote">“{item.quote}”</p>
+            <span>{item.detail ? `${item.name} · ${item.detail}` : item.name}</span>
+          </article>
+        ))}
+      </div>
+    ) : (
+      <div class="testimonials-empty">
+        <p>
+          Client transformations are featured here as they're approved — no stock
+          photos, no invented quotes. Want yours on this wall? Apply and be one of
+          the first.
+        </p>
+        <a class="button button-primary" href={applyHref} data-cta="proof-apply">
+          Apply to get featured
+        </a>
+      </div>
+    )}
+  </section>
+
   <section class="problem section-light" id="problem">
     <div class="section-heading">
       <p class="eyebrow" data-preview-slot="copy.problem.eyebrow">The cycle</p>
       <h2 data-preview-slot="copy.problem.heading">Most plans fall apart the second real life starts.</h2>
     </div>
     <div class="problem-grid">
-      <article>
-        <span>01</span>
-        <h3>Locked in all week</h3>
-        <p>
-          Training, eating clean, and trying to force progress with no plan
-          for the weekend.
-        </p>
-      </article>
-      <article>
-        <span>02</span>
-        <h3>The weekend hits</h3>
-        <p>
-          Drinks, travel, parties, dinners, and late nights turn into a full
-          reset.
-        </p>
-      </article>
-      <article>
-        <span>03</span>
-        <h3>Monday starts over</h3>
-        <p>
-          The goal is not to remove your social life. The goal is to build a
-          system that survives it.
-        </p>
-      </article>
+      {cycleSteps.map((step) => (
+        <details class="xcard">
+          <summary class="xcard__summary">
+            <span class="xcard__icon" set:html={svg(step.icon)} />
+            <span class="xcard__head">
+              <span class="xcard__num">{step.number}</span>
+              <h3 class="xcard__title">{step.title}</h3>
+              <p class="xcard__teaser">{step.teaser}</p>
+            </span>
+            <span class="xcard__chevron" set:html={chevron} />
+          </summary>
+          <div class="xcard__body">
+            <p>{step.text}</p>
+          </div>
+        </details>
+      ))}
     </div>
   </section>
 
@@ -149,10 +193,20 @@ const visibleNav = navItems.filter((item) => {
     </div>
     <div class="pillar-grid">
       {methodPillars.map((pillar) => (
-        <article class="pillar-card">
-          <h3>{pillar.title}</h3>
-          <p>{pillar.text}</p>
-        </article>
+        <details class="xcard xcard--dark">
+          <summary class="xcard__summary">
+            <span class="xcard__icon" set:html={svg(pillar.icon)} />
+            <span class="xcard__head">
+              <span class="xcard__num">{pillar.number}</span>
+              <h3 class="xcard__title">{pillar.title}</h3>
+              <p class="xcard__teaser">{pillar.teaser}</p>
+            </span>
+            <span class="xcard__chevron" set:html={chevron} />
+          </summary>
+          <div class="xcard__body">
+            <p>{pillar.text}</p>
+          </div>
+        </details>
       ))}
     </div>
   </section>
@@ -199,24 +253,6 @@ const visibleNav = navItems.filter((item) => {
       </div>
     </div>
   </section>
-
-  {proof.length > 0 && (
-    <section class="proof section-light" id="proof">
-      <div class="section-heading">
-        <p class="eyebrow">Proof</p>
-        <h2>Real results from real clients.</h2>
-      </div>
-      <div class="proof-grid">
-        {proof.map((item) => (
-          <article class="proof-card">
-            {item.image && <img src={item.image} alt={`Result from ${item.name}`} />}
-            <p class="proof-quote">“{item.quote}”</p>
-            <span>{item.detail ? `${item.name} · ${item.detail}` : item.name}</span>
-          </article>
-        ))}
-      </div>
-    </section>
-  )}
 
   <section class="pump-university section-dark" id="pump-university">
     <div class="brand-image">

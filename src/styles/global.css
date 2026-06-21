@@ -1,5 +1,6 @@
 :root {
   color-scheme: light;
+  interpolate-size: allow-keywords;
   --ink: #0b0c0e;
   --ink-soft: #24272d;
   --paper: #f7f4ed;
@@ -81,8 +82,66 @@ button:focus-visible {
   padding: 16px clamp(18px, 4vw, 56px);
   color: #fff;
   background: rgba(11, 12, 14, 0.76);
-  border-bottom: 1px solid var(--line-dark);
+  border-bottom: 0;
   backdrop-filter: blur(18px);
+}
+
+/* Nav bottom edge as a soft white neon line... */
+.site-header::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4) 5%,
+    rgba(255, 255, 255, 0.65) 50%,
+    rgba(255, 255, 255, 0.4) 95%,
+    transparent
+  );
+  box-shadow:
+    0 0 10px rgba(255, 255, 255, 0.42),
+    0 1px 20px rgba(170, 205, 255, 0.3);
+}
+
+/* ...with a bright dash of light that zips across it on a loop. */
+.site-header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2) 34%,
+    rgba(255, 255, 255, 0.98) 50%,
+    rgba(202, 228, 255, 0.85) 60%,
+    transparent 76%
+  ) no-repeat;
+  background-size: 190px 100%;
+  background-position: -240px 0;
+  filter:
+    drop-shadow(0 0 6px rgba(255, 255, 255, 0.8))
+    drop-shadow(0 0 16px rgba(150, 200, 255, 0.5));
+  animation: navLightZip 16s ease-in-out infinite;
+  will-change: background-position;
+}
+
+@keyframes navLightZip {
+  0% {
+    background-position: -240px 0;
+  }
+  55%,
+  100% {
+    background-position: calc(100% + 240px) 0;
+  }
 }
 
 .brand-mark {
@@ -382,101 +441,168 @@ button:focus-visible {
   object-position: 42% 18%;
 }
 
-.hero[data-hero-treatment='neon-split']::before,
-.hero[data-hero-treatment='neon-split']::after,
-.hero[data-hero-treatment='neon-bracket']::before,
-.hero[data-hero-treatment='neon-bracket']::after,
-.hero[data-hero-treatment='neon-glass']::before,
-.hero[data-hero-treatment='neon-glass']::after {
+/* --- No-gradient editorial treatments: panel / rule / frame ------------------
+   Shared base: a clean square-ish media panel anchored to the right viewport
+   edge (no floating box, no gradient wash on the image, no drop shadow). The
+   right side bleeds off-screen so the panel reads as an intentional magazine
+   bleed rather than a pasted rectangle. Variants differ only in the seam. */
+.hero[data-hero-treatment='panel']::before,
+.hero[data-hero-treatment='panel']::after,
+.hero[data-hero-treatment='rule']::before,
+.hero[data-hero-treatment='rule']::after,
+.hero[data-hero-treatment='frame']::before,
+.hero[data-hero-treatment='frame']::after,
+.hero[data-hero-treatment='ember']::before,
+.hero[data-hero-treatment='ember']::after {
   background: none;
   opacity: 0;
 }
 
-.hero[data-hero-treatment='neon-split'] .hero-media,
-.hero[data-hero-treatment='neon-bracket'] .hero-media,
-.hero[data-hero-treatment='neon-glass'] .hero-media {
-  top: clamp(106px, 13vh, 146px);
-  right: clamp(22px, 4vw, 74px);
+.hero[data-hero-treatment='panel'] .hero-media,
+.hero[data-hero-treatment='rule'] .hero-media,
+.hero[data-hero-treatment='frame'] .hero-media,
+.hero[data-hero-treatment='ember'] .hero-media {
+  top: 50%;
+  right: calc(clamp(18px, 5vw, 72px) * -1);
   bottom: auto;
-  width: min(43vw, 650px);
+  width: min(48vw, 720px);
   height: auto;
   aspect-ratio: 1200 / 1132;
-  overflow: visible;
+  overflow: hidden;
   background: #111318;
   border: 0;
   box-shadow: none;
-  transform: none;
+  transform: translateY(-50%);
   -webkit-mask-image: none;
   mask-image: none;
 }
 
-.hero[data-hero-treatment='neon-split'] .hero-media img,
-.hero[data-hero-treatment='neon-bracket'] .hero-media img,
-.hero[data-hero-treatment='neon-glass'] .hero-media img {
-  overflow: hidden;
-  object-position: 48% 18%;
+.hero[data-hero-treatment='panel'] .hero-media img,
+.hero[data-hero-treatment='rule'] .hero-media img,
+.hero[data-hero-treatment='frame'] .hero-media img,
+.hero[data-hero-treatment='ember'] .hero-media img {
+  object-position: center center;
 }
 
-.hero[data-hero-treatment='neon-split'] .hero-media::before,
-.hero[data-hero-treatment='neon-bracket'] .hero-media::before,
-.hero[data-hero-treatment='neon-glass'] .hero-media::before {
-  inset: 0 auto 0 -1px;
+/* Kill the inherited gradient/highlight pseudo-layers so the image stays clean. */
+.hero[data-hero-treatment='panel'] .hero-media::before,
+.hero[data-hero-treatment='panel'] .hero-media::after,
+.hero[data-hero-treatment='rule'] .hero-media::before,
+.hero[data-hero-treatment='rule'] .hero-media::after,
+.hero[data-hero-treatment='frame'] .hero-media::before,
+.hero[data-hero-treatment='frame'] .hero-media::after,
+.hero[data-hero-treatment='ember'] .hero-media::before,
+.hero[data-hero-treatment='ember'] .hero-media::after {
+  background: none;
+  box-shadow: none;
+  opacity: 1;
+  mix-blend-mode: normal;
+}
+
+/* panel — single crisp hairline seam at the content/image boundary. */
+.hero[data-hero-treatment='panel'] .hero-media::before {
+  inset: 0 auto 0 0;
+  z-index: 2;
   width: 1px;
-  background: rgba(245, 249, 255, 0.92);
-  box-shadow:
-    0 0 14px rgba(255, 255, 255, 0.42),
-    0 0 34px rgba(175, 210, 255, 0.24);
+  background: rgba(255, 255, 255, 0.2);
 }
 
-.hero[data-hero-treatment='neon-split'] .hero-media::after {
-  inset: -18px auto -18px -18px;
-  width: 72px;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.12), transparent 76%);
-  opacity: 0.8;
+.hero[data-hero-treatment='panel'] .hero-media::after {
+  display: none;
 }
 
-.hero[data-hero-treatment='neon-bracket'] .hero-media {
-  padding: 14px 0 14px 18px;
-}
-
-.hero[data-hero-treatment='neon-bracket'] .hero-media::before {
+/* rule — confident red brand seam (Pump University accent). */
+.hero[data-hero-treatment='rule'] .hero-media::before {
   inset: 0 auto 0 0;
+  z-index: 2;
+  width: 3px;
+  background: var(--red);
 }
 
-.hero[data-hero-treatment='neon-bracket'] .hero-media::after {
+.hero[data-hero-treatment='rule'] .hero-media::after {
+  display: none;
+}
+
+/* frame — contained gallery matte with red registration corners. */
+.hero[data-hero-treatment='frame'] .hero-media {
+  right: clamp(28px, 5vw, 86px);
+  width: min(44vw, 660px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.hero[data-hero-treatment='frame'] .hero-media::before {
   inset: 0 auto auto 0;
-  width: min(140px, 30%);
-  height: 100%;
-  background:
-    linear-gradient(90deg, rgba(245, 249, 255, 0.86), rgba(245, 249, 255, 0.18) 34%, transparent 34%) 0 0 / 100% 1px no-repeat,
-    linear-gradient(90deg, rgba(245, 249, 255, 0.86), rgba(245, 249, 255, 0.18) 34%, transparent 34%) 0 100% / 100% 1px no-repeat;
-  box-shadow:
-    -8px 0 28px rgba(255, 255, 255, 0.14),
-    0 0 34px rgba(175, 210, 255, 0.16);
-  opacity: 0.9;
-}
-
-.hero[data-hero-treatment='neon-glass'] .hero-media {
-  padding-left: 22px;
-}
-
-.hero[data-hero-treatment='neon-glass'] .hero-media::before {
-  inset: 8% auto 8% 0;
-  width: 2px;
-  background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.9) 18%, rgba(205, 226, 255, 0.72) 52%, rgba(255, 255, 255, 0.74) 84%, transparent);
-  box-shadow:
-    0 0 18px rgba(255, 255, 255, 0.42),
-    0 0 42px rgba(137, 192, 255, 0.24);
-}
-
-.hero[data-hero-treatment='neon-glass'] .hero-media::after {
-  inset: 0 auto 0 0;
+  z-index: 2;
   width: 22px;
-  border-left: 1px solid rgba(255, 255, 255, 0.24);
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.08), transparent);
-  opacity: 0.92;
+  height: 22px;
+  border-top: 2px solid var(--red);
+  border-left: 2px solid var(--red);
+}
+
+.hero[data-hero-treatment='frame'] .hero-media::after {
+  inset: auto 0 0 auto;
+  z-index: 2;
+  width: 22px;
+  height: 22px;
+  border-right: 2px solid var(--red);
+  border-bottom: 2px solid var(--red);
+}
+
+/* ember — the image sits ~20px off the right edge, wrapped in a soft red bloom,
+   with a slow red dash of light tracing its frame (no static border). */
+.hero[data-hero-treatment='ember'] .hero-media {
+  right: 20px;
+  width: min(46vw, 680px);
+  box-shadow:
+    0 0 100px -18px rgba(228, 61, 48, 0.42),
+    0 28px 90px -40px rgba(228, 61, 48, 0.3);
+}
+
+@property --ember-trace {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+/* A single red dash that orbits the image edge like a pulse running a circuit. */
+.hero[data-hero-treatment='ember'] .hero-media::before {
+  inset: 0;
+  z-index: 2;
+  padding: 3px;
+  background: conic-gradient(
+    from var(--ember-trace),
+    transparent 0 70%,
+    rgba(228, 61, 48, 0.35) 74%,
+    rgba(255, 92, 74, 0.95) 79%,
+    #ffd9d0 83%,
+    rgba(255, 92, 74, 0.95) 87%,
+    rgba(228, 61, 48, 0.35) 92%,
+    transparent 96% 100%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  filter:
+    drop-shadow(0 0 5px rgba(255, 80, 60, 0.9))
+    drop-shadow(0 0 12px rgba(228, 61, 48, 0.5));
+  animation: emberTrace 24s linear infinite;
+}
+
+@keyframes emberTrace {
+  to {
+    --ember-trace: 360deg;
+  }
+}
+
+.hero[data-hero-treatment='ember'] .hero-media::after {
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(0deg, rgba(228, 61, 48, 0.2), transparent 28%),
+    linear-gradient(180deg, rgba(228, 61, 48, 0.12), transparent 24%);
+  mix-blend-mode: screen;
 }
 
 .hero-content {
@@ -853,8 +979,6 @@ h3 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-.problem-grid article,
-.pillar-card,
 .proof-card,
 .contact-grid a {
   border: 1px solid var(--line);
@@ -866,7 +990,6 @@ h3 {
     transform 0.18s ease;
 }
 
-.problem-grid article:hover,
 .proof-card:hover,
 .contact-grid a:hover {
   border-color: rgba(11, 12, 14, 0.24);
@@ -874,8 +997,6 @@ h3 {
   transform: translateY(-2px);
 }
 
-.problem-grid span,
-.pillar-card span,
 .proof-card span,
 .contact-grid span,
 .content-card span {
@@ -887,8 +1008,6 @@ h3 {
   text-transform: uppercase;
 }
 
-.problem-grid p,
-.pillar-card p,
 .proof-card p {
   color: var(--muted);
 }
@@ -897,20 +1016,154 @@ h3 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-.pillar-card {
-  min-height: 240px;
+/* Expandable cards — shared by the cycle and method sections. ---------------- */
+.xcard {
+  align-self: start;
+  border: 1px solid var(--line);
+  background: var(--paper-strong);
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.xcard:hover {
+  border-color: rgba(11, 12, 14, 0.24);
+  box-shadow: 0 18px 44px rgba(11, 12, 14, 0.08);
+}
+
+.xcard__summary {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 16px;
+  padding: clamp(18px, 2.4vw, 24px);
+  cursor: pointer;
+  list-style: none;
+}
+
+.xcard__summary::-webkit-details-marker {
+  display: none;
+}
+
+.xcard__summary:focus-visible {
+  outline: 3px solid var(--red);
+  outline-offset: -3px;
+}
+
+.xcard__icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  color: var(--red);
+}
+
+.xcard__icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.xcard__head {
+  min-width: 0;
+}
+
+.xcard__num {
+  display: block;
+  color: var(--red);
+  font-size: 0.72rem;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+}
+
+.xcard__title {
+  margin: 2px 0 0;
+  font-size: 1.1rem;
+  line-height: 1.15;
+}
+
+.xcard__teaser {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 0.86rem;
+  line-height: 1.3;
+}
+
+.xcard__chevron {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  color: var(--muted);
+  transition:
+    transform 0.25s ease,
+    color 0.18s ease;
+}
+
+.xcard__chevron svg {
+  width: 18px;
+  height: 18px;
+}
+
+.xcard[open] .xcard__chevron {
+  color: var(--red);
+  transform: rotate(180deg);
+}
+
+.xcard__body p {
+  margin: 0;
+  padding: 0 clamp(18px, 2.4vw, 24px) clamp(18px, 2.4vw, 24px) 76px;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* Height + fade animation where supported; degrades to instant elsewhere. */
+.xcard::details-content {
+  overflow: clip;
+  block-size: 0;
+  opacity: 0;
+  transition:
+    block-size 0.32s ease,
+    opacity 0.32s ease,
+    content-visibility 0.32s allow-discrete;
+}
+
+.xcard[open]::details-content {
+  block-size: auto;
+  opacity: 1;
+}
+
+/* Dark variant for the Method section. */
+.xcard--dark {
   border-color: var(--line-dark);
   border-top: 3px solid var(--red);
   background: #111318;
 }
 
-.pillar-card:hover {
+.xcard--dark:hover {
   border-color: rgba(255, 255, 255, 0.26);
   box-shadow: 0 18px 52px rgba(0, 0, 0, 0.24);
-  transform: translateY(-2px);
 }
 
-.pillar-card p {
+.xcard--dark .xcard__icon {
+  border-color: var(--line-dark);
+}
+
+.xcard--dark .xcard__title {
+  color: #fff;
+}
+
+.xcard--dark .xcard__teaser {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.xcard--dark .xcard__chevron {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.xcard--dark .xcard__body p {
   color: rgba(255, 255, 255, 0.72);
 }
 
@@ -1180,12 +1433,16 @@ footer {
     width: 52vw;
   }
 
-  .hero[data-hero-treatment='neon-split'] .hero-media,
-  .hero[data-hero-treatment='neon-bracket'] .hero-media,
-  .hero[data-hero-treatment='neon-glass'] .hero-media {
-    top: 96px;
-    right: clamp(16px, 3vw, 32px);
-    width: 44vw;
+  .hero[data-hero-treatment='panel'] .hero-media,
+  .hero[data-hero-treatment='rule'] .hero-media {
+    right: calc(clamp(16px, 4vw, 42px) * -1);
+    width: 50vw;
+  }
+
+  .hero[data-hero-treatment='frame'] .hero-media,
+  .hero[data-hero-treatment='ember'] .hero-media {
+    right: clamp(20px, 4vw, 48px);
+    width: 46vw;
   }
 
   .hero-content {
@@ -1204,10 +1461,6 @@ footer {
 
   .pillar-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .pillar-card {
-    min-height: auto;
   }
 }
 
@@ -1294,14 +1547,33 @@ footer {
     object-position: center 24%;
   }
 
-  .hero[data-hero-treatment='neon-split'] .hero-media,
-  .hero[data-hero-treatment='neon-bracket'] .hero-media,
-  .hero[data-hero-treatment='neon-glass'] .hero-media {
-    width: calc(100% - 16px);
+  .hero[data-hero-treatment='panel'] .hero-media,
+  .hero[data-hero-treatment='rule'] .hero-media,
+  .hero[data-hero-treatment='ember'] .hero-media {
+    top: auto;
+    right: auto;
+    bottom: auto;
+    width: calc(100% + 32px);
+    height: auto;
+    aspect-ratio: 1200 / 1132;
+    margin: 0 -16px;
+    transform: none;
+  }
+
+  .hero[data-hero-treatment='ember'] .hero-media {
+    box-shadow: 0 0 70px -26px rgba(228, 61, 48, 0.42);
+  }
+
+  .hero[data-hero-treatment='frame'] .hero-media {
+    top: auto;
+    right: auto;
+    bottom: auto;
+    width: 100%;
     height: auto;
     aspect-ratio: 1200 / 1132;
     margin: 0 auto;
-    padding-left: 18px;
+    transform: none;
+    border: 1px solid rgba(255, 255, 255, 0.14);
   }
 
   .hero-media::before {
@@ -1328,18 +1600,16 @@ footer {
     object-position: center 32%;
   }
 
-  .hero[data-hero-treatment='neon-split'] .hero-media::before,
-  .hero[data-hero-treatment='neon-bracket'] .hero-media::before,
-  .hero[data-hero-treatment='neon-glass'] .hero-media::before {
-    inset: 0 auto 0 0;
-    width: 1px;
-    background: rgba(245, 249, 255, 0.9);
+  /* On mobile the panel is full-bleed below the copy, so vertical seams read as
+     stray lines — drop them. The red rule moves to a top edge accent. */
+  .hero[data-hero-treatment='panel'] .hero-media::before {
+    display: none;
   }
 
-  .hero[data-hero-treatment='neon-split'] .hero-media::after,
-  .hero[data-hero-treatment='neon-bracket'] .hero-media::after,
-  .hero[data-hero-treatment='neon-glass'] .hero-media::after {
-    background: none;
+  .hero[data-hero-treatment='rule'] .hero-media::before {
+    inset: 0 0 auto 0;
+    width: auto;
+    height: 3px;
   }
 
   .hero-watch {

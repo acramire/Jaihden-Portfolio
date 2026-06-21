@@ -39,33 +39,70 @@ export const navItems = [
 export const methodPillars = [
   {
     number: '01',
+    icon: 'apple',
     title: 'Lifestyle-first nutrition',
+    teaser: 'Flexible targets built around real weeks.',
     text:
       'Custom nutrition targets, grocery guidance, and week-level planning built around training days, social events, travel, and recovery.',
   },
   {
     number: '02',
+    icon: 'dumbbell',
     title: 'Aesthetic training',
+    teaser: 'Train for a visible, real-world physique.',
     text:
       'Training built for visible results: shoulders, arms, chest, back, posture, and the look that carries outside the gym.',
   },
   {
     number: '03',
+    icon: 'glass',
     title: 'Social protocols',
+    teaser: 'A playbook for nights out, trips, and the reset.',
     text:
       'Practical structure for nights out, big weekends, vacations, food choices, hydration, and the next-day reset.',
   },
   {
     number: '04',
+    icon: 'target',
     title: 'Identity-level mindset',
+    teaser: 'Standards that stick, not another short phase.',
     text:
       'A shift from short resets into standards that stick, so consistency becomes part of how you live instead of another phase.',
   },
   {
     number: '05',
+    icon: 'moon',
     title: 'Bio optimization',
+    teaser: 'Sleep, recovery, and performance, kept practical.',
     text:
       'Optional guidance around sleep, recovery, and performance habits, kept practical and compliance-conscious.',
+  },
+];
+
+export const cycleSteps = [
+  {
+    number: '01',
+    icon: 'lock',
+    title: 'Locked in all week',
+    teaser: 'Strict all week, no weekend plan.',
+    text:
+      'Training, eating clean, and trying to force progress with no plan for the weekend.',
+  },
+  {
+    number: '02',
+    icon: 'bolt',
+    title: 'The weekend hits',
+    teaser: 'Real life unravels the progress.',
+    text:
+      'Drinks, travel, parties, dinners, and late nights turn into a full reset.',
+  },
+  {
+    number: '03',
+    icon: 'loop',
+    title: 'Monday starts over',
+    teaser: 'Back to zero — on repeat.',
+    text:
+      'The goal is not to remove your social life. The goal is to build a system that survives it.',
   },
 ];
 
