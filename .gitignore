@@ -6,3 +6,5 @@ node_modules/
 dist/
 .astro/
 .DS_Store
+.venv/
+*__feedback_prepped.mp4
