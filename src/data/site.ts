@@ -7,8 +7,9 @@ export const site = {
   url: 'https://jaihdentorres.com',
   social: {
     instagram: 'https://www.instagram.com/jaihdentorres/',
-    // TikTok handle assumed to mirror the others — swap if it differs.
+    // TikTok + Snapchat handles assumed to mirror the others — swap if they differ.
     tiktok: 'https://www.tiktok.com/@jaihdentorres',
+    snapchat: 'https://www.snapchat.com/add/jaihdentorres',
     youtube: 'https://www.youtube.com/@jaihdentorres',
     pumpUniversity: 'https://uofpump.com/',
     shop: 'https://uofpump.com/collections/trademark-tee',
@@ -29,9 +30,21 @@ export const site = {
     og: '/images/candidates/generated-og-background-alt-01.png',
     pumpUniversityHero: '/images/candidates/pump-university-apparel.jpg',
     pumpUniversityAlt: '/images/candidates/pump-university-apparel.jpg',
+    // Pump University athletes (not Jaihden) for the brand pillar, so the same
+    // Jaihden photo isn't repeated across every major section.
+    pumpAthletes: '/images/candidates/uofpump-hero-01-trademark-gym.jpg',
     youtubeThumb: '/images/candidates/instagram-video-03-ceo-frat-formal.jpg',
-    bioOptimization: '/images/candidates/uofpump-lifestyle-04-training.jpg',
+    // Bio-optimization now uses Jaihden (round-2 request).
+    bioOptimization: '/images/candidates/instagram-profile-10-avatar.jpg',
   },
+};
+
+// Bio-optimization resource ("FRATLETE" code). Destination URL was not provided
+// in the brief — set fratleteUrl when confirmed; until then it falls back to a
+// clearly-named placeholder (Instagram, where the code is promoted).
+export const resources = {
+  fratleteCode: 'FRATLETE',
+  fratleteUrl: '',
 };
 
 // Sticky CTA + primary funnel actions. Labels live here so the funnel wording
@@ -207,7 +220,7 @@ export const heroSlides = [
     eyebrow: '7+ years of experience',
     title: 'Built on real transformations.',
     body:
-      'More than seven years lifting, coaching, and refining a lifestyle-first system that holds up to real weeks — not just photoshoot prep.',
+      'No trial-and-error. No second-guessing. A system refined over 7+ years of lifting and coaching, so you stop wasting years trying to figure it out alone.',
   },
   {
     id: 'pump',
@@ -217,7 +230,7 @@ export const heroSlides = [
     eyebrow: 'Meet the CEO',
     title: 'Pump University.',
     body:
-      'Founder of Pump University — building a culture of young, ambitious people who train hard, carry themselves well, and raise their standards together.',
+      'Founder of Pump University — building a culture of ambitious people who train hard, carry themselves well, and raise their standards together.',
   },
   {
     id: 'youtube',
@@ -234,19 +247,19 @@ export const heroSlides = [
 // Hero questionnaire — three starting goals borrowed from the reference flow.
 export const goalOptions = [
   {
-    value: 'weight-loss',
-    label: 'Weight loss',
-    detail: 'Lean down and stay lean without living in a permanent diet.',
+    value: 'fat-loss',
+    label: 'Fat loss',
+    detail: 'Lean down and stay lean enjoying your favorite foods year round.',
   },
   {
     value: 'build-muscle',
     label: 'Build muscle',
-    detail: 'Add real size and shape with training built around your week.',
+    detail: 'Add quality tissue and reshape your aesthetics around your week.',
   },
   {
-    value: 'healthy-lifestyle',
-    label: 'Healthy lifestyle',
-    detail: 'Energy, confidence, and structure that survives a full social life.',
+    value: 'balanced-lifestyle',
+    label: 'Balanced lifestyle',
+    detail: 'Energy, sleep, and routine optimizations built around your benders.',
   },
 ];
 
@@ -256,9 +269,9 @@ export const qualification = {
   yes: {
     title: 'This is for you if',
     items: [
-      'You are 25+ and a high-performing professional, business owner, breadwinner, or socialite.',
-      'You work hard and play hard — and want to look and feel your best while still networking, traveling, and enjoying your weekends.',
-      'You live in a social, fast-moving scene and are tired of restrictive plans that ignore real life.',
+      'You are 25+ years old — a high-performing professional, business owner, or breadwinner.',
+      'Fitness first, partying second: you want to look and feel your best while still networking, traveling, and enjoying your weekends.',
+      'You are tired of restrictive plans that ignore how you actually live.',
       'You want smart nutrition, data-driven methods, and bio-optimization tools — not another rigid meal plan.',
       'You take ownership of your results and have the budget for premium 1-on-1 coaching.',
     ],
@@ -266,11 +279,11 @@ export const qualification = {
   no: {
     title: "This isn't for you if",
     items: [
-      'You are shopping for the cheapest app subscription you can find.',
+      'You are shopping for the cheapest fitness app subscription you can find.',
       'You want a quick 12-week "shred and out" fix with no interest in keeping it.',
       'You expect your coach to cook your meals and watch every rep for you.',
       'You spend freely on nightlife but tell yourself you can’t invest in your health.',
-      'You are unwilling to put in the effort or take real ownership of the process.',
+      "You aren't ready to commit or take real ownership of a long-term process.",
     ],
   },
 };
@@ -278,42 +291,46 @@ export const qualification = {
 // Legally Jacked-style "What do you get?" slider — four required items.
 export const whatYouGet = [
   {
-    icon: 'dumbbell',
+    icon: 'phone',
+    tag: 'In your coaching app',
     title: 'Workout plans made for you',
     text:
-      'Training programmed around your goals, your schedule, and the equipment you actually have access to.',
+      'Training built around your goals, your schedule, and the equipment you have — delivered in a clean workout app you check from your phone.',
   },
   {
     icon: 'apple',
+    tag: 'Data-driven',
     title: 'Your own meal plan',
     text:
-      'Flexible nutrition targets and a plan built for your tastes, your routine, and the weekends most plans ignore.',
+      'Flexible meal plans built from your height, weight, macros, and blood work — structured for your tastes and the weekends most plans ignore.',
   },
   {
     icon: 'target',
+    tag: '24-hour access',
     title: 'We track your progress together',
     text:
-      'Regular check-ins and data — weight, training, photos, and habits — so we adjust before you ever stall out.',
+      'Progress tracked together with 24-hour access to me, so there is zero second-guessing between check-ins.',
   },
   {
-    icon: 'loop',
-    title: 'Continuous communication',
+    icon: 'spark',
+    tag: 'Blood work',
+    title: 'Bio-optimization tools & blood work',
     text:
-      'Direct access between check-ins. Real answers when life, travel, or a big weekend throws you a curveball.',
+      'Blood work review to flag hormone and vitamin gaps, plus bio-optimization tools and recommendations customized to you.',
   },
 ];
 
 // Bio-optimization tools. HARD RULE: keep this copy compliance-safe — no
 // references to restricted/medical-adjacent compounds (see brief).
 export const bioOptimization = {
-  eyebrow: 'Bio-optimization tools',
+  eyebrow: 'Bio-optimization tools & blood work',
   title: 'Optimize the parts of fitness most coaches ignore.',
   body:
     'Coaching goes past training and macros. We dial in the inputs that decide how you actually feel and perform day to day.',
   points: [
     'Sleep, recovery, and stress strategies built for a high-output schedule.',
+    'Blood work review — when you have it — to flag hormone or vitamin gaps and tailor recommendations.',
     'Energy, hydration, and supplementation guidance, kept practical and compliance-conscious.',
-    'Smart, data-informed habits — measured, reviewed, and adjusted over time.',
   ],
 };
 
@@ -331,4 +348,5 @@ export const socialLinks = [
   { label: 'Instagram', href: site.social.instagram, handle: '@jaihdentorres' },
   { label: 'TikTok', href: site.social.tiktok, handle: '@jaihdentorres' },
   { label: 'YouTube', href: site.social.youtube, handle: '@jaihdentorres' },
+  { label: 'Snapchat', href: site.social.snapchat, handle: '@jaihdentorres' },
 ];
