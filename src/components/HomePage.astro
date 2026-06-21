@@ -21,7 +21,12 @@ const visibleNav = navItems.filter((item) => {
 });
 ---
 
-<header class="site-header">
+<header
+  class="site-header"
+  data-type-style="anton"
+  data-preview-slot="style.typeface"
+  data-preview-attribute="data-type-style"
+>
   <a class="brand-mark" href="#top" aria-label="Jaihden Torres home">Jaihden Torres</a>
   <button
     class="nav-toggle"
@@ -43,13 +48,20 @@ const visibleNav = navItems.filter((item) => {
   </a>
 </header>
 
-<main id="top">
-  <section class="hero section-dark">
-    <div class="hero-media" aria-hidden="true">
-      <img src={site.media.hero} alt="" data-preview-slot="image.hero" />
-    </div>
+<main
+  id="top"
+  data-type-style="anton"
+  data-preview-slot="style.typeface"
+  data-preview-attribute="data-type-style"
+>
+  <section
+    class="hero section-dark"
+    data-hero-treatment="spotlight"
+    data-preview-slot="style.heroTreatment"
+    data-preview-attribute="data-hero-treatment"
+  >
     <div class="hero-content">
-      <p class="eyebrow" data-preview-slot="copy.hero.eyebrow">Fitness coaching + Pump University</p>
+      <p class="eyebrow hero-eyebrow" data-preview-slot="copy.hero.eyebrow">Fitness coaching + Pump University</p>
       <h1 data-preview-slot="copy.hero.headline">Real results without giving up your social life.</h1>
       <p class="hero-copy" data-preview-slot="copy.hero.body">
         Balanced, lifestyle-aware coaching for people who want to get leaner,
@@ -63,25 +75,38 @@ const visibleNav = navItems.filter((item) => {
           Shop Pump University
         </a>
       </div>
-      <a class="hero-watch" href={site.social.storyVideo} data-cta="hero-story">
-        <span class="hero-watch-icon" aria-hidden="true">▶</span>
-        <span data-preview-slot="copy.cta.story">Watch the story</span>
-      </a>
-      <dl class="hero-stats" aria-label="Brand highlights">
-        <div>
-          <dt>7+</dt>
-          <dd>years lifting</dd>
-        </div>
-        <div>
-          <dt>2</dt>
-          <dd>core pillars: coaching + brand</dd>
-        </div>
-        <div>
-          <dt>1</dt>
-          <dd>system built around real life</dd>
-        </div>
-      </dl>
     </div>
+    <div class="hero-media">
+      <img
+        src={site.media.transformationHero}
+        alt="Jaihden Torres before and after fitness transformation"
+        data-preview-slot="image.hero"
+      />
+    </div>
+    <dl
+      class="hero-stats"
+      aria-label="Experience and coaching paths"
+      data-stat-treatment="glass-band"
+      data-preview-slot="style.heroStats"
+      data-preview-attribute="data-stat-treatment"
+    >
+      <div class="stat-feature">
+        <dt>7+</dt>
+        <dd>years lifting, learning, and building a lifestyle-first fitness standard.</dd>
+      </div>
+      <div class="stat-path">
+        <dt>Fitness path</dt>
+        <dd>Coaching built around training, nutrition, and social-life structure.</dd>
+      </div>
+      <div class="stat-path">
+        <dt>Brand path</dt>
+        <dd>Apparel, content, and lifestyle standards through Pump University.</dd>
+      </div>
+    </dl>
+    <a class="hero-watch" href={site.social.storyVideo} data-cta="hero-story">
+      <span class="hero-watch-icon" aria-hidden="true">▶</span>
+      <span data-preview-slot="copy.cta.story">Watch the story</span>
+    </a>
   </section>
 
   <section class="problem section-light" id="problem">

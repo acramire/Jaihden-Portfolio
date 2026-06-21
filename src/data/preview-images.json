@@ -4,11 +4,19 @@
     "slots": [
       {
         "slot": "image.hero",
-        "label": "Hero background",
-        "default": "/images/candidates/instagram-uofpump-07-labor-day.jpg",
+        "label": "Hero transformation image",
+        "default": "/images/candidates/transformation-before-after.jpg?v=20260620-crop",
         "options": [
           {
-            "label": "Current: Pump University Labor Day",
+            "label": "Current: transformation split",
+            "value": "/images/candidates/transformation-before-after.jpg?v=20260620-crop"
+          },
+          {
+            "label": "Polished after physique",
+            "value": "/images/candidates/after-physique-strong.jpg"
+          },
+          {
+            "label": "Pump University Labor Day",
             "value": "/images/candidates/instagram-uofpump-07-labor-day.jpg"
           },
           {
@@ -46,6 +54,10 @@
           {
             "label": "Pump University Labor Day",
             "value": "/images/candidates/instagram-uofpump-07-labor-day.jpg"
+          },
+          {
+            "label": "Transformation split",
+            "value": "/images/candidates/transformation-before-after.jpg?v=20260620-crop"
           }
         ]
       }
@@ -57,10 +69,14 @@
       {
         "slot": "image.story",
         "label": "Story media",
-        "default": "/images/candidates/instagram-story-08-faith-drop.jpg",
+        "default": "/images/candidates/story-portrait-hoodie.jpg",
         "options": [
           {
-            "label": "Current: faith drop",
+            "label": "Current: hoodie portrait",
+            "value": "/images/candidates/story-portrait-hoodie.jpg"
+          },
+          {
+            "label": "Faith drop",
             "value": "/images/candidates/instagram-story-08-faith-drop.jpg"
           },
           {
@@ -85,10 +101,14 @@
       {
         "slot": "image.pumpUniversityHero",
         "label": "Pump University section image",
-        "default": "/images/candidates/uofpump-hero-01-trademark-gym.jpg",
+        "default": "/images/candidates/pump-university-apparel.jpg",
         "options": [
           {
-            "label": "Current: Trademark gym",
+            "label": "Current: Pump University apparel",
+            "value": "/images/candidates/pump-university-apparel.jpg"
+          },
+          {
+            "label": "Trademark gym",
             "value": "/images/candidates/uofpump-hero-01-trademark-gym.jpg"
           },
           {
@@ -136,10 +156,14 @@
       {
         "slot": "image.content.jaihden-on-instagram",
         "label": "Instagram content card",
-        "default": "/images/candidates/instagram-uofpump-07-labor-day.jpg",
+        "default": "/images/candidates/after-physique-strong.jpg",
         "options": [
           {
-            "label": "Current: Pump University Labor Day",
+            "label": "Current: polished after physique",
+            "value": "/images/candidates/after-physique-strong.jpg"
+          },
+          {
+            "label": "Pump University Labor Day",
             "value": "/images/candidates/instagram-uofpump-07-labor-day.jpg"
           },
           {
@@ -159,10 +183,14 @@
       {
         "slot": "image.content.shop-pump-university",
         "label": "Shop content card",
-        "default": "/images/candidates/uofpump-product-02-trademark-tee.jpg",
+        "default": "/images/candidates/pump-university-apparel.jpg",
         "options": [
           {
-            "label": "Current: Trademark tee",
+            "label": "Current: Pump University apparel",
+            "value": "/images/candidates/pump-university-apparel.jpg"
+          },
+          {
+            "label": "Trademark tee",
             "value": "/images/candidates/uofpump-product-02-trademark-tee.jpg"
           },
           {

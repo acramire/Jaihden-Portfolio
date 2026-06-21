@@ -1,8 +1,9 @@
 ---
 import imageGroups from '../data/preview-images.json';
 import copyGroups from '../data/preview-copy.json';
+import styleGroups from '../data/preview-styles.json';
 
-const previewConfig = { imageGroups, copyGroups };
+const previewConfig = { imageGroups, copyGroups, styleGroups };
 ---
 
 <aside class="preview-overlay" aria-label="Image and copy preview controls" data-preview-overlay>
@@ -20,7 +21,7 @@ const previewConfig = { imageGroups, copyGroups };
     <div class="preview-panel-header">
       <div>
         <p>Dev-only scaffold</p>
-        <h2>Image + Copy Options</h2>
+        <h2>Design Options</h2>
       </div>
       <button type="button" data-preview-collapse aria-label="Collapse preview controls">×</button>
     </div>
@@ -47,11 +48,13 @@ const previewConfig = { imageGroups, copyGroups };
 
 <script is:inline>
   (() => {
-    const storageKey = 'jaihden-preview-selections';
+    const storageKey = 'jaihden-preview-selections-v2';
     const collapsedKey = 'jaihden-preview-collapsed';
+    const positionKey = 'jaihden-preview-position';
     const configNode = document.getElementById('preview-options');
     const overlay = document.querySelector('[data-preview-overlay]');
     const panel = document.querySelector('[data-preview-panel]');
+    const panelHeader = document.querySelector('.preview-panel-header');
     const controlsRoot = document.querySelector('[data-preview-controls]');
     const toggle = document.querySelector('[data-preview-toggle]');
     const collapse = document.querySelector('[data-preview-collapse]');
@@ -64,6 +67,7 @@ const previewConfig = { imageGroups, copyGroups };
 
     const config = JSON.parse(configNode.textContent || '{}');
     const groups = [
+      ...(config.styleGroups || []).map((group) => ({ ...group, type: 'style' })),
       ...(config.copyGroups || []).map((group) => ({ ...group, type: 'copy' })),
       ...(config.imageGroups || []).map((group) => ({ ...group, type: 'image' })),
     ];
@@ -80,6 +84,8 @@ const previewConfig = { imageGroups, copyGroups };
     const selectBySlot = new Map();
 
     let selections = { ...defaults, ...readStoredSelections() };
+    let dragState = null;
+    let suppressNextToggle = false;
 
     function readStoredSelections() {
       try {
@@ -93,6 +99,44 @@ const previewConfig = { imageGroups, copyGroups };
       localStorage.setItem(storageKey, JSON.stringify(selections));
     }
 
+    function readStoredPosition() {
+      try {
+        return JSON.parse(localStorage.getItem(positionKey) || 'null');
+      } catch {
+        return null;
+      }
+    }
+
+    function clampPosition(left, top) {
+      const rect = overlay.getBoundingClientRect();
+      const margin = 10;
+      const width = rect.width || Math.min(440, window.innerWidth - margin * 2);
+      const height = rect.height || 42;
+      const maxLeft = Math.max(margin, window.innerWidth - width - margin);
+      const maxTop = Math.max(margin, window.innerHeight - height - margin);
+
+      return {
+        left: Math.min(Math.max(margin, left), maxLeft),
+        top: Math.min(Math.max(margin, top), maxTop),
+      };
+    }
+
+    function applyOverlayPosition(position) {
+      if (!position) return;
+
+      const nextPosition = clampPosition(position.left, position.top);
+      overlay.style.left = `${nextPosition.left}px`;
+      overlay.style.top = `${nextPosition.top}px`;
+      overlay.style.right = 'auto';
+      overlay.style.bottom = 'auto';
+    }
+
+    function storeOverlayPosition() {
+      const rect = overlay.getBoundingClientRect();
+      const position = clampPosition(rect.left, rect.top);
+      localStorage.setItem(positionKey, JSON.stringify(position));
+    }
+
     function setStatus(message) {
       if (status) status.textContent = message;
     }
@@ -104,7 +148,11 @@ const previewConfig = { imageGroups, copyGroups };
     function applySlot(slotName, value) {
       const nodes = getNodes(slotName);
       nodes.forEach((node) => {
-        if (node instanceof HTMLImageElement) {
+        const previewAttribute = node.getAttribute('data-preview-attribute');
+
+        if (previewAttribute) {
+          node.setAttribute(previewAttribute, value);
+        } else if (node instanceof HTMLImageElement) {
           node.src = value;
         } else {
           node.textContent = value;
@@ -160,9 +208,11 @@ const previewConfig = { imageGroups, copyGroups };
           row.className = 'preview-row';
 
           const label = document.createElement('label');
+          label.htmlFor = `preview-${slot.slot.replaceAll('.', '-')}`;
           label.textContent = slot.exportOnly ? `${slot.label} (export only)` : slot.label;
 
           const select = document.createElement('select');
+          select.id = label.htmlFor;
           select.setAttribute('aria-label', `${slot.label} options`);
           selectBySlot.set(slot.slot, select);
 
@@ -199,7 +249,11 @@ const previewConfig = { imageGroups, copyGroups };
           });
 
           actions.append(previous, next);
-          row.append(label, select, actions);
+          const picker = document.createElement('div');
+          picker.className = 'preview-picker';
+          picker.append(select, actions);
+
+          row.append(label, picker);
           groupElement.append(row);
         });
 
@@ -213,6 +267,10 @@ const previewConfig = { imageGroups, copyGroups };
       toggle.setAttribute('aria-expanded', String(!isCollapsed));
       toggle.textContent = isCollapsed ? 'Open preview controls' : 'Preview controls';
       localStorage.setItem(collapsedKey, String(isCollapsed));
+      requestAnimationFrame(() => {
+        const storedPosition = readStoredPosition();
+        if (storedPosition) applyOverlayPosition(storedPosition);
+      });
     }
 
     function resetSelections() {
@@ -237,13 +295,73 @@ const previewConfig = { imageGroups, copyGroups };
       }
     }
 
+    function canStartDrag(target) {
+      if (!(target instanceof Element)) return false;
+      return !target.closest('button:not([data-preview-toggle]), select, textarea, input, a');
+    }
+
+    function startDrag(event) {
+      if (event.button !== 0 || !canStartDrag(event.target)) return;
+
+      const rect = overlay.getBoundingClientRect();
+      dragState = {
+        pointerId: event.pointerId,
+        startX: event.clientX,
+        startY: event.clientY,
+        offsetX: event.clientX - rect.left,
+        offsetY: event.clientY - rect.top,
+        moved: false,
+      };
+      overlay.setAttribute('data-dragging', 'true');
+      event.currentTarget.setPointerCapture?.(event.pointerId);
+    }
+
+    function moveDrag(event) {
+      if (!dragState || event.pointerId !== dragState.pointerId) return;
+
+      const movement = Math.hypot(event.clientX - dragState.startX, event.clientY - dragState.startY);
+      if (movement > 4) dragState.moved = true;
+
+      applyOverlayPosition({
+        left: event.clientX - dragState.offsetX,
+        top: event.clientY - dragState.offsetY,
+      });
+    }
+
+    function endDrag(event) {
+      if (!dragState || event.pointerId !== dragState.pointerId) return;
+
+      if (dragState.moved) {
+        suppressNextToggle = true;
+        storeOverlayPosition();
+      }
+
+      overlay.removeAttribute('data-dragging');
+      dragState = null;
+      window.setTimeout(() => {
+        suppressNextToggle = false;
+      }, 0);
+    }
+
     buildControls();
     applyAll();
     setCollapsed(localStorage.getItem(collapsedKey) === 'true');
+    applyOverlayPosition(readStoredPosition());
 
-    toggle.addEventListener('click', () => {
+    toggle.addEventListener('click', (event) => {
+      if (suppressNextToggle) {
+        event.preventDefault();
+        return;
+      }
+
       setCollapsed(!panel.hidden);
     });
+
+    toggle.addEventListener('pointerdown', startDrag);
+    panelHeader?.addEventListener('pointerdown', startDrag);
+    document.addEventListener('pointermove', moveDrag);
+    document.addEventListener('pointerup', endDrag);
+    window.addEventListener('resize', () => applyOverlayPosition(readStoredPosition()));
 
     collapse?.addEventListener('click', () => {
       setCollapsed(true);
@@ -262,13 +380,13 @@ const previewConfig = { imageGroups, copyGroups };
   })();
 </script>
 
-<style>
+<style is:global>
   .preview-overlay {
     position: fixed;
     z-index: 100;
     right: 16px;
     bottom: 16px;
-    width: min(420px, calc(100vw - 32px));
+    width: min(440px, calc(100vw - 32px));
     color: #f8fafc;
     font-family:
       Archivo, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -285,15 +403,28 @@ const previewConfig = { imageGroups, copyGroups };
   .preview-toggle {
     display: block;
     margin-left: auto;
-    padding: 10px 12px;
+    min-height: 42px;
+    padding: 10px 14px;
     border: 1px solid rgba(255, 255, 255, 0.18);
     background: #e43d30;
     color: #fff;
     font-size: 0.78rem;
     font-weight: 900;
     text-transform: uppercase;
-    cursor: pointer;
+    cursor: grab;
+    user-select: none;
+    touch-action: none;
     box-shadow: 0 16px 45px rgba(0, 0, 0, 0.28);
+    transition:
+      background 0.18s ease,
+      transform 0.18s ease,
+      box-shadow 0.18s ease;
+  }
+
+  .preview-toggle:hover {
+    background: #c93126;
+    transform: translateY(-1px);
+    box-shadow: 0 20px 54px rgba(0, 0, 0, 0.34);
   }
 
   .preview-panel {
@@ -301,7 +432,10 @@ const previewConfig = { imageGroups, copyGroups };
     margin-top: 8px;
     overflow: auto;
     border: 1px solid rgba(255, 255, 255, 0.16);
-    background: rgba(11, 12, 14, 0.96);
+    border-radius: 8px;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.045), transparent 180px),
+      rgba(11, 12, 14, 0.96);
     box-shadow: 0 24px 70px rgba(0, 0, 0, 0.44);
     backdrop-filter: blur(18px);
   }
@@ -319,9 +453,12 @@ const previewConfig = { imageGroups, copyGroups };
     z-index: 1;
     top: 0;
     justify-content: space-between;
-    padding: 14px;
+    padding: 16px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-    background: #0b0c0e;
+    background: rgba(11, 12, 14, 0.98);
+    cursor: grab;
+    user-select: none;
+    touch-action: none;
   }
 
   .preview-panel-header p,
@@ -347,20 +484,27 @@ const previewConfig = { imageGroups, copyGroups };
     width: 36px;
     height: 36px;
     border: 1px solid rgba(255, 255, 255, 0.18);
-    background: transparent;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.04);
     color: #fff;
     font-size: 1.3rem;
     cursor: pointer;
   }
 
+  .preview-overlay[data-dragging='true'] .preview-toggle,
+  .preview-overlay[data-dragging='true'] .preview-panel-header {
+    cursor: grabbing;
+  }
+
   .preview-toolbar {
-    padding: 12px 14px 0;
+    padding: 14px 16px 0;
   }
 
   .preview-toolbar button,
   .preview-row-actions button {
     min-height: 36px;
     border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
     background: rgba(255, 255, 255, 0.08);
     color: #fff;
     font-size: 0.78rem;
@@ -380,23 +524,24 @@ const previewConfig = { imageGroups, copyGroups };
   }
 
   .preview-status {
-    padding: 10px 14px 0;
+    padding: 10px 16px 0;
     color: rgba(255, 255, 255, 0.72);
     font-size: 0.78rem;
   }
 
   .preview-controls {
     display: grid;
-    gap: 12px;
-    padding: 14px;
+    gap: 10px;
+    padding: 14px 16px 16px;
   }
 
   .preview-group {
     display: grid;
-    gap: 10px;
-    padding: 12px;
+    gap: 12px;
+    padding: 14px;
     border: 1px solid rgba(255, 255, 255, 0.12);
-    background: rgba(255, 255, 255, 0.04);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.045);
   }
 
   .preview-group h3 {
@@ -408,7 +553,7 @@ const previewConfig = { imageGroups, copyGroups };
 
   .preview-row {
     display: grid;
-    gap: 7px;
+    gap: 8px;
   }
 
   .preview-row label,
@@ -422,23 +567,41 @@ const previewConfig = { imageGroups, copyGroups };
   .preview-export-output textarea {
     width: 100%;
     border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 6px;
     background: #15171c;
     color: #fff;
   }
 
   .preview-row select {
     min-height: 38px;
-    padding: 6px 8px;
+    padding: 6px 34px 6px 10px;
+    appearance: none;
+    background-image:
+      linear-gradient(45deg, transparent 50%, rgba(255, 255, 255, 0.72) 50%),
+      linear-gradient(135deg, rgba(255, 255, 255, 0.72) 50%, transparent 50%);
+    background-position:
+      calc(100% - 17px) 16px,
+      calc(100% - 12px) 16px;
+    background-repeat: no-repeat;
+    background-size: 5px 5px;
+  }
+
+  .preview-picker {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px;
+    align-items: center;
   }
 
   .preview-row-actions button {
-    flex: 1;
+    min-width: 48px;
+    padding: 7px 9px;
   }
 
   .preview-export-output {
     display: grid;
     gap: 7px;
-    padding: 0 14px 14px;
+    padding: 0 16px 16px;
   }
 
   .preview-export-output textarea {
@@ -461,6 +624,10 @@ const previewConfig = { imageGroups, copyGroups };
 
     .preview-panel {
       max-height: calc(100vh - 78px);
+    }
+
+    .preview-picker {
+      grid-template-columns: 1fr;
     }
   }
 </style>

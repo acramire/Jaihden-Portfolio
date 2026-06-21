@@ -1,0 +1,84 @@
+[
+  {
+    "section": "Type + Hero Style",
+    "slots": [
+      {
+        "slot": "style.typeface",
+        "label": "Font direction",
+        "default": "anton",
+        "options": [
+          {
+            "label": "Current: bold condensed",
+            "value": "anton"
+          },
+          {
+            "label": "UofPump actual header sans",
+            "value": "pump-university"
+          },
+          {
+            "label": "UofPump loaded Bebas Neue",
+            "value": "bebas"
+          },
+          {
+            "label": "Clean performance sans",
+            "value": "performance-sans"
+          }
+        ]
+      },
+      {
+        "slot": "style.heroTreatment",
+        "label": "Hero image treatment",
+        "default": "spotlight",
+        "options": [
+          {
+            "label": "Current: spotlight card",
+            "value": "spotlight"
+          },
+          {
+            "label": "Blended transformation",
+            "value": "blend"
+          },
+          {
+            "label": "Editorial poster",
+            "value": "poster"
+          },
+          {
+            "label": "No gradient: neon split",
+            "value": "neon-split"
+          },
+          {
+            "label": "No gradient: bracket frame",
+            "value": "neon-bracket"
+          },
+          {
+            "label": "No gradient: glass edge",
+            "value": "neon-glass"
+          }
+        ]
+      },
+      {
+        "slot": "style.heroStats",
+        "label": "Hero stats section",
+        "default": "glass-band",
+        "options": [
+          {
+            "label": "Current: glass band",
+            "value": "glass-band"
+          },
+          {
+            "label": "Pump University label strip",
+            "value": "trademark-strip"
+          },
+          {
+            "label": "Floating proof cards",
+            "value": "proof-cards"
+          },
+          {
+            "label": "Compact stat rail",
+            "value": "stat-rail"
+          }
+        ]
+      }
+    ]
+  }
+]

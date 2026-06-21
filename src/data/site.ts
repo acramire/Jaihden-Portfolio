@@ -19,10 +19,12 @@ export const site = {
   },
   media: {
     hero: '/images/candidates/instagram-uofpump-07-labor-day.jpg',
-    story: '/images/candidates/instagram-story-08-faith-drop.jpg',
+    transformationHero: '/images/candidates/transformation-before-after.jpg?v=20260620-crop',
+    afterPhysiqueStrong: '/images/candidates/after-physique-strong.jpg',
+    story: '/images/candidates/story-portrait-hoodie.jpg',
     og: '/images/candidates/generated-og-background-alt-01.png',
-    pumpUniversityHero: '/images/candidates/uofpump-hero-01-trademark-gym.jpg',
-    pumpUniversityAlt: '/images/candidates/uofpump-product-02-trademark-tee.jpg',
+    pumpUniversityHero: '/images/candidates/pump-university-apparel.jpg',
+    pumpUniversityAlt: '/images/candidates/pump-university-apparel.jpg',
   },
 };
 
@@ -123,7 +125,7 @@ export const featuredContent = [
     title: 'Jaihden on Instagram',
     label: 'Fitness, lifestyle, and Pump University updates',
     href: site.social.instagram,
-    image: site.media.hero,
+    image: site.media.afterPhysiqueStrong,
   },
   {
     title: 'Shop Pump University',
