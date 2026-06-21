@@ -1,42 +1,46 @@
 ---
 import {
-  cycleSteps,
-  deliverables,
-  featuredContent,
-  methodPillars,
+  bioOptimization,
+  cta,
+  goalOptions,
+  heroSlides,
+  mission,
   navItems,
   proof,
+  qualification,
   site,
-  storyBeats,
+  socialLinks,
+  whatYouGet,
 } from '../data/site';
 
 const applyHref = site.integrations.tallyUrl || '#apply';
-const bookHref = site.integrations.calendlyUrl || '#apply';
+const bookHref = site.integrations.calendlyUrl || applyHref;
+const stickyHref = bookHref;
 
-// Inline line-icons (stroke = currentColor) for the expandable cards.
+// Inline line-icons (stroke = currentColor).
 const icons: Record<string, string> = {
   apple:
     '<path d="M12 20.94c1.5 0 2.75 1.06 4 1.06 3 0 6-8 6-12.22A4.91 4.91 0 0 0 17 5c-2.22 0-4 1.44-5 2-1-.56-2.78-2-5-2a4.9 4.9 0 0 0-5 4.78C2 14 5 22 8 22c1.25 0 2.5-1.06 4-1.06Z"/><path d="M10 2c1 .5 2 2 2 5"/>',
   dumbbell:
     '<path d="M6 7v10"/><path d="M9 5v14"/><path d="M15 5v14"/><path d="M18 7v10"/><path d="M9 12h6"/>',
-  glass: '<path d="M4 4h16l-8 9z"/><path d="M12 13v7"/><path d="M8 21h8"/>',
   target:
     '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>',
-  moon: '<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>',
-  lock:
-    '<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',
-  bolt: '<path d="M13 2 4 14h7l-1 8 9-12h-7z"/>',
   loop:
     '<path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/><path d="M3 21v-5h5"/>',
+  moon: '<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>',
+  spark:
+    '<path d="M12 3v4"/><path d="M12 17v4"/><path d="M3 12h4"/><path d="M17 12h4"/><path d="M12 8a4 4 0 0 0 4 4 4 4 0 0 0-4 4 4 4 0 0 0-4-4 4 4 0 0 0 4-4Z"/>',
 };
 
 const svg = (name: string) =>
   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icons[name] ?? ''}</svg>`;
-const chevron =
-  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>';
 
-// "Apply" is shown as the CTA button, not as a text link.
-// "Proof" stays hidden until there is at least one approved testimonial.
+const arrowLeft =
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>';
+const arrowRight =
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>';
+
+// "Apply" is the CTA button; "Proof" hides until there is a real testimonial.
 const visibleNav = navItems.filter((item) => {
   if (item.href === '#apply') return false;
   if (item.href === '#proof') return proof.length > 0;
@@ -44,12 +48,7 @@ const visibleNav = navItems.filter((item) => {
 });
 ---
 
-<header
-  class="site-header"
-  data-type-style="anton"
-  data-preview-slot="style.typeface"
-  data-preview-attribute="data-type-style"
->
+<header class="site-header" data-type-style="anton">
   <a class="brand-mark" href="#top" aria-label="Jaihden Torres home">Jaihden Torres</a>
   <button
     class="nav-toggle"
@@ -66,72 +65,126 @@ const visibleNav = navItems.filter((item) => {
   <nav id="primary-nav" aria-label="Primary navigation" data-nav data-open="false">
     {visibleNav.map((item) => <a href={item.href}>{item.label}</a>)}
   </nav>
-  <a class="header-cta" href={applyHref} data-cta="header-apply" data-preview-slot="copy.cta.apply-short">
-    Apply
-  </a>
+  <a class="header-cta" href={applyHref} data-cta="header-apply">Apply</a>
 </header>
 
-<main
-  id="top"
-  data-type-style="anton"
-  data-preview-slot="style.typeface"
-  data-preview-attribute="data-type-style"
->
-  <section
-    class="hero section-dark"
-    data-hero-treatment="rule"
-    data-preview-slot="style.heroTreatment"
-    data-preview-attribute="data-hero-treatment"
-  >
-    <div class="hero-content">
-      <p class="eyebrow hero-eyebrow" data-preview-slot="copy.hero.eyebrow">Fitness coaching + Pump University</p>
-      <h1 data-preview-slot="copy.hero.headline">Real results without giving up your social life.</h1>
-      <p class="hero-copy" data-preview-slot="copy.hero.body">
-        Balanced, lifestyle-aware coaching for people who want to get leaner,
-        stronger, and more confident while still living a full life.
-      </p>
-      <div class="hero-actions" aria-label="Primary calls to action">
-        <a class="button button-primary" href={applyHref} data-cta="hero-apply" data-preview-slot="copy.cta.apply">
-          Apply for Coaching
-        </a>
-        <a class="button button-secondary" href={site.social.shop} data-cta="hero-shop" data-preview-slot="copy.cta.shop">
-          Shop Pump University
-        </a>
-      </div>
+<main id="top" data-type-style="anton">
+  <!-- 1. HERO CAROUSEL ------------------------------------------------------ -->
+  <section class="hero-carousel" aria-label="Jaihden Torres coaching highlights" id="hero">
+    <h1 class="sr-only">
+      Jaihden Torres — lifestyle-first fitness coaching and Pump University.
+    </h1>
+    <div class="hc-track" data-hc-track>
+      {
+        heroSlides.map((slide, index) => (
+          <article
+            class="hc-slide"
+            data-hc-slide
+            data-slide-kind={slide.kind}
+            aria-roledescription="slide"
+            aria-label={`${index + 1} of ${heroSlides.length}`}
+          >
+            <img class="hc-slide__img" src={slide.image} alt={slide.alt} loading={index === 0 ? 'eager' : 'lazy'} />
+            <div class="hc-slide__shade" />
+            <div class="hc-slide__content">
+              <p class="eyebrow">{slide.eyebrow}</p>
+              <h2 class="hc-slide__title">{slide.title}</h2>
+
+              {slide.kind === 'questionnaire' ? (
+                <div class="quiz" data-quiz>
+                  <div class="quiz__step" data-quiz-step="1">
+                    <div class="quiz__progress">
+                      <span class="quiz__progress-label">How can I help you?</span>
+                      <span class="quiz__progress-count">Step 1 of 2</span>
+                    </div>
+                    <div class="quiz__bar" aria-hidden="true">
+                      <span style="width: 50%" />
+                    </div>
+                    <div class="quiz__options" role="group" aria-label="Choose your goal">
+                      {goalOptions.map((opt) => (
+                        <button
+                          type="button"
+                          class="quiz__option"
+                          data-quiz-goal={opt.value}
+                          data-quiz-label={opt.label}
+                        >
+                          <strong>{opt.label}</strong>
+                          <span>{opt.detail}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div class="quiz__step" data-quiz-step="2" hidden>
+                    <div class="quiz__progress">
+                      <span class="quiz__progress-label">
+                        Goal: <em data-quiz-chosen>Your goal</em>
+                      </span>
+                      <span class="quiz__progress-count">Step 2 of 2</span>
+                    </div>
+                    <div class="quiz__bar" aria-hidden="true">
+                      <span style="width: 100%" />
+                    </div>
+                    <p class="quiz__confirm">
+                      Perfect. Start the short questionnaire and, if it’s a fit, you’ll book a call —
+                      no pressure to commit before then.
+                    </p>
+                    <div class="quiz__actions">
+                      <a class="button button-primary" href={applyHref} data-quiz-apply data-cta="quiz-apply">
+                        {cta.questionnaireLabel}
+                      </a>
+                      <a class="button button-secondary" href={bookHref} data-cta="quiz-book">
+                        {cta.stickyLabel}
+                      </a>
+                    </div>
+                    <button type="button" class="quiz__back" data-quiz-back>← Change goal</button>
+                  </div>
+                </div>
+              ) : (
+                <Fragment>
+                  {slide.body && <p class="hc-slide__body">{slide.body}</p>}
+                  <div class="hc-slide__actions">
+                    {slide.id === 'pump' ? (
+                      <a class="button button-secondary" href={site.social.shop} data-cta="slide-shop">
+                        Shop Pump University
+                      </a>
+                    ) : slide.id === 'youtube' ? (
+                      <a class="button button-secondary" href={site.social.youtube} data-cta="slide-youtube">
+                        Watch on YouTube
+                      </a>
+                    ) : (
+                      <a class="button button-primary" href={applyHref} data-cta="slide-apply">
+                        {cta.applyLabel}
+                      </a>
+                    )}
+                  </div>
+                </Fragment>
+              )}
+            </div>
+          </article>
+        ))
+      }
     </div>
-    <div class="hero-media">
-      <img
-        src={site.media.transformationHero}
-        alt="Jaihden Torres before and after fitness transformation"
-        data-preview-slot="image.hero"
-      />
+
+    <button class="hc-arrow hc-arrow--prev" type="button" aria-label="Previous slide" data-hc-prev set:html={arrowLeft} />
+    <button class="hc-arrow hc-arrow--next" type="button" aria-label="Next slide" data-hc-next set:html={arrowRight} />
+
+    <div class="hc-dots" role="tablist" aria-label="Choose slide" data-hc-dots>
+      {
+        heroSlides.map((_, index) => (
+          <button
+            type="button"
+            class="hc-dot"
+            role="tab"
+            aria-label={`Go to slide ${index + 1}`}
+            data-hc-dot={index}
+          />
+        ))
+      }
     </div>
-    <dl
-      class="hero-stats"
-      aria-label="Experience and coaching paths"
-      data-stat-treatment="glass-band"
-      data-preview-slot="style.heroStats"
-      data-preview-attribute="data-stat-treatment"
-    >
-      <div class="stat-feature">
-        <dt>7+</dt>
-        <dd>years lifting, learning, and building a lifestyle-first fitness standard.</dd>
-      </div>
-      <div class="stat-path">
-        <dt>Fitness path</dt>
-        <dd>Coaching built around training, nutrition, and social-life structure.</dd>
-      </div>
-      <div class="stat-path">
-        <dt>Brand path</dt>
-        <dd>Apparel, content, and lifestyle standards through Pump University.</dd>
-      </div>
-    </dl>
-    <a class="hero-watch" href={site.social.storyVideo} data-cta="hero-story">
-      <span class="hero-watch-icon" aria-hidden="true">▶</span>
-      <span data-preview-slot="copy.cta.story">Watch the story</span>
-    </a>
   </section>
 
+  <!-- 2. TESTIMONIALS ------------------------------------------------------- -->
   <section class="testimonials section-light" id="proof">
     <div class="section-heading">
       <p class="eyebrow">Proof</p>
@@ -161,205 +214,150 @@ const visibleNav = navItems.filter((item) => {
     )}
   </section>
 
-  <section class="problem section-light" id="problem">
+  <!-- 3. WHO THIS IS FOR / ISN'T -------------------------------------------- -->
+  <section class="fit section-dark" id="fit">
     <div class="section-heading">
-      <p class="eyebrow" data-preview-slot="copy.problem.eyebrow">The cycle</p>
-      <h2 data-preview-slot="copy.problem.heading">Most plans fall apart the second real life starts.</h2>
+      <p class="eyebrow">The fit</p>
+      <h2>Who this is for. Who it isn't.</h2>
     </div>
-    <div class="problem-grid">
-      {cycleSteps.map((step) => (
-        <details class="xcard">
-          <summary class="xcard__summary">
-            <span class="xcard__icon" set:html={svg(step.icon)} />
-            <span class="xcard__head">
-              <span class="xcard__num">{step.number}</span>
-              <h3 class="xcard__title">{step.title}</h3>
-              <p class="xcard__teaser">{step.teaser}</p>
-            </span>
-            <span class="xcard__chevron" set:html={chevron} />
-          </summary>
-          <div class="xcard__body">
-            <p>{step.text}</p>
-          </div>
-        </details>
-      ))}
+    <div class="fit-grid">
+      <article class="fit-card fit-card--yes">
+        <h3>{qualification.yes.title}</h3>
+        <ul>
+          {qualification.yes.items.map((item) => <li>{item}</li>)}
+        </ul>
+      </article>
+      <article class="fit-card fit-card--no">
+        <h3>{qualification.no.title}</h3>
+        <ul>
+          {qualification.no.items.map((item) => <li>{item}</li>)}
+        </ul>
+      </article>
     </div>
   </section>
 
-  <section class="method section-dark" id="method">
-    <div class="section-heading">
-      <p class="eyebrow" data-preview-slot="copy.method.eyebrow">The method</p>
-      <h2 data-preview-slot="copy.method.heading">Five pillars built for the lifestyle you actually live.</h2>
-    </div>
-    <div class="pillar-grid">
-      {methodPillars.map((pillar) => (
-        <details class="xcard xcard--dark">
-          <summary class="xcard__summary">
-            <span class="xcard__icon" set:html={svg(pillar.icon)} />
-            <span class="xcard__head">
-              <span class="xcard__num">{pillar.number}</span>
-              <h3 class="xcard__title">{pillar.title}</h3>
-              <p class="xcard__teaser">{pillar.teaser}</p>
-            </span>
-            <span class="xcard__chevron" set:html={chevron} />
-          </summary>
-          <div class="xcard__body">
-            <p>{pillar.text}</p>
-          </div>
-        </details>
-      ))}
-    </div>
-  </section>
-
-  <section class="deliverables section-light" id="deliverables">
-    <div class="split">
+  <!-- 4. WHAT DO YOU GET (slider) ------------------------------------------- -->
+  <section class="get section-light" id="get">
+    <div class="get-head">
       <div>
-        <p class="eyebrow" data-preview-slot="copy.deliverables.eyebrow">What you get</p>
-        <h2 data-preview-slot="copy.deliverables.heading">
-          Clear structure before the call, during the week, and after the weekend.
-        </h2>
-        <p data-preview-slot="copy.deliverables.body">
-          Everything is built around the life you actually live — training days,
-          travel, recovery, and the weekends most plans pretend don't exist.
-        </p>
+        <p class="eyebrow">What do you get?</p>
+        <h2>Premium 1-on-1 coaching, built around you.</h2>
       </div>
-      <ul class="deliverable-list">
-        {deliverables.map((item) => <li>{item}</li>)}
+      <div class="get-nav">
+        <button class="get-arrow" type="button" aria-label="Previous benefit" data-get-prev set:html={arrowLeft} />
+        <span class="get-count" data-get-count>1 / {whatYouGet.length}</span>
+        <button class="get-arrow" type="button" aria-label="Next benefit" data-get-next set:html={arrowRight} />
+      </div>
+    </div>
+    <div class="get-track" data-get-track>
+      {
+        whatYouGet.map((item) => (
+          <article class="get-card" data-get-card>
+            <span class="get-card__icon" set:html={svg(item.icon)} />
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+          </article>
+        ))
+      }
+    </div>
+    <a class="button button-primary get-cta" href={applyHref} data-cta="get-apply">{cta.applyLabel}</a>
+  </section>
+
+  <!-- 5. BIO-OPTIMIZATION TOOLS --------------------------------------------- -->
+  <section class="bio section-dark" id="bio">
+    <div class="bio-media">
+      <img src={site.media.bioOptimization} alt="" loading="lazy" />
+    </div>
+    <div class="bio-copy">
+      <p class="eyebrow">{bioOptimization.eyebrow}</p>
+      <h2>{bioOptimization.title}</h2>
+      <p class="bio-lead">{bioOptimization.body}</p>
+      <ul class="bio-points">
+        {bioOptimization.points.map((point) => (
+          <li>
+            <span class="bio-points__icon" set:html={svg('moon')} />
+            <span>{point}</span>
+          </li>
+        ))}
       </ul>
     </div>
   </section>
 
+  <!-- 6. MISSION / GET TO KNOW ME ------------------------------------------- -->
   <section class="story section-dark" id="story">
     <div class="story-media">
-      <a href={site.social.storyVideo} aria-label="Watch Beer Tastes Better With Abs on YouTube">
-        <img
-          src={site.media.story}
-          alt="Beer Tastes Better With Abs video thumbnail"
-          data-preview-slot="image.story"
-        />
-        <span class="play-badge" data-preview-slot="copy.story.badge">Watch</span>
+      <a href={site.social.youtube} aria-label="Watch Jaihden Torres on YouTube">
+        <img src={site.media.story} alt="Jaihden Torres portrait" loading="lazy" />
+        <span class="play-badge">▶ {mission.videoLabel}</span>
       </a>
     </div>
     <div class="story-copy">
-      <p class="eyebrow" data-preview-slot="copy.story.eyebrow">Coach fit</p>
-      <h2 data-preview-slot="copy.story.heading">Built from the same tension his clients are trying to solve.</h2>
-      <div class="story-list">
-        {storyBeats.map((beat) => (
-          <article>
-            <h3>{beat.title}</h3>
-            <p>{beat.text}</p>
-          </article>
-        ))}
+      <p class="eyebrow">{mission.eyebrow}</p>
+      <h2>{mission.title}</h2>
+      <p class="bio-lead">{mission.body}</p>
+      <div class="story-actions">
+        <a class="button button-secondary" href={site.social.youtube} data-cta="story-youtube">
+          Watch on YouTube
+        </a>
+        <a class="button button-secondary" href={site.social.storyVideo} data-cta="story-feature">
+          Beer Tastes Better With Abs
+        </a>
       </div>
     </div>
   </section>
 
+  <!-- 7. PUMP UNIVERSITY BRAND BAND ----------------------------------------- -->
   <section class="pump-university section-dark" id="pump-university">
     <div class="brand-image">
-      <img
-        src={site.media.pumpUniversityHero}
-        alt="Pump University Trademark Collection gym apparel"
-        data-preview-slot="image.pumpUniversityHero"
-      />
+      <img src={site.media.pumpUniversityHero} alt="Pump University Trademark Collection apparel" loading="lazy" />
     </div>
     <div class="brand-copy">
-      <p class="eyebrow" data-preview-slot="copy.pumpUniversity.eyebrow">Co-equal brand pillar</p>
-      <h2 data-preview-slot="copy.pumpUniversity.heading">Pump University: Look Great. Feel Better.</h2>
-      <p data-preview-slot="copy.pumpUniversity.body">
-        Pump University is the brand side of Jaihden's ecosystem: apparel,
-        culture, and the same standard-driven lifestyle behind the coaching.
+      <p class="eyebrow">Co-equal brand pillar</p>
+      <h2>Pump University: Look Great. Feel Better.</h2>
+      <p class="bio-lead">
+        The brand side of Jaihden's ecosystem: apparel, culture, and the same
+        standard-driven lifestyle behind the coaching.
       </p>
       <div class="brand-actions">
-        <a class="button button-primary" href={site.social.shop} data-cta="pump-university-shop" data-preview-slot="copy.cta.shop-collection">
-          Shop Trademark Collection
-        </a>
-        <a class="button button-secondary" href={site.social.pumpUniversity} data-cta="pump-university-site" data-preview-slot="copy.cta.pump-university-site">
-          Visit Pump University
-        </a>
+        <a class="button button-primary" href={site.social.shop} data-cta="pump-shop">Shop Trademark Collection</a>
+        <a class="button button-secondary" href={site.social.pumpUniversity} data-cta="pump-site">Visit Pump University</a>
       </div>
     </div>
   </section>
 
-  <section class="content section-light" id="content">
-    <div class="section-heading">
-      <p class="eyebrow" data-preview-slot="copy.content.eyebrow">Content</p>
-      <h2 data-preview-slot="copy.content.heading">Featured content without relying on fragile social embeds.</h2>
-    </div>
-    <div class="content-grid">
-      {featuredContent.map((item) => (
-        <a class="content-card" href={item.href} data-cta={`content-${item.title}`}>
-          <img
-            src={item.image}
-            alt=""
-            data-preview-slot={`image.content.${item.title.toLowerCase().replaceAll(' ', '-').replaceAll('+', 'and')}`}
-          />
-          <span>{item.label}</span>
-          <h3>{item.title}</h3>
-        </a>
-      ))}
-    </div>
-  </section>
-
+  <!-- 8. APPLY + SOCIAL ----------------------------------------------------- -->
   <section class="apply section-dark" id="apply">
     <div class="apply-panel">
-      <p class="eyebrow" data-preview-slot="copy.apply.eyebrow">Apply</p>
-      <h2 data-preview-slot="copy.apply.heading">Start with the questionnaire. Book after there is a fit.</h2>
-      <p data-preview-slot="copy.apply.body">
-        Start with a few questions about your goals and schedule. If it's a fit,
-        you'll book a 30-minute call — no pressure to commit before then.
+      <p class="eyebrow">Apply</p>
+      <h2>Start with the questionnaire. Book after there's a fit.</h2>
+      <p>
+        A few questions about your goals and schedule. If it's a fit, you'll book
+        a 30-minute call — no pressure to commit before then.
       </p>
       <div class="apply-actions">
-        {
-          site.integrations.tallyUrl ? (
-            <a class="button button-primary" href={site.integrations.tallyUrl} data-cta="apply-tally" data-preview-slot="copy.cta.questionnaire">
-              Start Questionnaire
-            </a>
-          ) : (
-            <span class="button button-disabled" aria-disabled="true">
-              Questionnaire link pending
-            </span>
-          )
-        }
-        {
-          site.integrations.calendlyUrl ? (
-            <a class="button button-secondary" href={bookHref} data-cta="apply-calendly" data-preview-slot="copy.cta.book">
-              Book 30-Minute Call
-            </a>
-          ) : (
-            <a class="button button-secondary" href={site.social.instagram} data-cta="apply-instagram">
-              DM Jaihden on Instagram
-            </a>
-          )
-        }
+        <a class="button button-primary" href={applyHref} data-cta="apply-primary">{cta.applyLabel}</a>
+        <a class="button button-secondary" href={bookHref} data-cta="apply-book">{cta.stickyLabel}</a>
       </div>
-    </div>
-  </section>
-
-  <section class="contact section-light" id="contact">
-    <div class="section-heading">
-      <p class="eyebrow" data-preview-slot="copy.contact.eyebrow">Contact</p>
-      <h2 data-preview-slot="copy.contact.heading">Coaching, brand, and content paths stay clear.</h2>
-    </div>
-    <div class="contact-grid">
-      <a href={applyHref} data-cta="contact-apply">
-        <span>Coaching</span>
-        <strong>Apply for the coaching flow</strong>
-      </a>
-      <a href={site.social.shop} data-cta="contact-shop">
-        <span>Pump University</span>
-        <strong>Shop the Trademark Collection</strong>
-      </a>
-      <a href={site.social.instagram} data-cta="contact-instagram">
-        <span>Social</span>
-        <strong>Follow or DM on Instagram</strong>
-      </a>
-      <a href={site.social.youtube} data-cta="contact-youtube">
-        <span>Video</span>
-        <strong>Watch on YouTube</strong>
-      </a>
+      <ul class="social-rail" aria-label="Follow Jaihden Torres">
+        {
+          socialLinks.map((link) => (
+            <li>
+              <a href={link.href} data-cta={`social-${link.label.toLowerCase()}`}>
+                <strong>{link.label}</strong>
+                <span>{link.handle}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
     </div>
   </section>
 </main>
+
+<!-- Sticky mobile CTA -->
+<a class="sticky-cta" href={stickyHref} data-cta="sticky-book" data-sticky-cta>
+  {cta.stickyLabel}
+</a>
 
 <footer>
   <span>Jaihden Torres</span>
@@ -368,29 +366,158 @@ const visibleNav = navItems.filter((item) => {
 </footer>
 
 <script>
+  // Manual rAF tween for horizontal paging. Direct scrollLeft writes per frame
+  // work reliably with mandatory scroll-snap (CSS `scroll-behavior: smooth` and
+  // scrollTo({behavior:'smooth'}) can be cancelled by the snap container).
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const tweenScrollLeft = (el: HTMLElement, to: number, duration = 340) => {
+    const target = Math.max(0, Math.min(el.scrollWidth - el.clientWidth, Math.round(to)));
+    if (prefersReducedMotion || Math.abs(target - el.scrollLeft) < 2) {
+      el.scrollLeft = target;
+      return;
+    }
+    const start = el.scrollLeft;
+    const startTime = performance.now();
+    const ease = (p: number) => (p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2);
+    const step = (now: number) => {
+      const p = Math.min(1, (now - startTime) / duration);
+      el.scrollLeft = start + (target - start) * ease(p);
+      if (p < 1) requestAnimationFrame(step);
+      else el.scrollLeft = target;
+    };
+    requestAnimationFrame(step);
+  };
+
+  // --- Mobile nav --------------------------------------------------------------
   const toggle = document.querySelector('[data-nav-toggle]');
   const nav = document.querySelector('[data-nav]');
-
   if (toggle && nav) {
     const setOpen = (open: boolean) => {
       nav.setAttribute('data-open', String(open));
       toggle.setAttribute('aria-expanded', String(open));
-      toggle.setAttribute(
-        'aria-label',
-        open ? 'Close navigation menu' : 'Open navigation menu',
-      );
+      toggle.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
     };
-
-    toggle.addEventListener('click', () => {
-      setOpen(nav.getAttribute('data-open') !== 'true');
-    });
-
-    // Close after picking a destination, or on Escape.
-    nav.querySelectorAll('a').forEach((link) => {
-      link.addEventListener('click', () => setOpen(false));
-    });
+    toggle.addEventListener('click', () => setOpen(nav.getAttribute('data-open') !== 'true'));
+    nav.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setOpen(false)));
     document.addEventListener('keydown', (event) => {
       if (event.key === 'Escape') setOpen(false);
     });
+  }
+
+  // --- Hero carousel -----------------------------------------------------------
+  const track = document.querySelector<HTMLElement>('[data-hc-track]');
+  if (track) {
+    const slides = Array.from(track.querySelectorAll<HTMLElement>('[data-hc-slide]'));
+    const dots = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-hc-dot]'));
+    const prev = document.querySelector<HTMLButtonElement>('[data-hc-prev]');
+    const next = document.querySelector<HTMLButtonElement>('[data-hc-next]');
+    let active = 0;
+
+    const setActive = (i: number) => {
+      active = Math.max(0, Math.min(slides.length - 1, i));
+      dots.forEach((dot, di) => dot.setAttribute('aria-selected', String(di === active)));
+    };
+
+    const goTo = (i: number) => {
+      const clamped = Math.max(0, Math.min(slides.length - 1, i));
+      tweenScrollLeft(track, clamped * track.clientWidth);
+      setActive(clamped);
+    };
+
+    dots.forEach((dot, i) => dot.addEventListener('click', () => goTo(i)));
+    prev?.addEventListener('click', () => goTo(active - 1));
+    next?.addEventListener('click', () => goTo(active + 1));
+
+    // Keep dots in sync with manual swiping.
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(slides.indexOf(entry.target as HTMLElement));
+        });
+      },
+      { root: track, threshold: 0.6 },
+    );
+    slides.forEach((slide) => io.observe(slide));
+    setActive(0);
+  }
+
+  // --- Hero questionnaire ------------------------------------------------------
+  const quiz = document.querySelector<HTMLElement>('[data-quiz]');
+  if (quiz) {
+    const step1 = quiz.querySelector<HTMLElement>('[data-quiz-step="1"]');
+    const step2 = quiz.querySelector<HTMLElement>('[data-quiz-step="2"]');
+    const chosen = quiz.querySelector<HTMLElement>('[data-quiz-chosen]');
+    const applyLink = quiz.querySelector<HTMLAnchorElement>('[data-quiz-apply]');
+    const baseApply = applyLink?.getAttribute('href') ?? '#apply';
+
+    quiz.querySelectorAll<HTMLButtonElement>('[data-quiz-goal]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const value = button.getAttribute('data-quiz-goal') ?? '';
+        const label = button.getAttribute('data-quiz-label') ?? '';
+        if (chosen) chosen.textContent = label;
+        if (applyLink && baseApply.startsWith('http')) {
+          const sep = baseApply.includes('?') ? '&' : '?';
+          applyLink.href = `${baseApply}${sep}goal=${encodeURIComponent(value)}`;
+        }
+        step1?.setAttribute('hidden', '');
+        step2?.removeAttribute('hidden');
+      });
+    });
+
+    quiz.querySelector<HTMLButtonElement>('[data-quiz-back]')?.addEventListener('click', () => {
+      step2?.setAttribute('hidden', '');
+      step1?.removeAttribute('hidden');
+    });
+  }
+
+  // --- "What do you get?" slider ----------------------------------------------
+  const getTrack = document.querySelector<HTMLElement>('[data-get-track]');
+  if (getTrack) {
+    const cards = Array.from(getTrack.querySelectorAll<HTMLElement>('[data-get-card]'));
+    const count = document.querySelector<HTMLElement>('[data-get-count]');
+    const gPrev = document.querySelector<HTMLButtonElement>('[data-get-prev]');
+    const gNext = document.querySelector<HTMLButtonElement>('[data-get-next]');
+    let gActive = 0;
+
+    const render = () => {
+      if (count) count.textContent = `${gActive + 1} / ${cards.length}`;
+    };
+    const gGo = (i: number) => {
+      gActive = Math.max(0, Math.min(cards.length - 1, i));
+      const card = cards[gActive];
+      // Center the card within the track without scrolling the page vertically.
+      tweenScrollLeft(getTrack, card.offsetLeft - (getTrack.clientWidth - card.offsetWidth) / 2);
+      render();
+    };
+
+    gPrev?.addEventListener('click', () => gGo(gActive - 1));
+    gNext?.addEventListener('click', () => gGo(gActive + 1));
+
+    const gio = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            gActive = cards.indexOf(entry.target as HTMLElement);
+            render();
+          }
+        });
+      },
+      { root: getTrack, threshold: 0.6 },
+    );
+    cards.forEach((card) => gio.observe(card));
+    render();
+  }
+
+  // --- Sticky CTA: reveal once past the hero -----------------------------------
+  const sticky = document.querySelector<HTMLElement>('[data-sticky-cta]');
+  const heroSection = document.querySelector<HTMLElement>('#hero');
+  if (sticky && heroSection) {
+    const sio = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => sticky.classList.toggle('is-visible', !entry.isIntersecting));
+      },
+      { threshold: 0.15 },
+    );
+    sio.observe(heroSection);
   }
 </script>

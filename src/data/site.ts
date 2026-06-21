@@ -7,6 +7,8 @@ export const site = {
   url: 'https://jaihdentorres.com',
   social: {
     instagram: 'https://www.instagram.com/jaihdentorres/',
+    // TikTok handle assumed to mirror the others — swap if it differs.
+    tiktok: 'https://www.tiktok.com/@jaihdentorres',
     youtube: 'https://www.youtube.com/@jaihdentorres',
     pumpUniversity: 'https://uofpump.com/',
     shop: 'https://uofpump.com/collections/trademark-tee',
@@ -21,18 +23,30 @@ export const site = {
     hero: '/images/candidates/instagram-uofpump-07-labor-day.jpg',
     transformationHero: '/images/candidates/transformation-before-after.jpg?v=20260620-crop',
     afterPhysiqueStrong: '/images/candidates/after-physique-strong.jpg',
+    flexProfile: '/images/candidates/after-physique-strong.jpg',
+    transformation: '/images/candidates/transformation-before-after.jpg?v=20260620-crop',
     story: '/images/candidates/story-portrait-hoodie.jpg',
     og: '/images/candidates/generated-og-background-alt-01.png',
     pumpUniversityHero: '/images/candidates/pump-university-apparel.jpg',
     pumpUniversityAlt: '/images/candidates/pump-university-apparel.jpg',
+    youtubeThumb: '/images/candidates/instagram-video-03-ceo-frat-formal.jpg',
+    bioOptimization: '/images/candidates/uofpump-lifestyle-04-training.jpg',
   },
 };
 
+// Sticky CTA + primary funnel actions. Labels live here so the funnel wording
+// stays easy to swap once Jaihden confirms the final call-to-action.
+export const cta = {
+  stickyLabel: 'Book a Call',
+  applyLabel: 'Apply for Coaching',
+  questionnaireLabel: 'Start with the questionnaire',
+};
+
 export const navItems = [
-  { label: 'Coaching', href: '#method' },
   { label: 'Proof', href: '#proof' },
+  { label: 'Fit', href: '#fit' },
+  { label: "What you get", href: '#get' },
   { label: 'Pump University', href: '#pump-university' },
-  { label: 'Content', href: '#content' },
   { label: 'Apply', href: '#apply' },
 ];
 
@@ -170,4 +184,151 @@ export const featuredContent = [
     href: site.social.shop,
     image: site.media.pumpUniversityAlt,
   },
+];
+
+// --- Mobile-first coaching funnel content -----------------------------------
+
+// Four-slide hero carousel. Slide 1 carries the goal questionnaire; the rest
+// are image-led proof / brand / personality panels.
+export const heroSlides = [
+  {
+    id: 'goal',
+    kind: 'questionnaire' as const,
+    image: site.media.flexProfile,
+    alt: 'Jaihden Torres standing in the gym after a session',
+    eyebrow: 'Coaching that fits your life',
+    title: 'Become the best version of yourself.',
+  },
+  {
+    id: 'proof',
+    kind: 'panel' as const,
+    image: site.media.transformation,
+    alt: 'Before and after transformation photos',
+    eyebrow: '7+ years of experience',
+    title: 'Built on real transformations.',
+    body:
+      'More than seven years lifting, coaching, and refining a lifestyle-first system that holds up to real weeks — not just photoshoot prep.',
+  },
+  {
+    id: 'pump',
+    kind: 'panel' as const,
+    image: site.media.pumpUniversityHero,
+    alt: 'Jaihden Torres wearing Pump University apparel',
+    eyebrow: 'Meet the CEO',
+    title: 'Pump University.',
+    body:
+      'Founder of Pump University — building a culture of young, ambitious people who train hard, carry themselves well, and raise their standards together.',
+  },
+  {
+    id: 'youtube',
+    kind: 'panel' as const,
+    image: site.media.youtubeThumb,
+    alt: 'Jaihden Torres YouTube thumbnail',
+    eyebrow: 'On YouTube',
+    title: 'More than a coach.',
+    body:
+      'The lifestyle, the trips, the brand, and the personality behind the coaching — follow the full story on YouTube.',
+  },
+];
+
+// Hero questionnaire — three starting goals borrowed from the reference flow.
+export const goalOptions = [
+  {
+    value: 'weight-loss',
+    label: 'Weight loss',
+    detail: 'Lean down and stay lean without living in a permanent diet.',
+  },
+  {
+    value: 'build-muscle',
+    label: 'Build muscle',
+    detail: 'Add real size and shape with training built around your week.',
+  },
+  {
+    value: 'healthy-lifestyle',
+    label: 'Healthy lifestyle',
+    detail: 'Energy, confidence, and structure that survives a full social life.',
+  },
+];
+
+// OBHealth-style qualification. Polished from raw nightlife language into
+// premium, compliance-safe copy.
+export const qualification = {
+  yes: {
+    title: 'This is for you if',
+    items: [
+      'You are 25+ and a high-performing professional, business owner, breadwinner, or socialite.',
+      'You work hard and play hard — and want to look and feel your best while still networking, traveling, and enjoying your weekends.',
+      'You live in a social, fast-moving scene and are tired of restrictive plans that ignore real life.',
+      'You want smart nutrition, data-driven methods, and bio-optimization tools — not another rigid meal plan.',
+      'You take ownership of your results and have the budget for premium 1-on-1 coaching.',
+    ],
+  },
+  no: {
+    title: "This isn't for you if",
+    items: [
+      'You are shopping for the cheapest app subscription you can find.',
+      'You want a quick 12-week "shred and out" fix with no interest in keeping it.',
+      'You expect your coach to cook your meals and watch every rep for you.',
+      'You spend freely on nightlife but tell yourself you can’t invest in your health.',
+      'You are unwilling to put in the effort or take real ownership of the process.',
+    ],
+  },
+};
+
+// Legally Jacked-style "What do you get?" slider — four required items.
+export const whatYouGet = [
+  {
+    icon: 'dumbbell',
+    title: 'Workout plans made for you',
+    text:
+      'Training programmed around your goals, your schedule, and the equipment you actually have access to.',
+  },
+  {
+    icon: 'apple',
+    title: 'Your own meal plan',
+    text:
+      'Flexible nutrition targets and a plan built for your tastes, your routine, and the weekends most plans ignore.',
+  },
+  {
+    icon: 'target',
+    title: 'We track your progress together',
+    text:
+      'Regular check-ins and data — weight, training, photos, and habits — so we adjust before you ever stall out.',
+  },
+  {
+    icon: 'loop',
+    title: 'Continuous communication',
+    text:
+      'Direct access between check-ins. Real answers when life, travel, or a big weekend throws you a curveball.',
+  },
+];
+
+// Bio-optimization tools. HARD RULE: keep this copy compliance-safe — no
+// references to restricted/medical-adjacent compounds (see brief).
+export const bioOptimization = {
+  eyebrow: 'Bio-optimization tools',
+  title: 'Optimize the parts of fitness most coaches ignore.',
+  body:
+    'Coaching goes past training and macros. We dial in the inputs that decide how you actually feel and perform day to day.',
+  points: [
+    'Sleep, recovery, and stress strategies built for a high-output schedule.',
+    'Energy, hydration, and supplementation guidance, kept practical and compliance-conscious.',
+    'Smart, data-informed habits — measured, reviewed, and adjusted over time.',
+  ],
+};
+
+// Short mission / get-to-know-me section, with YouTube front and center.
+export const mission = {
+  eyebrow: 'Get to know me',
+  title: 'Why I coach the way I do.',
+  body:
+    "I lived the same cycle my clients are trying to solve — locked in all week, then watching it unravel every weekend. I built a system that keeps the physique, the confidence, and the social life at the same time, and now I help high-performers do the same.",
+  videoLabel: 'Watch the story on YouTube',
+};
+
+// Footer/social rail. YouTube is intentionally promoted alongside the usual icons.
+export const socialLinks = [
+  { label: 'Instagram', href: site.social.instagram, handle: '@jaihdentorres' },
+  { label: 'TikTok', href: site.social.tiktok, handle: '@jaihdentorres' },
+  { label: 'YouTube', href: site.social.youtube, handle: '@jaihdentorres' },
 ];
