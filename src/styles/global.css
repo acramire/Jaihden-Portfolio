@@ -1939,12 +1939,15 @@ footer {
   align-items: baseline;
   justify-content: space-between;
   gap: 12px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .quiz__progress-label {
-  font-weight: 800;
-  font-size: 1rem;
+  color: var(--red);
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .quiz__progress-label em {
@@ -1959,6 +1962,25 @@ footer {
   letter-spacing: 0.06em;
   text-transform: uppercase;
   white-space: nowrap;
+}
+
+.quiz__question {
+  margin: 0;
+  color: #fff;
+  font-family: var(--display);
+  font-size: clamp(1.75rem, 7vw, 2.4rem);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 0.96;
+  text-transform: uppercase;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.5);
+}
+
+.quiz__hint {
+  margin: 9px 0 14px;
+  color: rgba(255, 255, 255, 0.74);
+  font-size: 0.88rem;
+  line-height: 1.35;
 }
 
 .quiz__bar {

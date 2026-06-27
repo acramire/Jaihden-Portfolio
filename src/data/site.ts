@@ -247,18 +247,21 @@ export const heroSlides = [
 // Hero questionnaire — three starting goals borrowed from the reference flow.
 export const goalOptions = [
   {
-    value: 'fat-loss',
-    label: 'Fat loss',
+    value: 'lose-fat',
+    label: 'Lose fat',
+    tallyValue: 'Lose fat',
     detail: 'Lean down and stay lean enjoying your favorite foods year round.',
   },
   {
     value: 'build-muscle',
     label: 'Build muscle',
+    tallyValue: 'Build muscle',
     detail: 'Add quality tissue and reshape your aesthetics around your week.',
   },
   {
-    value: 'balanced-lifestyle',
-    label: 'Balanced lifestyle',
+    value: 'recomposition-confidence',
+    label: 'Recomposition / confidence',
+    tallyValue: 'Recomposition / confidence',
     detail: 'Energy, sleep, and routine optimizations built around your benders.',
   },
 ];

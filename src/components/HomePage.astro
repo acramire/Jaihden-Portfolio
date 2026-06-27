@@ -110,9 +110,11 @@ const visibleNav = navItems.filter((item) => {
                 <div class="quiz" data-quiz>
                   <div class="quiz__step" data-quiz-step="1">
                     <div class="quiz__progress">
-                      <span class="quiz__progress-label">How can I help you?</span>
+                      <span class="quiz__progress-label">Start here</span>
                       <span class="quiz__progress-count">Step 1 of 2</span>
                     </div>
+                    <h3 class="quiz__question">What is your main goal right now?</h3>
+                    <p class="quiz__hint">Choose one and the application will open with the same answer attached.</p>
                     <div class="quiz__bar" aria-hidden="true">
                       <span style="width: 50%" />
                     </div>
@@ -123,6 +125,7 @@ const visibleNav = navItems.filter((item) => {
                           class="quiz__option"
                           data-quiz-goal={opt.value}
                           data-quiz-label={opt.label}
+                          data-quiz-tally-value={opt.tallyValue}
                         >
                           <strong>{opt.label}</strong>
                           <span>{opt.detail}</span>
@@ -147,7 +150,7 @@ const visibleNav = navItems.filter((item) => {
                     </p>
                     <div class="quiz__actions">
                       <a class="button button-primary" href={applyHref} data-quiz-apply data-cta="quiz-apply">
-                        {cta.questionnaireLabel}
+                        Continue to application
                       </a>
                       <a class="button button-secondary" href={bookHref} data-cta="quiz-book">
                         {cta.stickyLabel}
@@ -477,16 +480,24 @@ const visibleNav = navItems.filter((item) => {
     const chosen = quiz.querySelector<HTMLElement>('[data-quiz-chosen]');
     const applyLink = quiz.querySelector<HTMLAnchorElement>('[data-quiz-apply]');
     const baseApply = applyLink?.getAttribute('href') ?? '#apply';
+    const buildApplicationHref = (value: string, label: string, tallyValue: string) => {
+      if (!baseApply.startsWith('http')) return baseApply;
+      const url = new URL(baseApply);
+      url.searchParams.set('goal', value);
+      url.searchParams.set('goal_label', label);
+      // `main_goal` is the Tally handoff field; keep it aligned with the form.
+      url.searchParams.set('main_goal', tallyValue || label);
+      url.searchParams.set('source', 'website_quiz');
+      return url.toString();
+    };
 
     quiz.querySelectorAll<HTMLButtonElement>('[data-quiz-goal]').forEach((button) => {
       button.addEventListener('click', () => {
         const value = button.getAttribute('data-quiz-goal') ?? '';
         const label = button.getAttribute('data-quiz-label') ?? '';
+        const tallyValue = button.getAttribute('data-quiz-tally-value') ?? label;
         if (chosen) chosen.textContent = label;
-        if (applyLink && baseApply.startsWith('http')) {
-          const sep = baseApply.includes('?') ? '&' : '?';
-          applyLink.href = `${baseApply}${sep}goal=${encodeURIComponent(value)}`;
-        }
+        if (applyLink) applyLink.href = buildApplicationHref(value, label, tallyValue);
         step1?.setAttribute('hidden', '');
         step2?.removeAttribute('hidden');
       });
