@@ -114,7 +114,6 @@ const visibleNav = navItems.filter((item) => {
                       <span class="quiz__progress-count">Step 1 of 2</span>
                     </div>
                     <h3 class="quiz__question">What is your main goal right now?</h3>
-                    <p class="quiz__hint">Choose one and the application will open with the same answer attached.</p>
                     <div class="quiz__bar" aria-hidden="true">
                       <span style="width: 50%" />
                     </div>
@@ -128,7 +127,6 @@ const visibleNav = navItems.filter((item) => {
                           data-quiz-tally-value={opt.tallyValue}
                         >
                           <strong>{opt.label}</strong>
-                          <span>{opt.detail}</span>
                         </button>
                       ))}
                     </div>

@@ -1367,6 +1367,11 @@ footer {
 @media (max-width: 980px) {
   .nav-toggle {
     display: inline-flex;
+    order: 3;
+  }
+
+  .header-cta {
+    order: 2;
     margin-left: auto;
   }
 
@@ -1812,6 +1817,11 @@ footer {
   text-shadow: 0 2px 22px rgba(0, 0, 0, 0.55);
 }
 
+.hc-slide[data-slide-kind='questionnaire'] .hc-slide__content > .eyebrow,
+.hc-slide[data-slide-kind='questionnaire'] .hc-slide__content > .hc-slide__title {
+  display: none;
+}
+
 .hc-slide__body {
   max-width: 46ch;
   margin: 0;
@@ -1922,16 +1932,48 @@ footer {
 
 /* --- Hero questionnaire --------------------------------------------------- */
 .quiz {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   width: min(440px, 100%);
   margin-top: 6px;
   padding: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.24);
   border-radius: 14px;
-  /* More transparent so the physique shows through; stronger blur keeps the
-     option text crisp and readable over the image. */
-  background: rgba(12, 14, 18, 0.46);
-  box-shadow: 0 26px 70px rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(22px) saturate(1.1);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.01) 46%, rgba(255, 255, 255, 0.045)),
+    rgba(0, 0, 0, 0.028);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    inset 0 -34px 70px rgba(255, 255, 255, 0.02),
+    0 24px 58px rgba(0, 0, 0, 0.26);
+  backdrop-filter: blur(30px) saturate(1.08) brightness(1.04);
+  -webkit-backdrop-filter: blur(30px) saturate(1.08) brightness(1.04);
+}
+
+.quiz::before {
+  position: absolute;
+  inset: 1px;
+  z-index: -1;
+  border-radius: inherit;
+  background:
+    radial-gradient(circle at 22% 0%, rgba(255, 255, 255, 0.11), transparent 34%),
+    radial-gradient(circle at 82% 18%, rgba(255, 255, 255, 0.07), transparent 28%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 44%);
+  content: '';
+  pointer-events: none;
+}
+
+.quiz::after {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.045) 48%, transparent);
+  content: '';
+  opacity: 0.4;
+  pointer-events: none;
+  transform: translateX(-38%) skewX(-14deg);
 }
 
 .quiz__progress {
@@ -1976,16 +2018,9 @@ footer {
   text-shadow: 0 2px 18px rgba(0, 0, 0, 0.5);
 }
 
-.quiz__hint {
-  margin: 9px 0 14px;
-  color: rgba(255, 255, 255, 0.74);
-  font-size: 0.88rem;
-  line-height: 1.35;
-}
-
 .quiz__bar {
   height: 4px;
-  margin-bottom: 16px;
+  margin: 12px 0 16px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.14);
   overflow: hidden;
@@ -2008,9 +2043,9 @@ footer {
   display: grid;
   gap: 3px;
   padding: 13px 15px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 11px;
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.018);
   color: #fff;
   text-align: left;
   cursor: pointer;
@@ -2061,6 +2096,107 @@ footer {
 
 .quiz__back:hover {
   color: #fff;
+}
+
+@media (max-width: 640px) {
+  .hc-slide {
+    min-height: 94svh;
+  }
+
+  .hc-slide[data-slide-kind='questionnaire'] {
+    min-height: 98svh;
+  }
+
+  .hc-slide[data-slide-kind='questionnaire'] .hc-slide__content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 118px 20px 56px;
+  }
+
+  .hc-slide[data-slide-kind='questionnaire'] .hc-slide__content > .hc-slide__title {
+    position: absolute;
+    top: 96px;
+    left: 20px;
+    display: block;
+    max-width: 17ch;
+    margin-bottom: 0;
+    font-size: clamp(1.95rem, 8.2vw, 2.45rem);
+    line-height: 0.92;
+  }
+
+  .hc-arrow {
+    display: none;
+  }
+
+  .quiz {
+    width: min(390px, 100%);
+    margin-top: 16px;
+    padding: 13px;
+    border-radius: 12px;
+    background:
+      linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.008) 46%, rgba(255, 255, 255, 0.04)),
+      rgba(0, 0, 0, 0.018);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.14),
+      inset 0 -26px 54px rgba(255, 255, 255, 0.018),
+      0 20px 48px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(34px) saturate(1.02) brightness(1.06);
+    -webkit-backdrop-filter: blur(34px) saturate(1.02) brightness(1.06);
+  }
+
+  .quiz__progress {
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+
+  .quiz__progress-label,
+  .quiz__progress-count {
+    font-size: 0.68rem;
+    letter-spacing: 0.05em;
+  }
+
+  .quiz__question {
+    font-size: clamp(1.35rem, 7vw, 1.72rem);
+    line-height: 0.92;
+  }
+
+  .quiz__bar {
+    height: 3px;
+    margin: 8px 0 10px;
+  }
+
+  .quiz__options,
+  .quiz__actions {
+    gap: 7px;
+  }
+
+  .quiz__option {
+    display: flex;
+    align-items: center;
+    min-height: 42px;
+    padding: 9px 11px;
+    border-radius: 9px;
+    background: rgba(255, 255, 255, 0.006);
+  }
+
+  .quiz__option strong {
+    font-size: 0.96rem;
+    line-height: 1.05;
+  }
+
+  .quiz__confirm {
+    margin-bottom: 10px;
+    font-size: 0.86rem;
+    line-height: 1.28;
+  }
+
+  .quiz__back {
+    margin-top: 8px;
+    font-size: 0.78rem;
+  }
 }
 
 /* --- Who this is for / isn't --------------------------------------------- */
