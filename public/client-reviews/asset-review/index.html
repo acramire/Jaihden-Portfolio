@@ -1,0 +1,915 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Jaihden Asset Review</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #08090b;
+        --panel: rgba(255, 255, 255, 0.06);
+        --panel-strong: rgba(255, 255, 255, 0.1);
+        --line: rgba(255, 255, 255, 0.14);
+        --text: #f6f3ee;
+        --muted: rgba(246, 243, 238, 0.68);
+        --red: #ef3d36;
+        --green: #37c871;
+        --gold: #d7b56d;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background:
+          radial-gradient(circle at top left, rgba(239, 61, 54, 0.12), transparent 34rem),
+          linear-gradient(140deg, rgba(255, 255, 255, 0.05), transparent 28rem),
+          var(--bg);
+        color: var(--text);
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        line-height: 1.45;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      button,
+      input {
+        font: inherit;
+      }
+
+      .shell {
+        width: min(1440px, 100%);
+        margin: 0 auto;
+        padding: 28px clamp(14px, 3vw, 36px) 48px;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        margin: -28px calc(clamp(14px, 3vw, 36px) * -1) 22px;
+        padding: 18px clamp(14px, 3vw, 36px);
+        border-bottom: 1px solid var(--line);
+        background: rgba(8, 9, 11, 0.82);
+        backdrop-filter: blur(14px);
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 20px;
+        align-items: end;
+      }
+
+      h1 {
+        margin: 0;
+        max-width: 820px;
+        font-size: clamp(2.2rem, 5vw, 5rem);
+        line-height: 0.92;
+        letter-spacing: 0;
+        text-transform: uppercase;
+      }
+
+      .lede {
+        max-width: 720px;
+        margin: 12px 0 0;
+        color: var(--muted);
+        font-size: 1rem;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(92px, 1fr));
+        gap: 8px;
+        min-width: min(430px, 100%);
+      }
+
+      .stat {
+        border: 1px solid var(--line);
+        background: var(--panel);
+        padding: 12px;
+      }
+
+      .stat strong {
+        display: block;
+        font-size: 1.8rem;
+        line-height: 1;
+      }
+
+      .stat span {
+        display: block;
+        margin-top: 5px;
+        color: var(--muted);
+        font-size: 0.75rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .controls {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 12px;
+        align-items: center;
+        margin-top: 18px;
+      }
+
+      .search {
+        min-height: 46px;
+        width: 100%;
+        border: 1px solid var(--line);
+        border-radius: 0;
+        background: rgba(255, 255, 255, 0.08);
+        color: var(--text);
+        padding: 0 14px;
+        outline: none;
+      }
+
+      .search:focus {
+        border-color: rgba(239, 61, 54, 0.7);
+      }
+
+      .count {
+        color: var(--muted);
+        white-space: nowrap;
+      }
+
+      .filters {
+        display: flex;
+        gap: 8px;
+        margin-top: 12px;
+        overflow-x: auto;
+        padding-bottom: 4px;
+      }
+
+      .filter {
+        min-height: 34px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.07);
+        color: var(--text);
+        padding: 0 12px;
+        white-space: nowrap;
+        cursor: pointer;
+      }
+
+      .filter[aria-pressed="true"] {
+        border-color: var(--red);
+        background: rgba(239, 61, 54, 0.18);
+      }
+
+      .section {
+        margin-top: 30px;
+      }
+
+      .section-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 14px;
+        align-items: end;
+        margin-bottom: 12px;
+      }
+
+      h2 {
+        margin: 0;
+        font-size: clamp(1.4rem, 2.4vw, 2.4rem);
+        line-height: 1;
+        text-transform: uppercase;
+      }
+
+      .section-head p {
+        margin: 0;
+        max-width: 560px;
+        color: var(--muted);
+        font-size: 0.92rem;
+        text-align: right;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .asset {
+        display: flex;
+        min-width: 0;
+        flex-direction: column;
+        border: 1px solid var(--line);
+        background: var(--panel);
+      }
+
+      .asset.is-hidden {
+        display: none;
+      }
+
+      .media {
+        position: relative;
+        display: block;
+        overflow: hidden;
+        border-bottom: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.04);
+      }
+
+      .media img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      .badge {
+        position: absolute;
+        left: 8px;
+        top: 8px;
+        max-width: calc(100% - 16px);
+        background: rgba(8, 9, 11, 0.78);
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        padding: 5px 7px;
+        color: var(--text);
+        font-size: 0.68rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .asset-body {
+        display: grid;
+        gap: 9px;
+        padding: 12px;
+      }
+
+      .asset-title {
+        margin: 0;
+        font-size: 1rem;
+        line-height: 1.15;
+      }
+
+      .meta,
+      .usage,
+      .path {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.78rem;
+      }
+
+      .usage strong {
+        color: var(--text);
+      }
+
+      .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+      }
+
+      .tag {
+        border: 1px solid rgba(255, 255, 255, 0.13);
+        background: rgba(255, 255, 255, 0.06);
+        padding: 3px 6px;
+        color: var(--muted);
+        font-size: 0.68rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .tag.live {
+        border-color: rgba(55, 200, 113, 0.5);
+        color: #baf3cf;
+      }
+
+      .tag.needs-review {
+        border-color: rgba(215, 181, 109, 0.55);
+        color: #f0d89d;
+      }
+
+      .path {
+        overflow-wrap: anywhere;
+      }
+
+      .empty {
+        display: none;
+        margin: 34px 0;
+        border: 1px solid var(--line);
+        background: var(--panel);
+        padding: 18px;
+        color: var(--muted);
+      }
+
+      .empty.is-visible {
+        display: block;
+      }
+
+      @media (max-width: 1100px) {
+        .hero {
+          grid-template-columns: 1fr;
+        }
+
+        .stats {
+          width: 100%;
+        }
+
+        .grid {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 760px) {
+        .shell {
+          padding-bottom: 32px;
+        }
+
+        .hero,
+        .controls,
+        .section-head {
+          display: block;
+        }
+
+        h1 {
+          font-size: clamp(2rem, 14vw, 3.6rem);
+        }
+
+        .stats {
+          grid-template-columns: repeat(3, 1fr);
+          margin-top: 16px;
+        }
+
+        .stat {
+          padding: 10px;
+        }
+
+        .stat strong {
+          font-size: 1.4rem;
+        }
+
+        .search {
+          margin-bottom: 8px;
+        }
+
+        .section-head p {
+          margin-top: 8px;
+          text-align: left;
+        }
+
+        .grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 10px;
+        }
+
+        .asset-body {
+          padding: 10px;
+        }
+      }
+
+      @media (max-width: 430px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <div class="topbar">
+        <div class="hero">
+          <div>
+            <h1>Asset Review</h1>
+            <p class="lede">
+              A quick review board for the images currently available for Jaihden's site. Use
+              search or filters to check live site assets, intake copies, client transformations,
+              YouTube thumbnails, and Pump University media.
+            </p>
+          </div>
+          <div class="stats" aria-label="Asset counts">
+            <div class="stat">
+              <strong id="totalCount">0</strong>
+              <span>Total</span>
+            </div>
+            <div class="stat">
+              <strong id="liveCount">0</strong>
+              <span>Live site</span>
+            </div>
+            <div class="stat">
+              <strong id="reviewCount">0</strong>
+              <span>Review</span>
+            </div>
+          </div>
+        </div>
+        <div class="controls">
+          <input class="search" id="search" type="search" placeholder="Search filename, client, use, tag..." />
+          <span class="count" id="visibleCount">Showing 0 assets</span>
+        </div>
+        <div class="filters" id="filters" aria-label="Asset filters"></div>
+      </div>
+
+      <div id="sections"></div>
+      <p class="empty" id="empty">No assets match that filter.</p>
+    </main>
+
+    <script>
+      const assets = [
+        {
+          group: 'Live site candidates',
+          title: 'Hero questionnaire image',
+          src: '/images/candidates/after-physique-strong.jpg',
+          file: 'after-physique-strong.jpg',
+          usage: 'Hero questionnaire, bio-optimization section, featured Instagram panel',
+          tags: ['live', 'hero', 'bio', 'jaihden', 'physique'],
+        },
+        {
+          group: 'Live site candidates',
+          title: 'Jaihden transformation composite',
+          src: '/images/candidates/transformation-before-after.jpg',
+          file: 'transformation-before-after.jpg',
+          usage: 'Hero carousel proof slide',
+          tags: ['live', 'hero', 'proof', 'jaihden', 'transformation'],
+        },
+        {
+          group: 'Live site candidates',
+          title: 'Final YouTube thumbnail',
+          src: '/images/candidates/youtube-more-than-coach-thumbnail.jpg',
+          file: 'youtube-more-than-coach-thumbnail.jpg',
+          usage: 'Hero carousel YouTube slide',
+          tags: ['live', 'youtube', 'hero'],
+        },
+        {
+          group: 'Live site candidates',
+          title: 'Pump University apparel hero',
+          src: '/images/candidates/pump-university-apparel.jpg',
+          file: 'pump-university-apparel.jpg',
+          usage: 'Pump University section and featured card',
+          tags: ['live', 'pump', 'apparel'],
+        },
+        {
+          group: 'Live site candidates',
+          title: 'Pump athletes gym shot',
+          src: '/images/candidates/uofpump-hero-01-trademark-gym.jpg',
+          file: 'uofpump-hero-01-trademark-gym.jpg',
+          usage: 'Pump University brand pillar',
+          tags: ['live', 'pump', 'gym'],
+        },
+        {
+          group: 'Unused or reference candidates',
+          title: 'Lower-quality duplicate portrait',
+          src: '/images/candidates/instagram-profile-10-avatar.jpg',
+          file: 'instagram-profile-10-avatar.jpg',
+          usage: 'Replaced by after-physique-strong.jpg for bio-optimization',
+          tags: ['review', 'portrait', 'bio', 'jaihden', 'duplicate'],
+        },
+        {
+          group: 'Live site candidates',
+          title: 'Story portrait',
+          src: '/images/candidates/story-portrait-hoodie.jpg',
+          file: 'story-portrait-hoodie.jpg',
+          usage: 'Mission / story section',
+          tags: ['live', 'portrait', 'story', 'jaihden'],
+        },
+        {
+          group: 'Live site candidates',
+          title: 'Generated social share background',
+          src: '/images/candidates/generated-og-background-alt-01.png',
+          file: 'generated-og-background-alt-01.png',
+          usage: 'Open Graph / social preview image',
+          tags: ['live', 'generated', 'og'],
+        },
+        {
+          group: 'Live site candidates',
+          title: 'Frat formal video still',
+          src: '/images/candidates/instagram-video-03-ceo-frat-formal.jpg',
+          file: 'instagram-video-03-ceo-frat-formal.jpg',
+          usage: 'Featured story / coaching breakdown card',
+          tags: ['live', 'youtube', 'social', 'jaihden'],
+        },
+        {
+          group: 'Client transformations live',
+          title: 'Alex before',
+          src: '/images/candidates/client-alex-before.png',
+          file: 'client-alex-before.png',
+          usage: 'Proof section, Alex transformation',
+          tags: ['live', 'client', 'alex', 'before', 'proof'],
+        },
+        {
+          group: 'Client transformations live',
+          title: 'Alex progress',
+          src: '/images/candidates/client-alex-progress.jpg',
+          file: 'client-alex-progress.jpg',
+          usage: 'Proof section, Alex transformation',
+          tags: ['live', 'client', 'alex', 'progress', 'proof'],
+        },
+        {
+          group: 'Client transformations live',
+          title: 'Ale before',
+          src: '/images/candidates/client-ale-before.jpg',
+          file: 'client-ale-before.jpg',
+          usage: 'Proof section, Ale transformation',
+          tags: ['live', 'client', 'ale', 'before', 'proof'],
+        },
+        {
+          group: 'Client transformations live',
+          title: 'Ale after',
+          src: '/images/candidates/client-ale-after.jpg',
+          file: 'client-ale-after.jpg',
+          usage: 'Proof section, Ale transformation',
+          tags: ['live', 'client', 'ale', 'after', 'proof'],
+        },
+        {
+          group: 'Client transformations live',
+          title: 'JeZai before',
+          src: '/images/candidates/client-jezai-before.jpg',
+          file: 'client-jezai-before.jpg',
+          usage: 'Proof section, JeZai transformation',
+          tags: ['live', 'client', 'jezai', 'before', 'proof'],
+        },
+        {
+          group: 'Client transformations live',
+          title: 'JeZai progress',
+          src: '/images/candidates/client-jezai-progress.jpg',
+          file: 'client-jezai-progress.jpg',
+          usage: 'Proof section, JeZai transformation',
+          tags: ['live', 'client', 'jezai', 'progress', 'proof'],
+        },
+        {
+          group: 'Unused or reference candidates',
+          title: 'Generated wide hero alternate',
+          src: '/images/candidates/generated-wide-hero-alt-01.png',
+          file: 'generated-wide-hero-alt-01.png',
+          usage: 'Reference / alternate hero option',
+          tags: ['review', 'generated', 'hero', 'alternate'],
+        },
+        {
+          group: 'Unused or reference candidates',
+          title: 'Generated clean gym alternate',
+          src: '/images/candidates/generated-clean-gym-alt-01.png',
+          file: 'generated-clean-gym-alt-01.png',
+          usage: 'Reference / alternate background option',
+          tags: ['review', 'generated', 'gym', 'alternate'],
+        },
+        {
+          group: 'Unused or reference candidates',
+          title: 'Coaching post - Fratlete',
+          src: '/images/candidates/instagram-coaching-01-fratlete.jpg',
+          file: 'instagram-coaching-01-fratlete.jpg',
+          usage: 'Social reference candidate',
+          tags: ['review', 'social', 'coaching'],
+        },
+        {
+          group: 'Unused or reference candidates',
+          title: 'Coaching post - 1:1',
+          src: '/images/candidates/instagram-coaching-02-1on1.jpg',
+          file: 'instagram-coaching-02-1on1.jpg',
+          usage: 'Social reference candidate',
+          tags: ['review', 'social', 'coaching'],
+        },
+        {
+          group: 'Unused or reference candidates',
+          title: 'Coaching post - Alpha cofounder',
+          src: '/images/candidates/instagram-coaching-06-alpha-cofounder.jpg',
+          file: 'instagram-coaching-06-alpha-cofounder.jpg',
+          usage: 'Social reference candidate',
+          tags: ['review', 'social', 'coaching'],
+        },
+        {
+          group: 'Unused or reference candidates',
+          title: 'Gym post - peptides caption',
+          src: '/images/candidates/instagram-gym-09-peptides-caption-avoid-copy.jpg',
+          file: 'instagram-gym-09-peptides-caption-avoid-copy.jpg',
+          usage: 'Reference only; avoid copying caption language',
+          tags: ['review', 'social', 'gym'],
+        },
+        {
+          group: 'Unused or reference candidates',
+          title: 'Instagram story faith drop',
+          src: '/images/candidates/instagram-story-08-faith-drop.jpg',
+          file: 'instagram-story-08-faith-drop.jpg',
+          usage: 'Social reference candidate',
+          tags: ['review', 'social', 'story'],
+        },
+        {
+          group: 'Unused or reference candidates',
+          title: 'Pump University trademark drop',
+          src: '/images/candidates/instagram-uofpump-05-trademark-drop.jpg',
+          file: 'instagram-uofpump-05-trademark-drop.jpg',
+          usage: 'Pump University reference candidate',
+          tags: ['review', 'pump', 'social'],
+        },
+        {
+          group: 'Unused or reference candidates',
+          title: 'Labor Day image',
+          src: '/images/candidates/instagram-uofpump-07-labor-day.jpg',
+          file: 'instagram-uofpump-07-labor-day.jpg',
+          usage: 'Configured as site.media.hero, not currently primary mobile quiz image',
+          tags: ['review', 'pump', 'hero'],
+        },
+        {
+          group: 'Unused or reference candidates',
+          title: 'Formal video part 2',
+          src: '/images/candidates/instagram-video-04-formal-part2.jpg',
+          file: 'instagram-video-04-formal-part2.jpg',
+          usage: 'Social / video reference candidate',
+          tags: ['review', 'social', 'video'],
+        },
+        {
+          group: 'Unused or reference candidates',
+          title: 'Pump detail square 05',
+          src: '/images/candidates/uofpump-detail-05-square.jpg',
+          file: 'uofpump-detail-05-square.jpg',
+          usage: 'Pump University product/detail candidate',
+          tags: ['review', 'pump', 'product'],
+        },
+        {
+          group: 'Unused or reference candidates',
+          title: 'Pump detail square 06',
+          src: '/images/candidates/uofpump-detail-06-square.jpg',
+          file: 'uofpump-detail-06-square.jpg',
+          usage: 'Pump University product/detail candidate',
+          tags: ['review', 'pump', 'product'],
+        },
+        {
+          group: 'Unused or reference candidates',
+          title: 'Pump black tee lifestyle',
+          src: '/images/candidates/uofpump-lifestyle-03-black-tee.jpg',
+          file: 'uofpump-lifestyle-03-black-tee.jpg',
+          usage: 'Pump University lifestyle candidate',
+          tags: ['review', 'pump', 'apparel'],
+        },
+        {
+          group: 'Unused or reference candidates',
+          title: 'Pump training lifestyle',
+          src: '/images/candidates/uofpump-lifestyle-04-training.jpg',
+          file: 'uofpump-lifestyle-04-training.jpg',
+          usage: 'Pump University lifestyle candidate',
+          tags: ['review', 'pump', 'training'],
+        },
+        {
+          group: 'Unused or reference candidates',
+          title: 'Pump trademark tee product',
+          src: '/images/candidates/uofpump-product-02-trademark-tee.jpg',
+          file: 'uofpump-product-02-trademark-tee.jpg',
+          usage: 'Pump University product candidate',
+          tags: ['review', 'pump', 'product'],
+        },
+        {
+          group: 'Jai intake copies',
+          title: 'Jaihden own before/after composite',
+          src: '/client-reviews/jai-image-intake/assets/client-a-before-after.jpg',
+          file: 'client-a-before-after.jpg',
+          usage: 'Intake copy; may already be represented by current transformation asset',
+          tags: ['intake', 'jaihden', 'transformation', 'needs-review'],
+        },
+        {
+          group: 'Jai intake copies',
+          title: 'Intake final YouTube thumbnail',
+          src: '/client-reviews/jai-image-intake/assets/youtube-thumbnail-final.jpg',
+          file: 'youtube-thumbnail-final.jpg',
+          usage: 'Source copy for live YouTube thumbnail',
+          tags: ['intake', 'youtube', 'live-source'],
+        },
+        {
+          group: 'Jai intake copies',
+          title: 'Earlier YouTube thumbnail candidate',
+          src: '/client-reviews/jai-image-intake/assets/youtube-thumbnail-candidate.jpg',
+          file: 'youtube-thumbnail-candidate.jpg',
+          usage: 'Older thumbnail candidate',
+          tags: ['intake', 'youtube', 'review'],
+        },
+        {
+          group: 'Jai intake copies',
+          title: 'Alex before source',
+          src: '/client-reviews/jai-image-intake/assets/img-1290.jpg',
+          file: 'img-1290.jpg',
+          usage: 'Alex transformation source image',
+          tags: ['intake', 'client', 'alex', 'before'],
+        },
+        {
+          group: 'Jai intake copies',
+          title: 'Alex progress source',
+          src: '/client-reviews/jai-image-intake/assets/img-2737.jpg',
+          file: 'img-2737.jpg',
+          usage: 'Alex transformation source image',
+          tags: ['intake', 'client', 'alex', 'progress'],
+        },
+        {
+          group: 'Jai intake copies',
+          title: 'Ale before source',
+          src: '/client-reviews/jai-image-intake/assets/img-0592.jpg',
+          file: 'img-0592.jpg',
+          usage: 'Ale transformation source image',
+          tags: ['intake', 'client', 'ale', 'before'],
+        },
+        {
+          group: 'Jai intake copies',
+          title: 'Ale after source',
+          src: '/client-reviews/jai-image-intake/assets/img-2669.jpg',
+          file: 'img-2669.jpg',
+          usage: 'Ale transformation source image',
+          tags: ['intake', 'client', 'ale', 'after'],
+        },
+        {
+          group: 'Jai intake copies',
+          title: 'JeZai before source',
+          src: '/client-reviews/jai-image-intake/assets/img-3774-original.jpg',
+          file: 'img-3774-original.jpg',
+          usage: 'JeZai transformation source image',
+          tags: ['intake', 'client', 'jezai', 'before'],
+        },
+        {
+          group: 'Jai intake copies',
+          title: 'JeZai progress source',
+          src: '/client-reviews/jai-image-intake/assets/img-9119-original.jpg',
+          file: 'img-9119-original.jpg',
+          usage: 'JeZai transformation source image',
+          tags: ['intake', 'client', 'jezai', 'progress'],
+        },
+        {
+          group: 'Jai intake copies',
+          title: 'Selfie source 2401',
+          src: '/client-reviews/jai-image-intake/assets/selfie-2401.jpg',
+          file: 'selfie-2401.jpg',
+          usage: 'Intake reference; not currently placed on main site',
+          tags: ['intake', 'jaihden', 'selfie', 'needs-review'],
+        },
+        {
+          group: 'Jai intake copies',
+          title: 'Selfie source 4503',
+          src: '/client-reviews/jai-image-intake/assets/selfie-4503.jpg',
+          file: 'selfie-4503.jpg',
+          usage: 'Intake reference; not currently placed on main site',
+          tags: ['intake', 'jaihden', 'selfie', 'needs-review'],
+        },
+      ];
+
+      assets.push(
+        {
+          group: 'Round 2 video review frames',
+          title: 'Round 2 contact sheet',
+          src: '/client-reviews/jaihden-round-2/frames/RPReplay_Final1782079485-contact-sheet.jpg',
+          file: 'RPReplay_Final1782079485-contact-sheet.jpg',
+          usage: 'Video review contact sheet for selecting stills',
+          tags: ['review', 'video', 'contact-sheet', 'jaihden'],
+        },
+        ...Array.from({ length: 18 }, (_, index) => {
+          const frame = String(index + 1).padStart(3, '0');
+          return {
+            group: 'Round 2 video review frames',
+            title: `Round 2 keyframe ${frame}`,
+            src: `/client-reviews/jaihden-round-2/keyframes/frame-${frame}.jpg`,
+            file: `frame-${frame}.jpg`,
+            usage: 'Extracted video keyframe for still-image review',
+            tags: ['review', 'video', 'keyframe', 'jaihden'],
+          };
+        }),
+      );
+
+      const preferredFilters = [
+        'all',
+        'live',
+        'review',
+        'intake',
+        'video',
+        'client',
+        'youtube',
+        'hero',
+        'proof',
+        'pump',
+        'jaihden',
+        'needs-review',
+      ];
+
+      const state = {
+        filter: 'all',
+        query: '',
+      };
+
+      const filtersEl = document.querySelector('#filters');
+      const sectionsEl = document.querySelector('#sections');
+      const emptyEl = document.querySelector('#empty');
+      const searchEl = document.querySelector('#search');
+      const visibleCountEl = document.querySelector('#visibleCount');
+
+      document.querySelector('#totalCount').textContent = assets.length;
+      document.querySelector('#liveCount').textContent = assets.filter((item) => item.tags.includes('live')).length;
+      document.querySelector('#reviewCount').textContent = assets.filter((item) => !item.tags.includes('live')).length;
+
+      const allTags = Array.from(new Set(assets.flatMap((item) => item.tags))).sort();
+      const filters = preferredFilters.concat(allTags.filter((tag) => !preferredFilters.includes(tag)));
+
+      filtersEl.innerHTML = filters
+        .map(
+          (filter) =>
+            `<button class="filter" type="button" data-filter="${filter}" aria-pressed="${filter === 'all'}">${filter.replace('-', ' ')}</button>`,
+        )
+        .join('');
+
+      function assetMatches(item) {
+        const haystack = [item.group, item.title, item.file, item.usage, item.src, item.tags.join(' ')]
+          .join(' ')
+          .toLowerCase();
+        const queryMatches = !state.query || haystack.includes(state.query);
+        const filterMatches = state.filter === 'all' || item.tags.includes(state.filter);
+        return queryMatches && filterMatches;
+      }
+
+      function tagClass(tag) {
+        if (tag === 'live') return 'tag live';
+        if (tag === 'needs-review') return 'tag needs-review';
+        return 'tag';
+      }
+
+      function render() {
+        const visible = assets.filter(assetMatches);
+        const groups = Array.from(new Set(assets.map((item) => item.group)));
+
+        sectionsEl.innerHTML = groups
+          .map((group) => {
+            const groupItems = visible.filter((item) => item.group === group);
+            if (!groupItems.length) return '';
+
+            return `
+              <section class="section">
+                <div class="section-head">
+                  <h2>${group}</h2>
+                  <p>${groupItems.length} visible asset${groupItems.length === 1 ? '' : 's'}</p>
+                </div>
+                <div class="grid">
+                  ${groupItems
+                    .map(
+                      (item) => `
+                        <article class="asset">
+                          <a class="media" href="${item.src}" target="_blank" rel="noreferrer">
+                            <img src="${item.src}" alt="${item.title}" loading="lazy" data-file="${item.file}" />
+                            <span class="badge">${item.tags.includes('live') ? 'Live' : item.tags.includes('intake') ? 'Intake' : 'Review'}</span>
+                          </a>
+                          <div class="asset-body">
+                            <h3 class="asset-title">${item.title}</h3>
+                            <p class="meta"><span class="dims" data-file="${item.file}">Loading dimensions...</span></p>
+                            <p class="usage"><strong>Use:</strong> ${item.usage}</p>
+                            <div class="tags">${item.tags.map((tag) => `<span class="${tagClass(tag)}">${tag.replace('-', ' ')}</span>`).join('')}</div>
+                            <p class="path">${item.src}</p>
+                          </div>
+                        </article>
+                      `,
+                    )
+                    .join('')}
+                </div>
+              </section>
+            `;
+          })
+          .join('');
+
+        visibleCountEl.textContent = `Showing ${visible.length} asset${visible.length === 1 ? '' : 's'}`;
+        emptyEl.classList.toggle('is-visible', visible.length === 0);
+        attachImageDimensionHandlers();
+      }
+
+      function attachImageDimensionHandlers() {
+        document.querySelectorAll('img[data-file]').forEach((img) => {
+          const update = () => {
+            const dims = document.querySelectorAll(`.dims[data-file="${CSS.escape(img.dataset.file)}"]`);
+            dims.forEach((el) => {
+              el.textContent =
+                img.naturalWidth && img.naturalHeight
+                  ? `${img.naturalWidth} x ${img.naturalHeight}`
+                  : 'Dimensions unavailable';
+            });
+          };
+
+          if (img.complete) {
+            update();
+          } else {
+            img.addEventListener('load', update, { once: true });
+            img.addEventListener(
+              'error',
+              () => {
+                document.querySelectorAll(`.dims[data-file="${CSS.escape(img.dataset.file)}"]`).forEach((el) => {
+                  el.textContent = 'Image missing or unreadable';
+                });
+              },
+              { once: true },
+            );
+          }
+        });
+      }
+
+      filtersEl.addEventListener('click', (event) => {
+        const button = event.target.closest('button[data-filter]');
+        if (!button) return;
+
+        state.filter = button.dataset.filter;
+        filtersEl.querySelectorAll('button').forEach((filterButton) => {
+          filterButton.setAttribute('aria-pressed', String(filterButton === button));
+        });
+        render();
+      });
+
+      searchEl.addEventListener('input', () => {
+        state.query = searchEl.value.trim().toLowerCase();
+        render();
+      });
+
+      render();
+    </script>
+  </body>
+</html>

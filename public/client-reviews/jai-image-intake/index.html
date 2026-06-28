@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Jaihden Image Intake Review</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #0b0c0e;
+        --panel: rgba(255, 255, 255, 0.055);
+        --panel-strong: rgba(255, 255, 255, 0.09);
+        --line: rgba(255, 255, 255, 0.16);
+        --text: #f8f8f6;
+        --muted: rgba(248, 248, 246, 0.68);
+        --red: #e43d30;
+        --green: #62d18f;
+        --yellow: #f4c95d;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background:
+          radial-gradient(circle at 20% 0%, rgba(228, 61, 48, 0.18), transparent 34rem),
+          linear-gradient(180deg, #111318, var(--bg) 34rem);
+        color: var(--text);
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 1.45;
+      }
+
+      header,
+      main {
+        width: min(1180px, calc(100% - 32px));
+        margin: 0 auto;
+      }
+
+      header {
+        padding: 48px 0 28px;
+      }
+
+      .eyebrow {
+        margin: 0 0 10px;
+        color: var(--red);
+        font-size: 0.78rem;
+        font-weight: 900;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+
+      h1 {
+        max-width: 820px;
+        margin-bottom: 14px;
+        font-size: clamp(2.4rem, 8vw, 5.3rem);
+        line-height: 0.95;
+        letter-spacing: -0.02em;
+      }
+
+      h2 {
+        margin-bottom: 16px;
+        font-size: clamp(1.65rem, 4vw, 2.6rem);
+        line-height: 1;
+      }
+
+      h3 {
+        margin-bottom: 8px;
+        font-size: 1.05rem;
+      }
+
+      p {
+        color: var(--muted);
+      }
+
+      .summary {
+        display: grid;
+        gap: 12px;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        margin: 28px 0 36px;
+      }
+
+      .summary div,
+      section {
+        border: 1px solid var(--line);
+        background: var(--panel);
+        backdrop-filter: blur(18px);
+      }
+
+      .summary div {
+        padding: 16px;
+      }
+
+      .summary strong {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 1.2rem;
+      }
+
+      section {
+        margin-bottom: 18px;
+        padding: 20px;
+      }
+
+      .section-head {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        min-height: 28px;
+        padding: 5px 9px;
+        border: 1px solid var(--line);
+        background: var(--panel-strong);
+        color: var(--muted);
+        font-size: 0.76rem;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .tag.good {
+        color: var(--green);
+      }
+
+      .tag.warn {
+        color: var(--yellow);
+      }
+
+      .grid {
+        display: grid;
+        gap: 14px;
+        grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      }
+
+      figure {
+        margin: 0;
+        border: 1px solid var(--line);
+        background: rgba(0, 0, 0, 0.22);
+      }
+
+      img {
+        display: block;
+        width: 100%;
+        height: auto;
+        background: #050608;
+      }
+
+      .thumb img {
+        aspect-ratio: 4 / 5;
+        object-fit: cover;
+      }
+
+      .wide img {
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+      }
+
+      figcaption {
+        padding: 12px;
+        color: var(--muted);
+        font-size: 0.85rem;
+      }
+
+      figcaption strong {
+        display: block;
+        margin-bottom: 3px;
+        color: var(--text);
+        font-size: 0.92rem;
+      }
+
+      .notes {
+        display: grid;
+        gap: 10px;
+        margin: 16px 0 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .notes li {
+        padding: 12px;
+        border-left: 3px solid var(--red);
+        background: rgba(255, 255, 255, 0.045);
+        color: var(--muted);
+      }
+
+      .questions {
+        display: grid;
+        gap: 10px;
+        margin: 0;
+        padding-left: 20px;
+        color: var(--muted);
+      }
+
+      code {
+        color: #fff;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 0.9em;
+      }
+
+      footer {
+        width: min(1180px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 20px 0 48px;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      @media (max-width: 640px) {
+        header {
+          padding-top: 32px;
+        }
+
+        section {
+          padding: 15px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <p class="eyebrow">Image intake review</p>
+      <h1>Jai asset sorting for site updates</h1>
+      <p>
+        This page separates Jaihden-owned assets from likely client transformation assets.
+        Nothing here should be published as a named result until Jai confirms the client grouping,
+        result detail, and approval status.
+      </p>
+      <div class="summary">
+        <div>
+          <strong>3 named transformation sets</strong>
+          <span>Confirmed groups: Alex, Ale, and JeZai.</span>
+        </div>
+        <div>
+          <strong>10 files</strong>
+          <span>Received in <code>New Pictures from jai/</code>.</span>
+        </div>
+        <div>
+          <strong>1 final YouTube thumbnail</strong>
+          <span><code>IMG_0527.jpg</code> is the higher-quality "More than a coach" thumbnail.</span>
+        </div>
+        <div>
+          <strong>1 Jaihden transformation</strong>
+          <span>The before/after composite is Jaihden's own, not a client result.</span>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Jaihden-owned</p>
+            <h2>Own transformation / proof asset</h2>
+            <p>
+              This is strong proof, but it may already be represented in the current hero slider.
+              The ratio is tall and split-screen, so it is not automatically ideal for a full hero slide.
+            </p>
+          </div>
+          <span class="tag warn">Confirm placement</span>
+        </div>
+        <div class="grid">
+          <figure class="thumb">
+            <img src="./assets/client-a-before-after.jpg" alt="Jaihden before and after transformation composite" />
+            <figcaption>
+              <strong>Jaihden own transformation</strong>
+              File: <code>CCB5E3F1-3F41-4E68-A736-886DA9DB749C.JPG</code><br />
+              Best use: proof/transformation carousel, not necessarily the top hero because of sizing and crop risk.
+            </figcaption>
+          </figure>
+        </div>
+        <ul class="notes">
+          <li>Recommendation: keep this as a proof/transformation slide or supporting proof card unless Jai specifically wants it as the hero image.</li>
+          <li>Need to compare against the existing current transformation slide before replacing anything.</li>
+        </ul>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">YouTube / personality</p>
+            <h2>"More than a coach" final thumbnail</h2>
+            <p>
+              This is the actual higher-quality thumbnail added after the first intake pass.
+              It should replace the low-res YouTube/personality slide image.
+            </p>
+          </div>
+          <span class="tag good">Added to site</span>
+        </div>
+        <div class="grid">
+          <figure class="wide">
+            <img src="./assets/youtube-thumbnail-final.jpg" alt="Jaihden YouTube thumbnail final" />
+            <figcaption>
+              <strong>YouTube thumbnail final</strong>
+              File: <code>IMG_0527.jpg</code><br />
+              Site use: replaces the "More than a coach" / YouTube slide image.
+            </figcaption>
+          </figure>
+          <figure class="wide">
+            <img src="./assets/youtube-thumbnail-candidate.jpg" alt="Earlier Jaihden YouTube thumbnail candidate" />
+            <figcaption>
+              <strong>Earlier candidate</strong>
+              File: <code>IMG_1972.JPG</code><br />
+              Keep as reference only.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Confirmed client</p>
+            <h2>Alex transformation</h2>
+            <p>
+              Confirmed by folder review notes: <code>IMG_2737.JPG</code> and <code>IMG_1290.HEIC</code>
+              belong to Alex's transformation.
+            </p>
+          </div>
+          <span class="tag good">Grouped</span>
+        </div>
+        <div class="grid">
+          <figure class="thumb">
+            <img src="./assets/img-1290.jpg" alt="Alex before mirror photo" />
+            <figcaption>
+              <strong>Alex before</strong>
+              File: <code>IMG_1290.HEIC</code>
+            </figcaption>
+          </figure>
+          <figure class="thumb">
+            <img src="./assets/img-2737.jpg" alt="Alex progress mirror photo" />
+            <figcaption>
+              <strong>Alex progress</strong>
+              File: <code>IMG_2737.JPG</code>
+            </figcaption>
+          </figure>
+        </div>
+        <ul class="notes">
+          <li>Still needed before publishing: result detail, timeframe, and approved quote or caption.</li>
+        </ul>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Confirmed client</p>
+            <h2>Ale transformation</h2>
+            <p>
+              Confirmed note: the first transformation with the skinny white client is Ale.
+              These are grouped as Ale unless Jai later removes one of the files.
+            </p>
+          </div>
+          <span class="tag good">Grouped</span>
+        </div>
+        <div class="grid">
+          <figure class="thumb">
+            <img src="./assets/img-0592.jpg" alt="Ale before mirror photo" />
+            <figcaption>
+              <strong>Ale before</strong>
+              File: <code>IMG_0592.JPG</code>
+            </figcaption>
+          </figure>
+          <figure class="thumb">
+            <img src="./assets/img-2669.jpg" alt="Ale after physique photo" />
+            <figcaption>
+              <strong>Ale after</strong>
+              File: <code>IMG_2669.JPEG</code><br />
+              Note: face is cropped, so confirm this exact crop is approved.
+            </figcaption>
+          </figure>
+        </div>
+        <ul class="notes">
+          <li>Still needed before publishing: result detail, timeframe, and approved quote or caption.</li>
+        </ul>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Confirmed client</p>
+            <h2>JeZai transformation</h2>
+            <p>
+              Confirmed note: the last transformation is JeZai.
+              These are grouped as JeZai based on the remaining final transformation files.
+            </p>
+          </div>
+          <span class="tag good">Grouped</span>
+        </div>
+        <div class="grid">
+          <figure class="thumb">
+            <img src="./assets/img-3774-original.jpg" alt="JeZai before beach photo" />
+            <figcaption>
+              <strong>JeZai before</strong>
+              File: <code>IMG_3774_Original.JPG</code>
+            </figcaption>
+          </figure>
+          <figure class="thumb">
+            <img src="./assets/img-9119-original.jpg" alt="JeZai progress gym mirror photo" />
+            <figcaption>
+              <strong>JeZai progress / after</strong>
+              File: <code>IMG_9119_Original.JPG</code>
+            </figcaption>
+          </figure>
+        </div>
+        <ul class="notes">
+          <li>Still needed before publishing: result detail, timeframe, and approved quote or caption.</li>
+        </ul>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Lower priority</p>
+            <h2>Casual Jaihden selfies</h2>
+            <p>
+              These feel more casual and less useful for the current premium homepage surface.
+              They may be useful for social texture later, but I would not prioritize them for the hero.
+            </p>
+          </div>
+          <span class="tag">Hold</span>
+        </div>
+        <div class="grid">
+          <figure class="thumb">
+            <img src="./assets/selfie-2401.jpg" alt="Jaihden casual selfie" />
+            <figcaption>
+              <strong>Casual selfie</strong>
+              File: <code>IMG_2401.JPG</code>
+            </figcaption>
+          </figure>
+          <figure class="thumb">
+            <img src="./assets/selfie-4503.jpg" alt="Jaihden casual car selfie" />
+            <figcaption>
+              <strong>Casual car selfie</strong>
+              File: <code>IMG_4503.JPG</code>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Reply needed</p>
+            <h2>Questions for Jai</h2>
+          </div>
+          <span class="tag warn">Before publishing names/results</span>
+        </div>
+        <ol class="questions">
+          <li>For Alex, Ale, and JeZai: confirm the exact result detail, time period, and approved quote/caption.</li>
+          <li>Confirm whether <code>IMG_0527.jpg</code> is approved as the final YouTube / "More than a coach" thumbnail.</li>
+          <li>Should Jaihden's own before/after composite stay in the transformation carousel, replace the current crop, or be skipped because of ratio/crop?</li>
+          <li>Are any of the casual selfies meant for the site, or were they just extra reference?</li>
+        </ol>
+      </section>
+    </main>
+
+    <footer>
+      Static review page generated for internal asset sorting. Do not publish as client proof without explicit approval.
+    </footer>
+  </body>
+</html>

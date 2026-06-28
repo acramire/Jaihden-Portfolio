@@ -104,7 +104,17 @@ const visibleNav = navItems.filter((item) => {
             <div class="hc-slide__shade" />
             <div class="hc-slide__content">
               <p class="eyebrow">{slide.eyebrow}</p>
-              <h2 class="hc-slide__title">{slide.title}</h2>
+              <h2 class="hc-slide__title">
+                {slide.kind === 'questionnaire' ? (
+                  <>
+                    <span class="mobile-title-line">Become the best</span>{' '}
+                    <span class="mobile-title-line">version of</span>{' '}
+                    <span class="mobile-title-line">yourself.</span>
+                  </>
+                ) : (
+                  slide.title
+                )}
+              </h2>
 
               {slide.kind === 'questionnaire' ? (
                 <div class="quiz" data-quiz>
@@ -211,8 +221,23 @@ const visibleNav = navItems.filter((item) => {
       <div class="proof-grid">
         {proof.map((item) => (
           <article class="proof-card">
-            {item.image && <img src={item.image} alt={`Result from ${item.name}`} />}
-            <p class="proof-quote">“{item.quote}”</p>
+            {item.images?.length ? (
+              <div class="proof-images">
+                {item.images.map((image) => (
+                  <figure>
+                    <img src={image.src} alt={image.alt} loading="lazy" />
+                    {image.label && <figcaption>{image.label}</figcaption>}
+                  </figure>
+                ))}
+              </div>
+            ) : (
+              item.image && <img src={item.image} alt={`Result from ${item.name}`} loading="lazy" />
+            )}
+            {item.quote ? (
+              <p class="proof-quote">“{item.quote}”</p>
+            ) : (
+              <p class="proof-note">Transformation photos added. Result details coming soon.</p>
+            )}
             <span>{item.detail ? `${item.name} · ${item.detail}` : item.name}</span>
           </article>
         ))}
@@ -337,7 +362,7 @@ const visibleNav = navItems.filter((item) => {
       <img src={site.media.pumpAthletes} alt="Pump University athletes in Trademark Collection apparel" loading="lazy" />
     </div>
     <div class="brand-copy">
-      <p class="eyebrow">Co-equal brand pillar</p>
+      <p class="eyebrow">Pump University</p>
       <h2>Pump University: Look Great. Feel Better.</h2>
       <p class="bio-lead">
         The brand side of Jaihden's ecosystem: apparel, culture, and the same

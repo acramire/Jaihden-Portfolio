@@ -33,9 +33,10 @@ export const site = {
     // Pump University athletes (not Jaihden) for the brand pillar, so the same
     // Jaihden photo isn't repeated across every major section.
     pumpAthletes: '/images/candidates/uofpump-hero-01-trademark-gym.jpg',
-    youtubeThumb: '/images/candidates/instagram-video-03-ceo-frat-formal.jpg',
-    // Bio-optimization now uses Jaihden (round-2 request).
-    bioOptimization: '/images/candidates/instagram-profile-10-avatar.jpg',
+    youtubeThumb: '/images/candidates/youtube-more-than-coach-thumbnail.jpg',
+    // Reuse the stronger Jaihden image for bio-optimization; the profile avatar
+    // is a lower-quality version of the same look.
+    bioOptimization: '/images/candidates/after-physique-strong.jpg',
   },
 };
 
@@ -172,11 +173,65 @@ export const storyBeats = [
 // Never fabricate quotes, names, or results. To enable the section, add real
 // entries here and the nav link returns automatically.
 export const proof: {
-  quote: string;
+  quote?: string;
   name: string;
   detail?: string;
   image?: string;
-}[] = [];
+  images?: {
+    src: string;
+    alt: string;
+    label?: string;
+  }[];
+}[] = [
+  {
+    name: 'Alex',
+    detail: 'Client transformation · details pending',
+    images: [
+      {
+        src: '/images/candidates/client-alex-before.png',
+        alt: 'Alex before transformation mirror photo',
+        label: 'Before',
+      },
+      {
+        src: '/images/candidates/client-alex-progress.jpg',
+        alt: 'Alex transformation progress mirror photo',
+        label: 'Progress',
+      },
+    ],
+  },
+  {
+    name: 'Ale',
+    detail: 'Client transformation · details pending',
+    images: [
+      {
+        src: '/images/candidates/client-ale-before.jpg',
+        alt: 'Ale before transformation mirror photo',
+        label: 'Before',
+      },
+      {
+        src: '/images/candidates/client-ale-after.jpg',
+        alt: 'Ale after transformation physique photo',
+        label: 'After',
+      },
+    ],
+  },
+  {
+    name: 'JeZai',
+    detail: 'Client transformation · details pending',
+    images: [
+      {
+        src: '/images/candidates/client-jezai-before.jpg',
+        alt: 'JeZai before transformation beach photo',
+        label: 'Before',
+      },
+      {
+        src: '/images/candidates/client-jezai-progress.jpg',
+        alt: 'JeZai transformation progress mirror photo',
+        label: 'Progress',
+      },
+    ],
+  },
+];
 
 export const featuredContent = [
   {
