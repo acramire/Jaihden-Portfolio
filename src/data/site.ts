@@ -46,7 +46,7 @@ export const site = {
 // clearly-named placeholder (Instagram, where the code is promoted).
 export const resources = {
   fratleteCode: 'FRATLETE',
-  fratleteUrl: '',
+  fratleteUrl: 'https://peak.you/',
 };
 
 // Sticky CTA + primary funnel actions. Labels live here so the funnel wording
