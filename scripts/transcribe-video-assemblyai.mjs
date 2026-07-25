@@ -2,12 +2,15 @@
 
 import { spawn } from 'node:child_process';
 import { mkdir, readFile, stat, writeFile } from 'node:fs/promises';
+import os from 'node:os';
 import path from 'node:path';
 
 async function loadLocalEnv() {
   const candidates = [
     path.resolve('scripts/.env'),
     path.resolve('.env'),
+    path.join(os.homedir(), '.config', 'transcribe-media', '.env'),
+    path.join(os.homedir(), '.assemblyai.env'),
   ];
 
   for (const envPath of candidates) {
@@ -42,6 +45,22 @@ function isHttpUrl(value) {
   return /^https?:\/\//i.test(value);
 }
 
+function formatMs(ms) {
+  if (!Number.isFinite(ms)) return '00:00';
+
+  const totalSeconds = Math.floor(ms / 1000);
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  const minutePart = String(minutes).padStart(hours ? 2 : 1, '0');
+  const secondPart = String(seconds).padStart(2, '0');
+
+  return hours
+    ? `${hours}:${minutePart}:${secondPart}`
+    : `${minutePart}:${secondPart}`;
+}
+
 async function pathExists(filePath) {
   try {
     await stat(filePath);
@@ -51,25 +70,128 @@ async function pathExists(filePath) {
   }
 }
 
+function printHelp() {
+  console.log(`Usage:
+  transcribe-media <media-file-or-url> [output-dir] [options]
+  node scripts/transcribe-video-assemblyai.mjs <media-file-or-url> [output-dir] [options]
+
+Examples:
+  transcribe-media ./voice-memo.m4a
+  transcribe-media ./interview.mov --out transcripts/client-interview --title "Client interview"
+  transcribe-media https://youtu.be/example --language en_us --no-highlights
+
+Options:
+  -o, --out <dir>        Output directory. Defaults to ./transcripts
+  -l, --language <code>  AssemblyAI language code. Defaults to en_us
+  --title <text>         Human-readable title in the Markdown output
+  --direct-url           Send an HTTP URL directly to AssemblyAI instead of downloading with yt-dlp
+  --no-speakers          Disable speaker labels
+  --no-chapters          Disable auto chapters
+  --no-highlights        Disable auto highlights
+  -h, --help             Show this help
+
+Environment:
+  ASSEMBLYAI_API_KEY is required.
+  Optional env files are loaded from ./scripts/.env, ./.env, ~/.config/transcribe-media/.env, and ~/.assemblyai.env.`);
+}
+
+function readValueArg(args, index, flag) {
+  const value = args[index + 1];
+
+  if (!value || value.startsWith('-')) {
+    throw new Error(`Missing value for ${flag}`);
+  }
+
+  return value;
+}
+
+function parseArgs(args) {
+  const options = {
+    autoChapters: process.env.ASSEMBLYAI_AUTO_CHAPTERS !== '0',
+    autoHighlights: process.env.ASSEMBLYAI_AUTO_HIGHLIGHTS !== '0',
+    directUrl: false,
+    help: false,
+    languageCode: process.env.ASSEMBLYAI_LANGUAGE_CODE || 'en_us',
+    outputDir: process.env.TRANSCRIBE_OUTPUT_DIR || 'transcripts',
+    speakerLabels: process.env.ASSEMBLYAI_SPEAKER_LABELS !== '0',
+    title: '',
+  };
+
+  const positionals = [];
+
+  for (let index = 0; index < args.length; index += 1) {
+    const arg = args[index];
+
+    if (arg === '-h' || arg === '--help') {
+      options.help = true;
+      continue;
+    }
+
+    if (arg === '-o' || arg === '--out') {
+      options.outputDir = readValueArg(args, index, arg);
+      index += 1;
+      continue;
+    }
+
+    if (arg === '-l' || arg === '--language') {
+      options.languageCode = readValueArg(args, index, arg);
+      index += 1;
+      continue;
+    }
+
+    if (arg === '--title') {
+      options.title = readValueArg(args, index, arg);
+      index += 1;
+      continue;
+    }
+
+    if (arg === '--direct-url') {
+      options.directUrl = true;
+      continue;
+    }
+
+    if (arg === '--no-speakers') {
+      options.speakerLabels = false;
+      continue;
+    }
+
+    if (arg === '--no-chapters') {
+      options.autoChapters = false;
+      continue;
+    }
+
+    if (arg === '--no-highlights') {
+      options.autoHighlights = false;
+      continue;
+    }
+
+    if (arg.startsWith('-')) {
+      throw new Error(`Unknown option: ${arg}`);
+    }
+
+    positionals.push(arg);
+  }
+
+  if (positionals.length > 2) {
+    throw new Error('Expected one input and an optional output directory.');
+  }
+
+  if (positionals[0]) {
+    options.input = positionals[0];
+  }
+
+  if (positionals[1]) {
+    options.outputDir = positionals[1];
+  }
+
+  return options;
+}
+
 await loadLocalEnv();
 
 const API_BASE_URL = process.env.ASSEMBLYAI_BASE_URL || 'https://api.assemblyai.com';
-const API_KEY = process.env.ASSEMBLYAI_API_KEY;
 const YT_DLP_BIN = process.env.YT_DLP_BIN || 'yt-dlp';
 const POLL_MS = Number(process.env.ASSEMBLYAI_POLL_MS || 5000);
-
-const input = process.argv[2];
-const outputDir = process.argv[3] || 'transcripts';
-
-if (!input) {
-  console.error('Usage: ASSEMBLYAI_API_KEY=... node scripts/transcribe-video-assemblyai.mjs <video-url-or-local-media-file> [output-dir]');
-  process.exit(1);
-}
-
-if (!API_KEY) {
-  console.error('Missing ASSEMBLYAI_API_KEY. Export it before running this script.');
-  process.exit(1);
-}
 
 function run(command, args) {
   return new Promise((resolve, reject) => {
@@ -132,7 +254,7 @@ async function assemblyFetch(endpoint, options = {}) {
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
     ...options,
     headers: {
-      Authorization: API_KEY,
+      Authorization: process.env.ASSEMBLYAI_API_KEY,
       ...(options.headers || {}),
     },
   });
@@ -173,7 +295,7 @@ async function uploadMedia(filePath) {
   return result.upload_url;
 }
 
-async function submitTranscript(uploadUrl) {
+async function submitTranscript(audioUrl, options) {
   console.log('Submitting transcription job...');
 
   const result = await assemblyFetch('/v2/transcript', {
@@ -182,13 +304,13 @@ async function submitTranscript(uploadUrl) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      audio_url: uploadUrl,
-      language_code: 'en_us',
+      audio_url: audioUrl,
+      language_code: options.languageCode,
       punctuate: true,
       format_text: true,
-      speaker_labels: true,
-      auto_chapters: true,
-      auto_highlights: true,
+      speaker_labels: options.speakerLabels,
+      auto_chapters: options.autoChapters,
+      auto_highlights: options.autoHighlights,
     }),
   });
 
@@ -218,11 +340,13 @@ async function waitForTranscript(transcriptId) {
   }
 }
 
-function formatTranscriptText(transcript) {
+function formatTranscriptText(transcript, context) {
   const parts = [];
 
-  parts.push(`# Transcript: ${transcript.id}`);
+  parts.push(`# ${context.title || `Transcript: ${transcript.id}`}`);
   parts.push('');
+  parts.push(`Source: ${context.input}`);
+  parts.push(`Generated: ${new Date().toISOString()}`);
   parts.push(`Status: ${transcript.status}`);
   parts.push(`Language: ${transcript.language_code || 'unknown'}`);
   parts.push('');
@@ -249,6 +373,17 @@ function formatTranscriptText(transcript) {
     parts.push('');
   }
 
+  if (Array.isArray(transcript.utterances) && transcript.utterances.length > 0) {
+    parts.push('## Speaker Transcript');
+    parts.push('');
+
+    for (const utterance of transcript.utterances) {
+      const speaker = utterance.speaker ? `Speaker ${utterance.speaker}` : 'Speaker';
+      parts.push(`**${formatMs(utterance.start)} ${speaker}:** ${utterance.text || ''}`.trim());
+      parts.push('');
+    }
+  }
+
   parts.push('## Full Text');
   parts.push('');
   parts.push(transcript.text || '');
@@ -258,18 +393,40 @@ function formatTranscriptText(transcript) {
 }
 
 async function main() {
+  const options = parseArgs(process.argv.slice(2));
+
+  if (options.help) {
+    printHelp();
+    return;
+  }
+
+  if (!options.input) {
+    printHelp();
+    process.exit(1);
+  }
+
+  if (!process.env.ASSEMBLYAI_API_KEY) {
+    console.error('Missing ASSEMBLYAI_API_KEY. Export it or add it to one of the supported .env files.');
+    process.exit(1);
+  }
+
+  const input = options.input;
+  const outputDir = path.resolve(options.outputDir);
+
   await mkdir(outputDir, { recursive: true });
 
-  const mediaPath = isHttpUrl(input)
+  const mediaPath = isHttpUrl(input) && !options.directUrl
     ? await downloadAudio(input, outputDir)
     : path.resolve(input);
 
-  if (!(await pathExists(mediaPath))) {
+  if (!options.directUrl && !(await pathExists(mediaPath))) {
     throw new Error(`Media file not found: ${mediaPath}`);
   }
 
-  const uploadUrl = await uploadMedia(mediaPath);
-  const transcriptId = await submitTranscript(uploadUrl);
+  const audioUrl = options.directUrl
+    ? input
+    : await uploadMedia(mediaPath);
+  const transcriptId = await submitTranscript(audioUrl, options);
   const transcript = await waitForTranscript(transcriptId);
 
   const outputBase = path.join(outputDir, `assemblyai-${transcriptId}`);
@@ -277,11 +434,11 @@ async function main() {
   const txtPath = `${outputBase}.md`;
 
   await writeFile(jsonPath, `${JSON.stringify(transcript, null, 2)}\n`);
-  await writeFile(txtPath, formatTranscriptText(transcript));
+  await writeFile(txtPath, formatTranscriptText(transcript, { input, title: options.title }));
 
   console.log('');
   console.log('Done.');
-  console.log(`Media file: ${mediaPath}`);
+  console.log(`Media file: ${options.directUrl ? input : mediaPath}`);
   console.log(`Transcript JSON: ${jsonPath}`);
   console.log(`Transcript Markdown: ${txtPath}`);
 }

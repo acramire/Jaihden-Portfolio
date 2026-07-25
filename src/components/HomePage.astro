@@ -90,7 +90,10 @@ const visibleNav = navItems.filter((item) => {
             aria-roledescription="slide"
             aria-label={`${index + 1} of ${heroSlides.length}`}
           >
-            <img class="hc-slide__img" src={slide.image} alt={slide.alt} loading={index === 0 ? 'eager' : 'lazy'} />
+            <picture class="hc-slide__picture">
+              {'desktopImage' in slide && <source media="(min-width: 981px)" srcset={slide.desktopImage} />}
+              <img class="hc-slide__img" src={slide.image} alt={slide.alt} loading={index === 0 ? 'eager' : 'lazy'} />
+            </picture>
             {slide.id === 'youtube' && (
               <a
                 class="hc-youtube-play"

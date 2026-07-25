@@ -23,8 +23,9 @@ export const site = {
   media: {
     hero: '/images/candidates/instagram-uofpump-07-labor-day.jpg',
     transformationHero: '/images/candidates/transformation-before-after.jpg?v=20260620-crop',
-    afterPhysiqueStrong: '/images/candidates/after-physique-strong.jpg',
-    flexProfile: '/images/candidates/after-physique-strong.jpg',
+    afterPhysiqueStrong: '/images/candidates/after-physique-strong.jpg?v=20260627-hero',
+    flexProfile: '/images/candidates/after-physique-strong.jpg?v=20260627-hero',
+    flexProfileDesktop: '/images/candidates/after-physique-strong-desktop.jpg?v=20260627-desktop-left',
     transformation: '/images/candidates/transformation-before-after.jpg?v=20260620-crop',
     story: '/images/candidates/story-portrait-hoodie.jpg',
     og: '/images/candidates/generated-og-background-alt-01.png',
@@ -36,7 +37,7 @@ export const site = {
     youtubeThumb: '/images/candidates/youtube-more-than-coach-thumbnail.jpg',
     // Reuse the stronger Jaihden image for bio-optimization; the profile avatar
     // is a lower-quality version of the same look.
-    bioOptimization: '/images/candidates/after-physique-strong.jpg',
+    bioOptimization: '/images/candidates/after-physique-strong.jpg?v=20260627-hero',
   },
 };
 
@@ -263,6 +264,7 @@ export const heroSlides = [
     id: 'goal',
     kind: 'questionnaire' as const,
     image: site.media.flexProfile,
+    desktopImage: site.media.flexProfileDesktop,
     alt: 'Jaihden Torres standing in the gym after a session',
     eyebrow: 'Coaching that fits your life',
     title: 'Become the best version of yourself.',
@@ -281,6 +283,7 @@ export const heroSlides = [
     id: 'pump',
     kind: 'panel' as const,
     image: site.media.pumpUniversityHero,
+    desktopImage: site.media.pumpAthletes,
     alt: 'Jaihden Torres wearing Pump University apparel',
     eyebrow: 'Meet the CEO',
     title: 'Pump University.',
