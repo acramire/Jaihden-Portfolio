@@ -239,9 +239,22 @@ const visibleNav = navItems.filter((item) => {
             {item.quote ? (
               <p class="proof-quote">“{item.quote}”</p>
             ) : (
-              <p class="proof-note">Transformation photos added. Result details coming soon.</p>
+              <p class="proof-note">Photos are ready. Confirm the details below before publishing result claims.</p>
             )}
             <span>{item.detail ? `${item.name} · ${item.detail}` : item.name}</span>
+            {item.intakeChecklist?.length && (
+              <div class="proof-intake" aria-label={`${item.name} details to confirm`}>
+                <p class="proof-intake__title">Stepbrother checklist</p>
+                <dl>
+                  {item.intakeChecklist.map((field) => (
+                    <div>
+                      <dt>{field.label}</dt>
+                      <dd>{field.prompt}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            )}
           </article>
         ))}
       </div>
@@ -412,7 +425,14 @@ const visibleNav = navItems.filter((item) => {
 </main>
 
 <!-- Sticky mobile CTA -->
-<a class="sticky-cta" href={stickyHref} data-cta="sticky-book" data-sticky-cta>
+<a
+  class="sticky-cta"
+  href={stickyHref}
+  data-cta="sticky-book"
+  data-sticky-cta
+  aria-hidden="true"
+  tabindex="-1"
+>
   {cta.stickyLabel}
 </a>
 
@@ -577,12 +597,23 @@ const visibleNav = navItems.filter((item) => {
   const sticky = document.querySelector<HTMLElement>('[data-sticky-cta]');
   const heroSection = document.querySelector<HTMLElement>('#hero');
   if (sticky && heroSection) {
-    const sio = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => sticky.classList.toggle('is-visible', !entry.isIntersecting));
-      },
-      { threshold: 0.15 },
-    );
-    sio.observe(heroSection);
+    const syncSticky = () => {
+      const isPastHero = heroSection.getBoundingClientRect().bottom <= 0;
+      sticky.classList.toggle('is-visible', isPastHero);
+      sticky.setAttribute('aria-hidden', String(!isPastHero));
+      if (isPastHero) sticky.removeAttribute('tabindex');
+      else sticky.setAttribute('tabindex', '-1');
+    };
+    let stickyFrame = 0;
+    const requestStickySync = () => {
+      if (stickyFrame) return;
+      stickyFrame = requestAnimationFrame(() => {
+        stickyFrame = 0;
+        syncSticky();
+      });
+    };
+    window.addEventListener('scroll', requestStickySync, { passive: true });
+    window.addEventListener('resize', requestStickySync);
+    syncSticky();
   }
 </script>

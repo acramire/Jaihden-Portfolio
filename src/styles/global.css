@@ -1012,7 +1012,7 @@ h3 {
   transform: translateY(-2px);
 }
 
-.proof-card span,
+.proof-card > span,
 .contact-grid span,
 .content-card span {
   display: block;
@@ -1324,6 +1324,48 @@ h3 {
   color: var(--muted);
   font-size: 0.95rem;
   font-weight: 650;
+}
+
+.proof-intake {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.proof-card .proof-intake__title {
+  margin: 0 0 14px;
+  color: var(--ink);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.proof-intake dl {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+}
+
+.proof-intake dl > div {
+  padding-left: 12px;
+  border-left: 2px solid rgba(228, 61, 48, 0.32);
+}
+
+.proof-intake dt {
+  margin-bottom: 2px;
+  color: var(--red-deep);
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.proof-intake dd {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.42;
 }
 
 .brand-copy .eyebrow {
@@ -2223,16 +2265,52 @@ footer {
     min-height: 94svh;
   }
 
+  .hc-slide[data-slide-id='proof'] {
+    justify-content: flex-end;
+    background: #0b0c0e;
+  }
+
+  .hc-slide[data-slide-id='proof'] .hc-slide__picture,
+  .hc-slide[data-slide-id='proof'] .hc-slide__shade {
+    top: 0;
+    right: 0;
+    bottom: auto;
+    left: 0;
+    height: 48%;
+  }
+
+  .hc-slide[data-slide-id='proof'] .hc-slide__picture {
+    background: #0b0c0e;
+  }
+
+  .hc-slide[data-slide-id='proof'] .hc-slide__img {
+    object-fit: cover;
+    object-position: center 58%;
+  }
+
+  .hc-slide[data-slide-id='proof'] .hc-slide__shade {
+    background: linear-gradient(0deg, #0b0c0e 0%, rgba(11, 12, 14, 0) 28%);
+  }
+
+  .hc-slide[data-slide-id='proof'] .hc-slide__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 52%;
+    padding: 28px 20px 54px;
+    background: #0b0c0e;
+  }
+
   .hc-slide[data-slide-kind='questionnaire'] {
     min-height: 98svh;
   }
 
   .hc-slide[data-slide-kind='questionnaire'] .hc-slide__content {
-    padding: 118px 20px 56px;
+    padding: 82px 20px 56px;
   }
 
   .hc-slide[data-slide-kind='questionnaire'] .hc-slide__content > .hc-slide__title {
-    top: 64px;
+    top: 28px;
   }
 
   .hc-slide[data-slide-kind='questionnaire'] .mobile-title-line {

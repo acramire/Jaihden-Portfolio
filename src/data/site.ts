@@ -27,6 +27,7 @@ export const site = {
     flexProfile: '/images/candidates/after-physique-strong.jpg?v=20260627-hero',
     flexProfileDesktop: '/images/candidates/after-physique-strong-desktop.jpg?v=20260627-desktop-left',
     transformation: '/images/candidates/transformation-before-after.jpg?v=20260620-crop',
+    transformationFull: '/client-reviews/jai-image-intake/assets/client-a-before-after.jpg',
     story: '/images/candidates/story-portrait-hoodie.jpg',
     og: '/images/candidates/generated-og-background-alt-01.png',
     pumpUniversityHero: '/images/candidates/pump-university-apparel.jpg',
@@ -173,10 +174,45 @@ export const storyBeats = [
 // section and its "Proof" nav link do not render at all (see index.astro).
 // Never fabricate quotes, names, or results. To enable the section, add real
 // entries here and the nav link returns automatically.
+const transformationIntake = (name: string) => [
+  {
+    label: 'Role / goal',
+    prompt: `Ask: What was ${name}'s starting point and primary goal?`,
+  },
+  {
+    label: 'Coaching scope',
+    prompt: 'Ask: Which parts of training, nutrition, accountability, or lifestyle support were included?',
+  },
+  {
+    label: 'Outcomes',
+    prompt: 'Ask: Which approved measurements, strength gains, habits, or confidence changes can be shared?',
+  },
+  {
+    label: 'Tools',
+    prompt: 'Ask: Which workout app, check-in format, meal plan, or tracking tools did the client use?',
+  },
+  {
+    label: 'Timeline',
+    prompt: 'Ask: When did coaching begin, and how much time separates the photos?',
+  },
+  {
+    label: 'Links / assets',
+    prompt: 'Collect: Approved photo dates and labels, a testimonial, consent, and any preferred social link.',
+  },
+  {
+    label: 'Open questions',
+    prompt: `Ask: What was ${name}'s biggest obstacle, and what part of the coaching made the difference?`,
+  },
+];
+
 export const proof: {
   quote?: string;
   name: string;
   detail?: string;
+  intakeChecklist?: {
+    label: string;
+    prompt: string;
+  }[];
   image?: string;
   images?: {
     src: string;
@@ -186,7 +222,8 @@ export const proof: {
 }[] = [
   {
     name: 'Alex',
-    detail: 'Client transformation · details pending',
+    detail: 'Client transformation · details to confirm',
+    intakeChecklist: transformationIntake('Alex'),
     images: [
       {
         src: '/images/candidates/client-alex-before.png',
@@ -202,7 +239,8 @@ export const proof: {
   },
   {
     name: 'Ale',
-    detail: 'Client transformation · details pending',
+    detail: 'Client transformation · details to confirm',
+    intakeChecklist: transformationIntake('Ale'),
     images: [
       {
         src: '/images/candidates/client-ale-before.jpg',
@@ -218,7 +256,8 @@ export const proof: {
   },
   {
     name: 'JeZai',
-    detail: 'Client transformation · details pending',
+    detail: 'Client transformation · details to confirm',
+    intakeChecklist: transformationIntake('JeZai'),
     images: [
       {
         src: '/images/candidates/client-jezai-before.jpg',
@@ -272,7 +311,8 @@ export const heroSlides = [
   {
     id: 'proof',
     kind: 'panel' as const,
-    image: site.media.transformation,
+    image: site.media.transformationFull,
+    desktopImage: site.media.transformation,
     alt: 'Before and after transformation photos',
     eyebrow: '7+ years of experience',
     title: 'Built on real transformations.',
