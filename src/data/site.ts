@@ -453,6 +453,7 @@ export const mobileNavGroups = [
   {
     label: 'Explore',
     links: [
+      { label: 'Start Here', href: '#hero' },
       { label: 'Testimonials', href: '#proof' },
       { label: 'Fit', href: '#fit' },
       { label: 'What you get', href: '#get' },
