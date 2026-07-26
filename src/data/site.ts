@@ -35,7 +35,7 @@ export const site = {
     // Pump University athletes (not Jaihden) for the brand pillar, so the same
     // Jaihden photo isn't repeated across every major section.
     pumpAthletes: '/images/candidates/uofpump-hero-01-trademark-gym.jpg',
-    youtubeThumb: '/images/candidates/youtube-more-than-coach-thumbnail.jpg',
+    youtubeThumb: '/images/candidates/youtube-vegas-fratlete-thumbnail.jpg',
     // Reuse the stronger Jaihden image for bio-optimization; the profile avatar
     // is a lower-quality version of the same look.
     bioOptimization: '/images/candidates/after-physique-strong.jpg?v=20260627-hero',
@@ -170,19 +170,22 @@ export const storyBeats = [
   },
 ];
 
-// Only client names, photo groupings, and image-stage labels confirmed by the
-// supplied asset review are published here. Add claims or quotes only when the
-// client has expressly approved them.
+// Client names, photo groupings, image-stage labels, and testimonial wording
+// reflect the approved source material supplied by Jaihden.
 export const proof: {
   name: string;
+  testimonial: string;
   images: {
     src: string;
     alt: string;
     label: string;
+    fit?: 'cover' | 'contain';
   }[];
 }[] = [
   {
     name: 'Alex',
+    testimonial:
+      'I dropped 70 lbs working a 9 to 5 and honestly I didn’t think it was possible with my schedule. JT didn’t just give me a meal plan and training plan then disappear he helped me break the habits holding me back and build something that actually fit my lifestyle without giving up my weekends.',
     images: [
       {
         src: '/images/candidates/client-alex-before.png',
@@ -192,12 +195,14 @@ export const proof: {
       {
         src: '/images/candidates/client-alex-progress.jpg',
         alt: 'Alex transformation progress mirror photo',
-        label: 'Progress',
+        label: 'After',
       },
     ],
   },
   {
     name: 'Ale',
+    testimonial:
+      'Tearing my ACL and meniscus completely threw me off track. Working with JT gave me a plan for post surgery helped me rebuild my confidence and finally made me feel like I was entering my prime again instead of settling.',
     images: [
       {
         src: '/images/candidates/client-ale-before.jpg',
@@ -213,6 +218,8 @@ export const proof: {
   },
   {
     name: 'JeZai',
+    testimonial:
+      'I was skinny fat and hated taking my shirt off around people. JT helped me put on real muscle lose that last layer of fat and actually build a routine I could stick to. For the first time in a long time I actually like what I see in the mirror.',
     images: [
       {
         src: '/images/candidates/client-jezai-before.jpg',
@@ -222,7 +229,41 @@ export const proof: {
       {
         src: '/images/candidates/client-jezai-progress.jpg',
         alt: 'JeZai transformation progress mirror photo',
-        label: 'Progress',
+        label: 'After',
+      },
+    ],
+  },
+  {
+    name: 'Christian',
+    testimonial:
+      'I was in a rut and couldn’t figure out why I felt the way I did. JT went through my blood work helped me optimize my biology and built a plan around it. Now I finally have my energy back feel confident again and feel like I’m becoming the person I know I can be.',
+    images: [
+      {
+        src: '/images/candidates/client-progress-04-before-tight-balanced.jpg',
+        alt: 'Earlier physique photo in a red-walled locker room',
+        label: 'Before',
+      },
+      {
+        src: '/images/candidates/client-progress-04-progress-tight-leg-tones-test.jpg',
+        alt: 'Progress physique mirror photo in a dark locker room',
+        label: 'After',
+      },
+    ],
+  },
+  {
+    name: 'Ryan Biglou',
+    testimonial:
+      'I came in knowing pretty much nothing. JT taught me the whole blueprint from progressive overload to hitting my protein and actually understanding nutrition. But the biggest thing was having him in my corner anytime I doubted myself had a question or needed help with form he’d always get back to me within 24 hours and that’s what made all the difference.',
+    images: [
+      {
+        src: '/images/candidates/client-progress-05-before.jpg',
+        alt: 'Earlier gym physique photo in a front double-biceps pose',
+        label: 'Before',
+      },
+      {
+        src: '/images/candidates/client-progress-05-progress.jpg',
+        alt: 'Progress physique mirror photo in a locker room',
+        label: 'After',
       },
     ],
   },
@@ -289,7 +330,7 @@ export const heroSlides = [
     id: 'youtube',
     kind: 'panel' as const,
     image: site.media.youtubeThumb,
-    alt: 'Jaihden Torres YouTube thumbnail',
+    alt: 'Jaihden Torres in a Las Vegas pool-party YouTube thumbnail with code FRATLETE',
     eyebrow: 'On YouTube',
     title: 'More than a coach.',
     body:
@@ -313,8 +354,8 @@ export const goalOptions = [
   },
   {
     value: 'recomposition-confidence',
-    label: 'Recomposition / confidence',
-    tallyValue: 'Recomposition / confidence',
+    label: 'Both / Recomposition',
+    tallyValue: 'Both / Recomposition',
     detail: 'Energy, sleep, and routine optimizations built around your benders.',
   },
 ];
@@ -348,17 +389,17 @@ export const qualification = {
 export const whatYouGet = [
   {
     icon: 'phone',
-    tag: 'In your coaching app',
+    tag: 'BUILT FOR YOUR LIFESTYLE',
     title: 'Workout plans made for you',
     text:
-      'Training built around your goals, your schedule, and the equipment you have — delivered in a clean workout app you check from your phone.',
+      'Forget cookie cutter programs. Every workout is built around your goals your schedule and the equipment you have so you can stay consistent.',
   },
   {
     icon: 'apple',
-    tag: 'Data-driven',
-    title: 'Your own meal plan',
+    tag: 'MACRO BASED',
+    title: 'Meal plans made for real life',
     text:
-      'Flexible meal plans built from your height, weight, macros, and blood work — structured for your tastes and the weekends most plans ignore.',
+      'No cutting out your favorite foods. We build your calories and macros around your body your goals and your lifestyle so you can make progress without giving up your weekends.',
   },
   {
     icon: 'target',

@@ -19,7 +19,6 @@ const fratleteHref = resources.fratleteUrl || site.social.instagram;
 const applyHref = site.integrations.tallyUrl || '#apply';
 const bookHref = site.integrations.calendlyUrl || applyHref;
 const stickyHref = bookHref;
-const proofPhotoCount = proof.reduce((total, item) => total + item.images.length, 0);
 const formatCount = (value: number) => String(value).padStart(2, '0');
 
 // Inline line-icons (stroke = currentColor).
@@ -219,45 +218,77 @@ const visibleNav = navItems.filter((item) => {
   <!-- 2. CLIENT PROGRESS ---------------------------------------------------- -->
   <section class="testimonials section-light" id="proof">
     <div class="section-heading">
-      <p class="eyebrow">Client progress</p>
-      <h2>{proof.length > 0 ? 'Progress, seen side by side.' : 'Client progress, added as it happens.'}</h2>
-      {proof.length > 0 && <p class="proof-intro">A closer look at three client journeys.</p>}
-      {proof.length > 0 && (
-        <div class="proof-facts" aria-label="Client progress gallery details">
-          <div class="proof-fact">
-            <strong>{formatCount(proof.length)}</strong>
-            <span>Client photo pairs</span>
-          </div>
-          <div class="proof-fact">
-            <strong>{formatCount(proofPhotoCount)}</strong>
-            <span>Comparison images</span>
-          </div>
-          <p class="proof-facts__context">Side-by-side visual archive</p>
-        </div>
-      )}
+      <p class="eyebrow">Testimonials</p>
+      <h2>{proof.length > 0 ? 'Real people. Real progress.' : 'Client progress, added as it happens.'}</h2>
     </div>
     {proof.length > 0 ? (
-      <div class="proof-grid">
-        {proof.map((item, index) => (
-          <article class="proof-card">
-            <div class="proof-images">
-              {item.images.map((image) => (
-                <figure>
-                  <img src={image.src} alt={image.alt} loading="lazy" />
-                  <figcaption>{image.label}</figcaption>
-                </figure>
-              ))}
-            </div>
-            <div class="proof-card__footer">
-              <h3>{item.name}</h3>
-              <div class="proof-card__meta">
-                <span>{formatCount(index + 1)} / {formatCount(proof.length)}</span>
-                <p>Photo pair</p>
+      <>
+        <div
+          class="proof-grid"
+          id="proof-card-track"
+          role="region"
+          aria-label="Client progress gallery"
+          data-proof-track
+        >
+          {proof.map((item, index) => (
+            <article
+              class="proof-card"
+              role="group"
+              aria-label={`${index + 1} of ${proof.length}: ${item.name}`}
+              data-proof-card
+            >
+              <div class="proof-images">
+                {item.images.map((image) => (
+                  <figure>
+                    <img
+                      src={image.src}
+                      alt={image.alt}
+                      class={image.fit === 'contain' ? 'proof-image--contain' : undefined}
+                      loading="lazy"
+                    />
+                    <figcaption>{image.label}</figcaption>
+                  </figure>
+                ))}
               </div>
-            </div>
-          </article>
-        ))}
-      </div>
+              <div class="proof-card__footer">
+                <h3>{item.name}</h3>
+              </div>
+              <figure class="proof-card__testimonial" data-testimonial>
+                <blockquote id={`proof-testimonial-${index + 1}`}>
+                  <p>{item.testimonial}</p>
+                </blockquote>
+                <button
+                  type="button"
+                  aria-expanded="false"
+                  aria-controls={`proof-testimonial-${index + 1}`}
+                  data-testimonial-toggle
+                >
+                  Read full testimonial
+                </button>
+              </figure>
+            </article>
+          ))}
+        </div>
+        <div class="proof-carousel-nav" aria-label="Client progress carousel controls">
+          <button
+            type="button"
+            aria-label="Previous client progress card"
+            aria-controls="proof-card-track"
+            data-proof-prev
+            set:html={arrowLeft}
+          />
+          <span aria-live="polite" aria-atomic="true" data-proof-count>
+            01 / {formatCount(proof.length)}
+          </span>
+          <button
+            type="button"
+            aria-label="Next client progress card"
+            aria-controls="proof-card-track"
+            data-proof-next
+            set:html={arrowRight}
+          />
+        </div>
+      </>
     ) : (
       <div class="testimonials-empty">
         <p>
@@ -592,6 +623,70 @@ const visibleNav = navItems.filter((item) => {
     cards.forEach((card) => gio.observe(card));
     render();
   }
+
+  // --- Client progress carousel (small phones only) ---------------------------
+  const proofTrack = document.querySelector<HTMLElement>('[data-proof-track]');
+  if (proofTrack) {
+    const proofCards = Array.from(proofTrack.querySelectorAll<HTMLElement>('[data-proof-card]'));
+    const proofCount = document.querySelector<HTMLElement>('[data-proof-count]');
+    const proofPrev = document.querySelector<HTMLButtonElement>('[data-proof-prev]');
+    const proofNext = document.querySelector<HTMLButtonElement>('[data-proof-next]');
+    let proofActive = 0;
+    let proofPaging = false;
+
+    const renderProofCarousel = () => {
+      if (proofCount) {
+        proofCount.textContent = `${String(proofActive + 1).padStart(2, '0')} / ${String(proofCards.length).padStart(2, '0')}`;
+      }
+      if (proofPrev) proofPrev.disabled = proofActive === 0;
+      if (proofNext) proofNext.disabled = proofActive === proofCards.length - 1;
+    };
+
+    const goToProofCard = (index: number) => {
+      proofActive = Math.max(0, Math.min(proofCards.length - 1, index));
+      const firstOffset = proofCards[0]?.offsetLeft ?? 0;
+      const target = proofCards[proofActive].offsetLeft - firstOffset;
+      proofPaging = true;
+      proofTrack.classList.add('is-paging');
+      tweenScrollLeft(proofTrack, target);
+      renderProofCarousel();
+      window.setTimeout(() => {
+        proofTrack.scrollLeft = target;
+        proofTrack.classList.remove('is-paging');
+        proofPaging = false;
+        renderProofCarousel();
+      }, prefersReducedMotion ? 0 : 360);
+    };
+
+    let proofScrollFrame = 0;
+    proofTrack.addEventListener('scroll', () => {
+      if (proofScrollFrame || proofPaging) return;
+      proofScrollFrame = requestAnimationFrame(() => {
+        proofScrollFrame = 0;
+        const firstOffset = proofCards[0]?.offsetLeft ?? 0;
+        proofActive = proofCards.reduce((nearest, card, index) => {
+          const cardDistance = Math.abs(card.offsetLeft - firstOffset - proofTrack.scrollLeft);
+          const nearestDistance = Math.abs(proofCards[nearest].offsetLeft - firstOffset - proofTrack.scrollLeft);
+          return cardDistance < nearestDistance ? index : nearest;
+        }, 0);
+        renderProofCarousel();
+      });
+    }, { passive: true });
+
+    proofPrev?.addEventListener('click', () => goToProofCard(proofActive - 1));
+    proofNext?.addEventListener('click', () => goToProofCard(proofActive + 1));
+    renderProofCarousel();
+  }
+
+  // --- Compact mobile testimonial previews -----------------------------------
+  document.querySelectorAll<HTMLElement>('[data-testimonial]').forEach((testimonial) => {
+    const toggle = testimonial.querySelector<HTMLButtonElement>('[data-testimonial-toggle]');
+    toggle?.addEventListener('click', () => {
+      const expanded = testimonial.classList.toggle('is-expanded');
+      toggle.setAttribute('aria-expanded', String(expanded));
+      toggle.textContent = expanded ? 'Show less' : 'Read full testimonial';
+    });
+  });
 
   // --- Sticky CTA: reveal once past the hero -----------------------------------
   const sticky = document.querySelector<HTMLElement>('[data-sticky-cta]');
