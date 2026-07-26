@@ -7,9 +7,8 @@ export const site = {
   url: 'https://jaihdentorres.com',
   social: {
     instagram: 'https://www.instagram.com/jaihdentorres/',
-    // Snapchat is still assumed to mirror the other profiles until confirmed.
     tiktok: 'https://www.tiktok.com/@tjaihden?_r=1&_t=ZP-98LBWNH0xpe',
-    snapchat: 'https://www.snapchat.com/add/jaihdentorres',
+    snapchat: 'https://www.snapchat.com/@not.ja1',
     youtube: 'https://www.youtube.com/@jaihdentorres',
     pumpUniversity: 'https://uofpump.com/',
     shop: 'https://uofpump.com/collections/trademark-tee',
@@ -445,9 +444,7 @@ export const socialLinks = [
   { label: 'Instagram', href: site.social.instagram, handle: '@jaihdentorres', active: true },
   { label: 'TikTok', href: site.social.tiktok, handle: '@tjaihden', active: true },
   { label: 'YouTube', href: site.social.youtube, handle: '@jaihdentorres', active: true },
-  // Retain the candidate handle in centralized data, but do not publish its
-  // current 404 destination until Jaihden confirms a live Snapchat profile.
-  { label: 'Snapchat', href: site.social.snapchat, handle: '@jaihdentorres', active: false },
+  { label: 'Snapchat', href: site.social.snapchat, handle: 'not.ja1', active: true },
 ];
 
 // Mobile navigation expands the compact desktop header into a complete,
