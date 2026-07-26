@@ -1610,6 +1610,43 @@ footer {
     color: #fff;
   }
 
+  .nav-menu-group.nav-menu-group--social {
+    padding: 14px;
+    border: 1px solid rgba(228, 61, 48, 0.26);
+    border-radius: 12px;
+    background:
+      radial-gradient(circle at 100% 0%, rgba(228, 61, 48, 0.16), transparent 48%),
+      rgba(255, 255, 255, 0.025);
+  }
+
+  .nav-menu-group--social .nav-menu-group__label {
+    color: rgba(255, 105, 94, 0.88);
+  }
+
+  .site-header .nav-menu-group--social .nav-menu-group__links a {
+    gap: 9px;
+    min-height: 50px;
+    border-color: rgba(255, 255, 255, 0.13);
+    background: rgba(0, 0, 0, 0.2);
+    letter-spacing: 0.055em;
+  }
+
+  .nav-social-mark {
+    display: inline-grid;
+    flex: 0 0 27px;
+    width: 27px;
+    height: 27px;
+    place-items: center;
+    border: 1px solid rgba(228, 61, 48, 0.72);
+    border-radius: 50%;
+    background: rgba(228, 61, 48, 0.12);
+    color: #fff;
+    font-family: Archivo, ui-sans-serif, system-ui, sans-serif;
+    font-size: 0.58rem;
+    font-weight: 900;
+    letter-spacing: 0.04em;
+  }
+
   .site-header .nav-menu-group__links a:hover,
   .site-header .nav-menu-group__links a:focus-visible {
     border-color: var(--red);
@@ -2662,7 +2699,7 @@ footer {
 
   .hc-slide[data-slide-kind='questionnaire'] .hc-slide__content > .hc-slide__title {
     top: 58px;
-    font-size: clamp(2.5rem, 11.5vw, 3.15rem);
+    font-size: clamp(2.125rem, 9.775vw, 2.6775rem);
   }
 
   .hc-slide[data-slide-kind='questionnaire'] .hc-slide__content > .eyebrow {

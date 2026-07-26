@@ -441,10 +441,10 @@ export const mission = {
 
 // Footer/social rail. YouTube is intentionally promoted alongside the usual icons.
 export const socialLinks = [
-  { label: 'Instagram', href: site.social.instagram, handle: '@jaihdentorres', active: true },
-  { label: 'TikTok', href: site.social.tiktok, handle: '@tjaihden', active: true },
-  { label: 'YouTube', href: site.social.youtube, handle: '@jaihdentorres', active: true },
-  { label: 'Snapchat', href: site.social.snapchat, handle: 'not.ja1', active: true },
+  { label: 'Instagram', href: site.social.instagram, handle: '@jaihdentorres', mark: 'IG', active: true },
+  { label: 'TikTok', href: site.social.tiktok, handle: '@tjaihden', mark: 'TT', active: true },
+  { label: 'YouTube', href: site.social.youtube, handle: '@jaihdentorres', mark: 'YT', active: true },
+  { label: 'Snapchat', href: site.social.snapchat, handle: 'not.ja1', mark: 'SC', active: true },
 ];
 
 // Mobile navigation expands the compact desktop header into a complete,
@@ -453,9 +453,12 @@ export const mobileNavGroups = [
   {
     label: 'Explore',
     links: [
-      ...navItems.filter((item) => item.href !== '#apply'),
+      { label: 'Testimonials', href: '#proof' },
+      { label: 'Fit', href: '#fit' },
+      { label: 'What you get', href: '#get' },
       { label: 'Bio optimization', href: '#bio' },
       { label: 'My story', href: '#story' },
+      { label: 'Pump University', href: '#pump-university' },
     ],
   },
   {
@@ -466,15 +469,8 @@ export const mobileNavGroups = [
     ],
   },
   {
-    label: 'Resources',
-    links: [
-      { label: 'Bio resources', href: resources.fratleteUrl },
-      { label: 'Pump University', href: site.social.pumpUniversity },
-      { label: 'Shop the collection', href: site.social.shop },
-    ],
-  },
-  {
-    label: 'Follow',
-    links: socialLinks.filter((link) => link.active).map(({ label, href }) => ({ label, href })),
+    label: 'Social',
+    kind: 'social',
+    links: socialLinks.filter((link) => link.active).map(({ label, href, mark }) => ({ label, href, mark })),
   },
 ];

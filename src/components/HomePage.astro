@@ -87,10 +87,20 @@ const visibleMobileNavGroups = mobileNavGroups
     <div class="nav-mobile-groups">
       {
         visibleMobileNavGroups.map((group, groupIndex) => (
-          <section class="nav-menu-group" aria-labelledby={`nav-group-${groupIndex}`}>
+          <section
+            class:list={['nav-menu-group', group.kind === 'social' && 'nav-menu-group--social']}
+            aria-labelledby={`nav-group-${groupIndex}`}
+          >
             <p class="nav-menu-group__label" id={`nav-group-${groupIndex}`}>{group.label}</p>
             <div class="nav-menu-group__links">
-              {group.links.map((link) => <a href={link.href}>{link.label}</a>)}
+              {
+                group.links.map((link) => (
+                  <a href={link.href}>
+                    {'mark' in link && <span class="nav-social-mark" aria-hidden="true">{link.mark}</span>}
+                    <span>{link.label}</span>
+                  </a>
+                ))
+              }
             </div>
           </section>
         ))
