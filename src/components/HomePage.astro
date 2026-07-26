@@ -5,6 +5,7 @@ import {
   goalOptions,
   heroSlides,
   mission,
+  mobileNavGroups,
   navItems,
   proof,
   qualification,
@@ -52,6 +53,17 @@ const visibleNav = navItems.filter((item) => {
   if (item.href === '#proof') return proof.length > 0;
   return true;
 });
+
+const visibleMobileNavGroups = mobileNavGroups
+  .map((group) => ({
+    ...group,
+    links: group.links.filter((link) => {
+      if (!link.href) return false;
+      if (link.href === '#proof') return proof.length > 0;
+      return true;
+    }),
+  }))
+  .filter((group) => group.links.length > 0);
 ---
 
 <header class="site-header" data-type-style="anton">
@@ -69,7 +81,21 @@ const visibleNav = navItems.filter((item) => {
     <span></span>
   </button>
   <nav id="primary-nav" aria-label="Primary navigation" data-nav data-open="false">
-    {visibleNav.map((item) => <a href={item.href}>{item.label}</a>)}
+    <div class="nav-desktop-links">
+      {visibleNav.map((item) => <a href={item.href}>{item.label}</a>)}
+    </div>
+    <div class="nav-mobile-groups">
+      {
+        visibleMobileNavGroups.map((group, groupIndex) => (
+          <section class="nav-menu-group" aria-labelledby={`nav-group-${groupIndex}`}>
+            <p class="nav-menu-group__label" id={`nav-group-${groupIndex}`}>{group.label}</p>
+            <div class="nav-menu-group__links">
+              {group.links.map((link) => <a href={link.href}>{link.label}</a>)}
+            </div>
+          </section>
+        ))
+      }
+    </div>
   </nav>
   <a class="header-cta" href={applyHref} data-cta="header-apply">Apply</a>
 </header>
@@ -443,7 +469,7 @@ const visibleNav = navItems.filter((item) => {
       </div>
       <ul class="social-rail" aria-label="Follow Jaihden Torres">
         {
-          socialLinks.map((link) => (
+          socialLinks.filter((link) => link.active).map((link) => (
             <li>
               <a href={link.href} data-cta={`social-${link.label.toLowerCase()}`}>
                 <strong>{link.label}</strong>
@@ -499,18 +525,32 @@ const visibleNav = navItems.filter((item) => {
   };
 
   // --- Mobile nav --------------------------------------------------------------
-  const toggle = document.querySelector('[data-nav-toggle]');
-  const nav = document.querySelector('[data-nav]');
+  const toggle = document.querySelector<HTMLButtonElement>('[data-nav-toggle]');
+  const nav = document.querySelector<HTMLElement>('[data-nav]');
   if (toggle && nav) {
-    const setOpen = (open: boolean) => {
+    const setOpen = (open: boolean, restoreFocus = false) => {
       nav.setAttribute('data-open', String(open));
       toggle.setAttribute('aria-expanded', String(open));
       toggle.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+      if (open) {
+        requestAnimationFrame(() => nav.querySelector<HTMLAnchorElement>('.nav-mobile-groups a')?.focus());
+      } else if (restoreFocus) {
+        toggle.focus();
+      }
     };
     toggle.addEventListener('click', () => setOpen(nav.getAttribute('data-open') !== 'true'));
     nav.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setOpen(false)));
     document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') setOpen(false);
+      if (event.key === 'Escape' && nav.getAttribute('data-open') === 'true') setOpen(false, true);
+    });
+    document.addEventListener('pointerdown', (event) => {
+      if (nav.getAttribute('data-open') !== 'true') return;
+      if (event.target instanceof Node && !nav.contains(event.target) && !toggle.contains(event.target)) {
+        setOpen(false);
+      }
+    });
+    window.matchMedia('(min-width: 981px)').addEventListener('change', (event) => {
+      if (event.matches) setOpen(false);
     });
   }
 

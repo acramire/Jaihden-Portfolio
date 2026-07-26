@@ -163,9 +163,18 @@ main#top {
 .site-header nav {
   display: flex;
   align-items: center;
-  gap: clamp(20px, 2.4vw, 38px);
   margin-left: auto;
   margin-right: clamp(20px, 3vw, 40px);
+}
+
+.nav-desktop-links {
+  display: flex;
+  align-items: center;
+  gap: clamp(20px, 2.4vw, 38px);
+}
+
+.nav-mobile-groups {
+  display: none;
 }
 
 .site-header nav a {
@@ -1531,29 +1540,84 @@ footer {
     display: none;
     flex-direction: column;
     align-items: stretch;
-    gap: 0;
+    max-height: calc(100svh - var(--site-header-height));
     margin: 0;
-    padding: 8px clamp(14px, 4vw, 24px) 16px;
+    padding: 18px clamp(16px, 4vw, 24px) 24px;
     background: rgba(11, 12, 14, 0.97);
     border-bottom: 1px solid var(--line-dark);
     backdrop-filter: blur(18px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
   }
 
   .site-header nav[data-open='true'] {
     display: flex;
   }
 
-  .site-header nav a {
+  .nav-desktop-links {
+    display: none;
+  }
+
+  .nav-mobile-groups {
+    display: grid;
+    gap: 20px;
+  }
+
+  .nav-menu-group {
+    display: grid;
+    gap: 9px;
+  }
+
+  .nav-menu-group + .nav-menu-group {
+    padding-top: 18px;
+    border-top: 1px solid var(--line-dark);
+  }
+
+  .nav-menu-group__label {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.46);
+    font-family: Archivo, ui-sans-serif, system-ui, sans-serif;
+    font-size: 0.66rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .nav-menu-group__links {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 7px;
+  }
+
+  .site-header .nav-menu-group__links a {
     display: flex;
     align-items: center;
-    min-height: 48px;
-    padding: 4px 2px;
-    border-top: 1px solid var(--line-dark);
+    min-height: 44px;
+    padding: 9px 11px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.025);
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.72rem;
+    letter-spacing: 0.075em;
+    line-height: 1.15;
+  }
+
+  .site-header .nav-menu-group:nth-child(2) .nav-menu-group__links a {
+    border-color: rgba(228, 61, 48, 0.5);
+    background: rgba(228, 61, 48, 0.12);
     color: #fff;
   }
 
-  .site-header nav a:first-child {
-    border-top: 0;
+  .site-header .nav-menu-group__links a:hover,
+  .site-header .nav-menu-group__links a:focus-visible {
+    border-color: var(--red);
+    background: rgba(228, 61, 48, 0.12);
+  }
+
+  .site-header .nav-menu-group__links a::after {
+    display: none;
   }
 
   .hero {

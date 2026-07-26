@@ -442,8 +442,42 @@ export const mission = {
 
 // Footer/social rail. YouTube is intentionally promoted alongside the usual icons.
 export const socialLinks = [
-  { label: 'Instagram', href: site.social.instagram, handle: '@jaihdentorres' },
-  { label: 'TikTok', href: site.social.tiktok, handle: '@tjaihden' },
-  { label: 'YouTube', href: site.social.youtube, handle: '@jaihdentorres' },
-  { label: 'Snapchat', href: site.social.snapchat, handle: '@jaihdentorres' },
+  { label: 'Instagram', href: site.social.instagram, handle: '@jaihdentorres', active: true },
+  { label: 'TikTok', href: site.social.tiktok, handle: '@tjaihden', active: true },
+  { label: 'YouTube', href: site.social.youtube, handle: '@jaihdentorres', active: true },
+  // Retain the candidate handle in centralized data, but do not publish its
+  // current 404 destination until Jaihden confirms a live Snapchat profile.
+  { label: 'Snapchat', href: site.social.snapchat, handle: '@jaihdentorres', active: false },
+];
+
+// Mobile navigation expands the compact desktop header into a complete,
+// intentionally grouped directory of public destinations.
+export const mobileNavGroups = [
+  {
+    label: 'Explore',
+    links: [
+      ...navItems.filter((item) => item.href !== '#apply'),
+      { label: 'Bio optimization', href: '#bio' },
+      { label: 'My story', href: '#story' },
+    ],
+  },
+  {
+    label: 'Start here',
+    links: [
+      { label: cta.applyLabel, href: site.integrations.tallyUrl },
+      { label: cta.stickyLabel, href: site.integrations.calendlyUrl },
+    ],
+  },
+  {
+    label: 'Resources',
+    links: [
+      { label: 'Bio resources', href: resources.fratleteUrl },
+      { label: 'Pump University', href: site.social.pumpUniversity },
+      { label: 'Shop the collection', href: site.social.shop },
+    ],
+  },
+  {
+    label: 'Follow',
+    links: socialLinks.filter((link) => link.active).map(({ label, href }) => ({ label, href })),
+  },
 ];
