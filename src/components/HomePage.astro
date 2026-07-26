@@ -19,6 +19,8 @@ const fratleteHref = resources.fratleteUrl || site.social.instagram;
 const applyHref = site.integrations.tallyUrl || '#apply';
 const bookHref = site.integrations.calendlyUrl || applyHref;
 const stickyHref = bookHref;
+const proofPhotoCount = proof.reduce((total, item) => total + item.images.length, 0);
+const formatCount = (value: number) => String(value).padStart(2, '0');
 
 // Inline line-icons (stroke = currentColor).
 const icons: Record<string, string> = {
@@ -214,47 +216,45 @@ const visibleNav = navItems.filter((item) => {
     </div>
   </section>
 
-  <!-- 2. TESTIMONIALS ------------------------------------------------------- -->
+  <!-- 2. CLIENT PROGRESS ---------------------------------------------------- -->
   <section class="testimonials section-light" id="proof">
     <div class="section-heading">
-      <p class="eyebrow">Proof</p>
-      <h2>{proof.length > 0 ? 'Real results from real clients.' : 'Real results, added as they happen.'}</h2>
+      <p class="eyebrow">Client progress</p>
+      <h2>{proof.length > 0 ? 'Progress, seen side by side.' : 'Client progress, added as it happens.'}</h2>
+      {proof.length > 0 && <p class="proof-intro">A closer look at three client journeys.</p>}
+      {proof.length > 0 && (
+        <div class="proof-facts" aria-label="Client progress gallery details">
+          <div class="proof-fact">
+            <strong>{formatCount(proof.length)}</strong>
+            <span>Client photo pairs</span>
+          </div>
+          <div class="proof-fact">
+            <strong>{formatCount(proofPhotoCount)}</strong>
+            <span>Comparison images</span>
+          </div>
+          <p class="proof-facts__context">Side-by-side visual archive</p>
+        </div>
+      )}
     </div>
     {proof.length > 0 ? (
       <div class="proof-grid">
-        {proof.map((item) => (
+        {proof.map((item, index) => (
           <article class="proof-card">
-            {item.images?.length ? (
-              <div class="proof-images">
-                {item.images.map((image) => (
-                  <figure>
-                    <img src={image.src} alt={image.alt} loading="lazy" />
-                    {image.label && <figcaption>{image.label}</figcaption>}
-                  </figure>
-                ))}
+            <div class="proof-images">
+              {item.images.map((image) => (
+                <figure>
+                  <img src={image.src} alt={image.alt} loading="lazy" />
+                  <figcaption>{image.label}</figcaption>
+                </figure>
+              ))}
+            </div>
+            <div class="proof-card__footer">
+              <h3>{item.name}</h3>
+              <div class="proof-card__meta">
+                <span>{formatCount(index + 1)} / {formatCount(proof.length)}</span>
+                <p>Photo pair</p>
               </div>
-            ) : (
-              item.image && <img src={item.image} alt={`Result from ${item.name}`} loading="lazy" />
-            )}
-            {item.quote ? (
-              <p class="proof-quote">“{item.quote}”</p>
-            ) : (
-              <p class="proof-note">Photos are ready. Confirm the details below before publishing result claims.</p>
-            )}
-            <span>{item.detail ? `${item.name} · ${item.detail}` : item.name}</span>
-            {item.intakeChecklist?.length && (
-              <div class="proof-intake" aria-label={`${item.name} details to confirm`}>
-                <p class="proof-intake__title">Stepbrother checklist</p>
-                <dl>
-                  {item.intakeChecklist.map((field) => (
-                    <div>
-                      <dt>{field.label}</dt>
-                      <dd>{field.prompt}</dd>
-                    </div>
-                  ))}
-                </dl>
-              </div>
-            )}
+            </div>
           </article>
         ))}
       </div>

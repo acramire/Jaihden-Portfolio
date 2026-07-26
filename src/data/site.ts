@@ -7,8 +7,8 @@ export const site = {
   url: 'https://jaihdentorres.com',
   social: {
     instagram: 'https://www.instagram.com/jaihdentorres/',
-    // TikTok + Snapchat handles assumed to mirror the others — swap if they differ.
-    tiktok: 'https://www.tiktok.com/@jaihdentorres',
+    // Snapchat is still assumed to mirror the other profiles until confirmed.
+    tiktok: 'https://www.tiktok.com/@tjaihden?_r=1&_t=ZP-98LBWNH0xpe',
     snapchat: 'https://www.snapchat.com/add/jaihdentorres',
     youtube: 'https://www.youtube.com/@jaihdentorres',
     pumpUniversity: 'https://uofpump.com/',
@@ -24,7 +24,7 @@ export const site = {
     hero: '/images/candidates/instagram-uofpump-07-labor-day.jpg',
     transformationHero: '/images/candidates/transformation-before-after.jpg?v=20260620-crop',
     afterPhysiqueStrong: '/images/candidates/after-physique-strong.jpg?v=20260627-hero',
-    flexProfile: '/images/candidates/after-physique-strong.jpg?v=20260627-hero',
+    flexProfile: '/images/candidates/after-physique-strong-mobile-crop-less-test.jpg?v=20260725-less-crop-test',
     flexProfileDesktop: '/images/candidates/after-physique-strong-desktop.jpg?v=20260627-desktop-left',
     transformation: '/images/candidates/transformation-before-after.jpg?v=20260620-crop',
     transformationFull: '/client-reviews/jai-image-intake/assets/client-a-before-after.jpg',
@@ -170,60 +170,19 @@ export const storyBeats = [
   },
 ];
 
-// Client-approved testimonials only. While this array is empty, the Proof
-// section and its "Proof" nav link do not render at all (see index.astro).
-// Never fabricate quotes, names, or results. To enable the section, add real
-// entries here and the nav link returns automatically.
-const transformationIntake = (name: string) => [
-  {
-    label: 'Role / goal',
-    prompt: `Ask: What was ${name}'s starting point and primary goal?`,
-  },
-  {
-    label: 'Coaching scope',
-    prompt: 'Ask: Which parts of training, nutrition, accountability, or lifestyle support were included?',
-  },
-  {
-    label: 'Outcomes',
-    prompt: 'Ask: Which approved measurements, strength gains, habits, or confidence changes can be shared?',
-  },
-  {
-    label: 'Tools',
-    prompt: 'Ask: Which workout app, check-in format, meal plan, or tracking tools did the client use?',
-  },
-  {
-    label: 'Timeline',
-    prompt: 'Ask: When did coaching begin, and how much time separates the photos?',
-  },
-  {
-    label: 'Links / assets',
-    prompt: 'Collect: Approved photo dates and labels, a testimonial, consent, and any preferred social link.',
-  },
-  {
-    label: 'Open questions',
-    prompt: `Ask: What was ${name}'s biggest obstacle, and what part of the coaching made the difference?`,
-  },
-];
-
+// Only client names, photo groupings, and image-stage labels confirmed by the
+// supplied asset review are published here. Add claims or quotes only when the
+// client has expressly approved them.
 export const proof: {
-  quote?: string;
   name: string;
-  detail?: string;
-  intakeChecklist?: {
-    label: string;
-    prompt: string;
-  }[];
-  image?: string;
-  images?: {
+  images: {
     src: string;
     alt: string;
-    label?: string;
+    label: string;
   }[];
 }[] = [
   {
     name: 'Alex',
-    detail: 'Client transformation · details to confirm',
-    intakeChecklist: transformationIntake('Alex'),
     images: [
       {
         src: '/images/candidates/client-alex-before.png',
@@ -239,8 +198,6 @@ export const proof: {
   },
   {
     name: 'Ale',
-    detail: 'Client transformation · details to confirm',
-    intakeChecklist: transformationIntake('Ale'),
     images: [
       {
         src: '/images/candidates/client-ale-before.jpg',
@@ -256,8 +213,6 @@ export const proof: {
   },
   {
     name: 'JeZai',
-    detail: 'Client transformation · details to confirm',
-    intakeChecklist: transformationIntake('JeZai'),
     images: [
       {
         src: '/images/candidates/client-jezai-before.jpg',
@@ -447,7 +402,7 @@ export const mission = {
 // Footer/social rail. YouTube is intentionally promoted alongside the usual icons.
 export const socialLinks = [
   { label: 'Instagram', href: site.social.instagram, handle: '@jaihdentorres' },
-  { label: 'TikTok', href: site.social.tiktok, handle: '@jaihdentorres' },
+  { label: 'TikTok', href: site.social.tiktok, handle: '@tjaihden' },
   { label: 'YouTube', href: site.social.youtube, handle: '@jaihdentorres' },
   { label: 'Snapchat', href: site.social.snapchat, handle: '@jaihdentorres' },
 ];

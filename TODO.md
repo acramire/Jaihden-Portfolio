@@ -16,7 +16,7 @@ Based on the latest Round 3 feedback recording (`RPReplay_Final1782083472.MOV`) 
   - Instagram: `https://www.instagram.com/jaihdentorres?utm_source=qr`
   - YouTube: `https://youtube.com/@jaihdentorres?si=aKdaCWpzUHzW4N-N`
   - Snapchat: `https://www.snapchat.com/add/not.ja1?share_id=nt4fi8_gTcifHZptS5mweg&locale=en_US`
-  - TikTok: use the supplied share URL, or confirm the cleaner canonical profile URL for `@jaihdentorrez`.
+  - TikTok: `https://www.tiktok.com/@tjaihden?_r=1&_t=ZP-98LBWNH0xpe`
 - [ ] Consolidate the two “Get to know me” buttons into one CTA.
   - Recommended label: `Watch “Beer Tastes Better With Abs” on YouTube`.
   - Link directly to the featured YouTube video.

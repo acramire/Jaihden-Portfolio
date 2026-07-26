@@ -26,6 +26,7 @@
 
 html {
   scroll-behavior: smooth;
+  background-color: var(--ink);
 }
 
 section[id] {
@@ -998,11 +999,14 @@ h3 {
 .contact-grid a {
   border: 1px solid var(--line);
   background: var(--paper-strong);
-  padding: clamp(20px, 3vw, 30px);
   transition:
     border-color 0.18s ease,
     box-shadow 0.18s ease,
     transform 0.18s ease;
+}
+
+.contact-grid a {
+  padding: clamp(20px, 3vw, 30px);
 }
 
 .proof-card:hover,
@@ -1012,7 +1016,6 @@ h3 {
   transform: translateY(-2px);
 }
 
-.proof-card > span,
 .contact-grid span,
 .content-card span {
   display: block;
@@ -1275,28 +1278,85 @@ h3 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-.proof-quote {
-  margin-bottom: 16px;
-  color: var(--ink-soft);
-  font-size: 1.05rem;
-  font-weight: 600;
+.proof-intro {
+  max-width: 42rem;
+  margin-top: 14px;
+  color: var(--muted);
+  font-size: 1rem;
+}
+
+.proof-facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 165px)) minmax(180px, 1fr);
+  align-items: stretch;
+  margin-top: 26px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.proof-fact {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 72px;
+  padding: 10px 18px 10px 0;
+  border-right: 1px solid var(--line);
+}
+
+.proof-fact + .proof-fact {
+  padding-left: 18px;
+}
+
+.proof-fact strong {
+  color: var(--red-deep);
+  font-family: var(--display);
+  font-size: clamp(2.15rem, 3.2vw, 3rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 0.9;
+}
+
+.proof-fact span,
+.proof-facts__context {
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.075em;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+.proof-facts .proof-facts__context {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 0;
+  padding-left: 22px;
+  text-align: right;
+}
+
+.proof-card {
+  overflow: hidden;
+  padding: 0;
 }
 
 .proof-card img {
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 3 / 4;
   width: 100%;
+  height: 100%;
   object-fit: cover;
+  transition: transform 0.35s ease;
 }
 
-.proof-card > img {
-  margin-bottom: 18px;
+.proof-card:hover img {
+  transform: scale(1.025);
 }
 
 .proof-images {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
-  margin-bottom: 18px;
+  gap: 2px;
+  background: var(--paper);
 }
 
 .proof-images figure {
@@ -1306,66 +1366,69 @@ h3 {
   background: #0b0c0e;
 }
 
+.proof-images figure::after {
+  position: absolute;
+  inset: auto 0 0;
+  height: 30%;
+  background: linear-gradient(0deg, rgba(11, 12, 14, 0.56), transparent);
+  content: '';
+  pointer-events: none;
+}
+
 .proof-images figcaption {
   position: absolute;
-  left: 8px;
-  bottom: 8px;
-  padding: 4px 7px;
-  background: rgba(11, 12, 14, 0.72);
+  z-index: 1;
+  left: 12px;
+  bottom: 11px;
+  padding: 0;
   color: #fff;
-  font-size: 0.68rem;
+  font-size: 0.7rem;
   font-weight: 900;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.09em;
   text-transform: uppercase;
 }
 
-.proof-note {
-  margin-bottom: 16px;
-  color: var(--muted);
-  font-size: 0.95rem;
-  font-weight: 650;
+.proof-card__footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px 20px;
 }
 
-.proof-intake {
-  margin-top: 18px;
-  padding-top: 16px;
-  border-top: 1px solid var(--line);
-}
-
-.proof-card .proof-intake__title {
-  margin: 0 0 14px;
-  color: var(--ink);
-  font-size: 0.78rem;
-  font-weight: 900;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.proof-intake dl {
-  display: grid;
-  gap: 12px;
+.proof-card__footer h3 {
   margin: 0;
+  color: var(--ink);
+  font-family: var(--display);
+  font-size: clamp(1.55rem, 2.2vw, 2rem);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1;
 }
 
-.proof-intake dl > div {
-  padding-left: 12px;
-  border-left: 2px solid rgba(228, 61, 48, 0.32);
+.proof-card__meta {
+  display: grid;
+  gap: 4px;
+  text-align: right;
 }
 
-.proof-intake dt {
-  margin-bottom: 2px;
+.proof-card__meta span {
+  color: var(--ink-soft);
+  font-family: var(--display);
+  font-size: 1.05rem;
+  letter-spacing: 0.035em;
+  line-height: 1;
+}
+
+.proof-card .proof-card__meta p {
+  margin: 0;
   color: var(--red-deep);
   font-size: 0.68rem;
   font-weight: 900;
-  letter-spacing: 0.07em;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-align: right;
   text-transform: uppercase;
-}
-
-.proof-intake dd {
-  margin: 0;
-  color: var(--muted);
-  font-size: 0.82rem;
-  line-height: 1.42;
 }
 
 .brand-copy .eyebrow {
@@ -1779,6 +1842,29 @@ footer {
   .section-light {
     padding-right: 16px;
     padding-left: 16px;
+  }
+
+  .proof-facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .proof-fact {
+    min-height: 66px;
+    padding-right: 12px;
+  }
+
+  .proof-fact + .proof-fact {
+    padding-left: 12px;
+    border-right: 0;
+  }
+
+  .proof-facts .proof-facts__context {
+    grid-column: 1 / -1;
+    justify-content: flex-start;
+    min-height: 42px;
+    padding: 10px 0;
+    border-top: 1px solid var(--line);
+    text-align: left;
   }
 
   .content-card {
