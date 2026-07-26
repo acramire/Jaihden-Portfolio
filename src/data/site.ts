@@ -251,7 +251,7 @@ export const proof: {
     ],
   },
   {
-    name: 'Ryan Biglou',
+    name: 'Ryan',
     testimonial:
       'I came in knowing pretty much nothing. JT taught me the whole blueprint from progressive overload to hitting my protein and actually understanding nutrition. But the biggest thing was having him in my corner anytime I doubted myself had a question or needed help with form he’d always get back to me within 24 hours and that’s what made all the difference.',
     images: [
@@ -301,7 +301,7 @@ export const heroSlides = [
     image: site.media.flexProfile,
     desktopImage: site.media.flexProfileDesktop,
     alt: 'Jaihden Torres standing in the gym after a session',
-    eyebrow: 'Coaching that fits your life',
+    eyebrow: 'LIFESTYLE COACHING',
     title: 'Become the best version of yourself.',
   },
   {

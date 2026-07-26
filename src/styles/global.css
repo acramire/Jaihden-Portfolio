@@ -2033,6 +2033,25 @@ footer {
   object-position: center 18%;
 }
 
+.hc-slide[data-slide-id='goal'] {
+  background: #050608;
+}
+
+.hc-slide[data-slide-id='goal'] .hc-slide__picture {
+  left: 8%;
+  width: 92%;
+}
+
+.hc-slide[data-slide-id='goal'] .hc-slide__img {
+  object-position: left 18%;
+}
+
+.hc-slide[data-slide-id='goal'] .hc-slide__shade {
+  background:
+    linear-gradient(90deg, rgba(3, 4, 6, 0.94) 0%, rgba(3, 4, 6, 0.6) 38%, rgba(3, 4, 6, 0.08) 72%),
+    linear-gradient(180deg, rgba(5, 6, 8, 0.08) 30%, rgba(5, 6, 8, 0.88) 100%);
+}
+
 /* Keep heads and physiques in frame on the proof / youtube slides. */
 .hc-slide[data-slide-id='proof'] .hc-slide__img {
   object-position: center 12%;
@@ -2074,9 +2093,36 @@ footer {
   text-shadow: 0 2px 22px rgba(0, 0, 0, 0.55);
 }
 
-.hc-slide[data-slide-kind='questionnaire'] .hc-slide__content > .eyebrow,
-.hc-slide[data-slide-kind='questionnaire'] .hc-slide__content > .hc-slide__title {
-  display: none;
+.hc-slide[data-slide-kind='questionnaire'] .hc-slide__content > .eyebrow {
+  position: absolute;
+  z-index: 2;
+  top: 48px;
+  left: 20px;
+  display: block;
+  margin: 0;
+  color: rgba(235, 238, 241, 0.66);
+  font-size: clamp(0.62rem, 2.7vw, 0.72rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.28em;
+  white-space: nowrap;
+}
+
+.hc-slide[data-slide-kind='questionnaire'] .hc-slide__title {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-weight: 400;
+  letter-spacing: -0.055em;
+  text-transform: none;
+}
+
+.hc-slide[data-slide-kind='questionnaire'] .hero-title-line {
+  display: block;
+}
+
+.hc-slide[data-slide-kind='questionnaire'] .hero-title-emphasis {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-weight: 400;
+  font-style: italic;
 }
 
 .hc-slide__body {
@@ -2356,6 +2402,22 @@ footer {
 }
 
 @media (min-width: 981px) {
+  .hc-slide[data-slide-id='goal'] .hc-slide__picture {
+    right: 0;
+    left: auto;
+    width: 66%;
+  }
+
+  .hc-slide[data-slide-id='goal'] .hc-slide__img {
+    object-position: left center;
+  }
+
+  .hc-slide[data-slide-id='goal'] .hc-slide__shade {
+    background:
+      linear-gradient(90deg, rgba(3, 4, 6, 0.98) 0%, rgba(3, 4, 6, 0.9) 31%, rgba(3, 4, 6, 0.3) 55%, rgba(3, 4, 6, 0.05) 78%),
+      linear-gradient(180deg, rgba(5, 6, 8, 0.04) 44%, rgba(5, 6, 8, 0.82) 100%);
+  }
+
   .hc-slide[data-slide-kind='questionnaire'] .hc-slide__content {
     position: absolute;
     inset: 0;
@@ -2367,18 +2429,22 @@ footer {
 
   .hc-slide[data-slide-kind='questionnaire'] .hc-slide__content > .hc-slide__title {
     position: absolute;
-    top: clamp(72px, 10vh, 112px);
-    right: clamp(24px, 5vw, 64px);
+    top: clamp(112px, 14vh, 150px);
+    right: auto;
+    left: clamp(36px, 5vw, 78px);
     display: block;
-    max-width: 15ch;
+    max-width: 7.4em;
     margin: 0;
-    font-size: clamp(2.6rem, 4.6vw, 4.8rem);
-    line-height: 0.9;
-    text-align: right;
+    font-size: clamp(3.45rem, 5.4vw, 5.25rem);
+    line-height: 0.91;
+    text-align: left;
   }
 
-  .hc-slide[data-slide-kind='questionnaire'] .mobile-title-line {
-    display: block;
+  .hc-slide[data-slide-kind='questionnaire'] .hc-slide__content > .eyebrow {
+    top: clamp(78px, 9.5vh, 102px);
+    left: clamp(39px, 5.2vw, 81px);
+    font-size: clamp(0.68rem, 0.78vw, 0.8rem);
+    letter-spacing: 0.34em;
   }
 
   .hc-slide[data-slide-kind='questionnaire'] .quiz {
@@ -2405,13 +2471,13 @@ footer {
 
   .hc-slide[data-slide-kind='questionnaire'] .hc-slide__content > .hc-slide__title {
     position: absolute;
-    top: 64px;
+    top: 84px;
     left: 20px;
     display: block;
-    max-width: 17ch;
+    max-width: 7.6em;
     margin-bottom: 0;
-    font-size: clamp(1.66rem, 7vw, 2.08rem);
-    line-height: 0.92;
+    font-size: clamp(2.4rem, 8.7vw, 4.4rem);
+    line-height: 0.91;
   }
 }
 
@@ -2531,11 +2597,13 @@ footer {
   }
 
   .hc-slide[data-slide-kind='questionnaire'] .hc-slide__content > .hc-slide__title {
-    top: 28px;
+    top: 58px;
+    font-size: clamp(2.5rem, 11.5vw, 3.15rem);
   }
 
-  .hc-slide[data-slide-kind='questionnaire'] .mobile-title-line {
-    display: block;
+  .hc-slide[data-slide-kind='questionnaire'] .hc-slide__content > .eyebrow {
+    top: 27px;
+    left: 20px;
   }
 
   .hc-arrow {
