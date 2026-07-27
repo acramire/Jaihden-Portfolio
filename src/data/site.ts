@@ -436,7 +436,6 @@ export const mission = {
   title: 'Why I coach the way I do.',
   body:
     "I lived the same cycle my clients are trying to solve — locked in all week, then watching it unravel every weekend. I built a system that keeps the physique, the confidence, and the social life at the same time, and now I help high-performers do the same.",
-  videoLabel: 'Watch the story on YouTube',
 };
 
 // Footer/social rail. YouTube is intentionally promoted alongside the usual icons.

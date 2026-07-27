@@ -421,19 +421,13 @@ const visibleMobileNavGroups = mobileNavGroups
   <!-- 6. MISSION / GET TO KNOW ME ------------------------------------------- -->
   <section class="story section-dark" id="story">
     <div class="story-media">
-      <a href={site.social.youtube} aria-label="Watch Jaihden Torres on YouTube">
-        <img src={site.media.story} alt="Jaihden Torres portrait" loading="lazy" />
-        <span class="play-badge">▶ {mission.videoLabel}</span>
-      </a>
+      <img src={site.media.story} alt="Jaihden Torres portrait" loading="lazy" />
     </div>
     <div class="story-copy">
       <p class="eyebrow">{mission.eyebrow}</p>
       <h2>{mission.title}</h2>
       <p class="bio-lead">{mission.body}</p>
       <div class="story-actions">
-        <a class="button button-secondary" href={site.social.youtube} data-cta="story-youtube">
-          Watch on YouTube
-        </a>
         <a class="button button-secondary" href={site.social.storyVideo} data-cta="story-feature">
           Beer Tastes Better With Abs
         </a>
@@ -455,7 +449,6 @@ const visibleMobileNavGroups = mobileNavGroups
       </p>
       <div class="brand-actions">
         <a class="button button-primary" href={site.social.shop} data-cta="pump-shop">Shop Trademark Collection</a>
-        <a class="button button-secondary" href={site.social.pumpUniversity} data-cta="pump-site">Visit Pump University</a>
       </div>
     </div>
   </section>
