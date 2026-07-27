@@ -244,8 +244,8 @@ main#top {
   align-items: center;
   justify-content: center;
   min-height: 38px;
-  padding: 9px 22px;
-  border-radius: 5px;
+  padding: 9px 18px;
+  border-radius: 3px;
   background: var(--red);
   color: #fff;
   box-shadow: 0 7px 20px rgba(228, 61, 48, 0.22);
@@ -1531,9 +1531,9 @@ footer {
   .header-cta {
     order: 2;
     margin-left: auto;
-    min-width: 94px;
+    min-width: 88px;
     min-height: 44px;
-    padding: 8px 16px;
+    padding: 8px 12px;
     font-size: 0.86rem;
   }
 
@@ -2071,8 +2071,8 @@ footer {
   }
 
   .header-cta {
-    min-width: 84px;
-    padding-inline: 12px;
+    min-width: 78px;
+    padding-inline: 10px;
   }
 }
 
