@@ -243,8 +243,8 @@ main#top {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 42px;
-  padding: 12px 30px;
+  min-height: 38px;
+  padding: 9px 22px;
   border-radius: 5px;
   background: var(--red);
   color: #fff;
@@ -1531,9 +1531,9 @@ footer {
   .header-cta {
     order: 2;
     margin-left: auto;
-    min-width: 108px;
+    min-width: 94px;
     min-height: 44px;
-    padding: 12px 22px;
+    padding: 8px 16px;
     font-size: 0.86rem;
   }
 
@@ -2071,8 +2071,8 @@ footer {
   }
 
   .header-cta {
-    min-width: 94px;
-    padding-inline: 16px;
+    min-width: 84px;
+    padding-inline: 12px;
   }
 }
 
